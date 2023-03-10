@@ -62,13 +62,16 @@ class _Board extends State<Board> {
                 game.placePieces(isPlayer1, i);
                 game.switchTurns(!isPlayer1);
                 if (game.ai == true && game.turn == true) {
-                  isPlayer1 = game.piece;
-                  log('both true!');
-                  int spot = game.aiTurn(isPlayer1);
-                  log('$spot');
-                  setState(() {});
-                  game.placePieces(isPlayer1, spot);
-                  game.switchTurns(!isPlayer1);
+                  winState = game.boardCheck(game
+                      .piece); //check winstate to make sure there wasn't a winning play
+                  if (winState == 1) {
+                    isPlayer1 = game.piece;
+                    log('both true!');
+                    int spot = game.aiTurn(isPlayer1);
+                    log('$spot');
+                    game.placePieces(isPlayer1, spot);
+                    game.switchTurns(!isPlayer1);
+                  }
                 }
               },
               child: emptySquare(
@@ -131,7 +134,7 @@ class _Board extends State<Board> {
         );
       }
 
-      winState = game.boardCheck(isPlayer1);
+      winState = game.boardCheck(game.piece);
       if (winState == 2) {
         if (MediaQuery.of(context).orientation == Orientation.portrait) {
           return Stack(children: [
