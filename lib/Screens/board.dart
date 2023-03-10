@@ -62,8 +62,8 @@ class _Board extends State<Board> {
                 game.placePieces(isPlayer1, i);
                 game.switchTurns(!isPlayer1);
                 if (game.ai == true && game.turn == true) {
-                  winState = game.boardCheck(game
-                      .piece); //check winstate to make sure there wasn't a winning play
+                  winState = game.boardCheck(
+                      isPlayer1); //check winstate to make sure there wasn't a winning play
                   if (winState == 1) {
                     isPlayer1 = game.piece;
                     log('both true!');
@@ -134,7 +134,7 @@ class _Board extends State<Board> {
         );
       }
 
-      winState = game.boardCheck(game.piece);
+      winState = game.boardCheck(isPlayer1);
       if (winState == 2) {
         if (MediaQuery.of(context).orientation == Orientation.portrait) {
           return Stack(children: [
