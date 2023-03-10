@@ -330,10 +330,6 @@ class GameProvider extends ChangeNotifier {
         }
       }); //make or update the aiBoard
       log('finished board');
-      log('checking for blocks');
-      if (aiBlockCheck(!p) != -1) {
-        return aiBlockCheck(!p);
-      }
       log('checking for wins');
       for (int i = 0; i <= 8; i++) {
         log('${aiBoard[i]}');
@@ -344,6 +340,11 @@ class GameProvider extends ChangeNotifier {
           }
         }
       }
+      log('checking for blocks');
+      if (aiBlockCheck(!p) != -1) {
+        return aiBlockCheck(!p);
+      }
+
       for (int i = 0; i <= 8; i++) {
         if (!spaceCheck(i)) {
           log('randomly picked $i');
