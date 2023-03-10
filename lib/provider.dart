@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
 class GameProvider extends ChangeNotifier {
   final Map<bool, String> _player = {};
@@ -6,6 +7,9 @@ class GameProvider extends ChangeNotifier {
   String _winnerName = '';
   bool _piece = false;
   Map<int, bool> board = {};
+  bool _ai = false; //is the AI on?
+  bool _turn = false; // is it the AI's turn?
+  Map<int, bool> aiBoard = {};
 
   String get name {
     return _name;
@@ -24,6 +28,22 @@ class GameProvider extends ChangeNotifier {
     return _winnerName;
   }
 
+  bool get ai {
+    return _ai;
+  }
+
+  bool get turn {
+    return _turn;
+  }
+
+  void aiOn() {
+    _ai = true;
+  }
+
+  void turnOn() {
+    _turn = true;
+  }
+
   void addPlayer(bool piece, String player) {
     //adds a player to the map
     _player[piece] = player;
@@ -35,6 +55,10 @@ class GameProvider extends ChangeNotifier {
     //if player two, switch name to player one
     if (_player.containsKey(turn)) {
       _name = _player[turn]!;
+      log(_name);
+    }
+    if (_ai && _name == 'Computer') {
+      turnOn();
     }
     notifyListeners();
   }
@@ -94,6 +118,165 @@ class GameProvider extends ChangeNotifier {
     return 1;
   }
 
+  bool aiWinCheck(bool p, int i) {
+    if (aiBoard.isNotEmpty && aiBoard.length >= 3) {
+      aiBoard.addEntries([MapEntry(i, p)]);
+      if (aiBoard[0] == p && aiBoard[1] == p && aiBoard[2] == p) {
+        //first row win
+        return true;
+      }
+      if (aiBoard[0] == p && aiBoard[3] == p && aiBoard[6] == p) {
+        //first column win
+        return true;
+      }
+      if (aiBoard[0] == p && aiBoard[4] == p && aiBoard[8] == p) {
+        //diag 1 win
+        return true;
+      }
+      if (aiBoard[3] == p && aiBoard[4] == p && aiBoard[5] == p) {
+        //second row win
+        return true;
+      }
+      if (aiBoard[6] == p && aiBoard[7] == p && aiBoard[8] == p) {
+        //third row win
+        return true;
+      }
+      if (aiBoard[1] == p && aiBoard[4] == p && aiBoard[7] == p) {
+        //second column win
+        return true;
+      }
+      if (aiBoard[2] == p && aiBoard[5] == p && aiBoard[8] == p) {
+        //third column win
+        return true;
+      }
+      if (aiBoard[2] == p && aiBoard[4] == p && aiBoard[6] == p) {
+        //second diag win
+        return true;
+      }
+      aiBoard.remove(i); //gets rid of piece if no win condition
+      return false;
+    }
+    return false;
+  }
+
+  int aiBlockCheck(bool p) {
+    if (aiBoard.isNotEmpty && aiBoard.length >= 3) {
+      if (aiBoard[0] != p && aiBoard[1] != p ||
+          aiBoard[0] != p && aiBoard[2] != p ||
+          aiBoard[1] != p && aiBoard[2] != p) {
+        //player potentially wins row 1
+        if (!spaceCheck(0)) {
+          return 0;
+        }
+        if (!spaceCheck(1)) {
+          return 1;
+        }
+        if (!spaceCheck(2)) {
+          return 2;
+        }
+      }
+      if (aiBoard[0] != p && aiBoard[3] != p ||
+          aiBoard[0] != p && aiBoard[6] != p ||
+          aiBoard[3] != p && aiBoard[6] != p) {
+        //player potentially wins column 1
+        if (!spaceCheck(0)) {
+          return 0;
+        }
+        if (!spaceCheck(3)) {
+          return 3;
+        }
+        if (!spaceCheck(6)) {
+          return 6;
+        }
+      }
+      if (aiBoard[0] != p && aiBoard[4] != p ||
+          aiBoard[0] != p && aiBoard[8] != p ||
+          aiBoard[4] != p && aiBoard[8] != p) {
+        //player potentially wins diag 1
+        if (!spaceCheck(0)) {
+          return 0;
+        }
+        if (!spaceCheck(4)) {
+          return 4;
+        }
+        if (!spaceCheck(8)) {
+          return 8;
+        }
+      }
+      if (aiBoard[3] != p && aiBoard[4] != p ||
+          aiBoard[3] != p && aiBoard[5] != p ||
+          aiBoard[4] != p && aiBoard[5] != p) {
+        //player potentially wins row 2
+        if (!spaceCheck(3)) {
+          return 3;
+        }
+        if (!spaceCheck(4)) {
+          return 4;
+        }
+        if (!spaceCheck(5)) {
+          return 5;
+        }
+      }
+      if (aiBoard[6] != p && aiBoard[7] != p ||
+          aiBoard[6] != p && aiBoard[8] != p ||
+          aiBoard[7] != p && aiBoard[8] != p) {
+        //player potentially wins row 3
+        if (!spaceCheck(6)) {
+          return 6;
+        }
+        if (!spaceCheck(7)) {
+          return 7;
+        }
+        if (!spaceCheck(8)) {
+          return 8;
+        }
+      }
+      if (aiBoard[1] != p && aiBoard[4] != p ||
+          aiBoard[1] != p && aiBoard[7] != p ||
+          aiBoard[4] != p && aiBoard[7] != p) {
+        //player potentially wins column 2
+        if (!spaceCheck(1)) {
+          return 1;
+        }
+        if (!spaceCheck(4)) {
+          return 4;
+        }
+        if (!spaceCheck(7)) {
+          return 7;
+        }
+      }
+      if (aiBoard[2] != p && aiBoard[5] != p ||
+          aiBoard[2] != p && aiBoard[8] != p ||
+          aiBoard[5] != p && aiBoard[8] != p) {
+        //player potentially wins column 3
+        if (!spaceCheck(2)) {
+          return 2;
+        }
+        if (!spaceCheck(5)) {
+          return 5;
+        }
+        if (!spaceCheck(8)) {
+          return 8;
+        }
+      }
+      if (aiBoard[2] != p && aiBoard[4] != p ||
+          aiBoard[2] != p && aiBoard[6] != p ||
+          aiBoard[4] != p && aiBoard[6] != p) {
+        //player potentially wins diag 2
+        if (!spaceCheck(2)) {
+          return 2;
+        }
+        if (!spaceCheck(4)) {
+          return 4;
+        }
+        if (!spaceCheck(6)) {
+          return 6;
+        }
+      }
+    }
+    return -1;
+  }
+
   bool spaceCheck(int i) {
     if (board[i] != null) {
       return true;
@@ -112,9 +295,49 @@ class GameProvider extends ChangeNotifier {
     return false;
   }
 
+  int aiTurn(bool p) {
+    if (!spaceCheck(4)) {
+      log('picked center');
+      _turn = false;
+      return 4;
+    } else if (spaceCheck(4)) {
+      board.forEach((key, value) {
+        if (!aiBoard.containsKey(key)) {
+          aiBoard.addEntries([MapEntry(key, value)]);
+        }
+      }); //make or update the aiBoard
+      log('finished board');
+      log('checking for blocks');
+      if (aiBlockCheck(p) != -1) {
+        return aiBlockCheck(p);
+      }
+      log('checking for wins');
+      for (int i = 0; i <= 8; i++) {
+        if (!spaceCheck(i)) {
+          if (aiWinCheck(p, i)) {
+            _turn = false;
+            return i;
+          }
+        }
+      }
+      for (int i = 0; i <= 8; i++) {
+        if (!spaceCheck(i)) {
+          log('randomly picked $i');
+          _turn = false;
+          return i;
+        }
+      }
+    }
+    _turn = false;
+    log('oops');
+    return -1;
+  }
+
   void emptyBoard() {
-    //clears out board when game is done
+    //clears out board when game is done and makes sure AI is turned off
     board.clear();
+    aiBoard.clear();
+    _ai = false;
     notifyListeners();
   }
 }
