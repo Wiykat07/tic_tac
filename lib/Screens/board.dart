@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:align_positioned/align_positioned.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/Widgets/confetti.dart';
@@ -17,6 +18,7 @@ class _Board extends State<Board> {
   CustomPaint paint = CustomPaint(painter: XAndO(true, false));
   bool isPlayer1 = true; //player 1 is X, player 2 is O
   int winState = 0; //1 is no win, 2 is win, and 3 is tie
+  bool update = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,15 @@ class _Board extends State<Board> {
                 setState(() {});
                 game.placePieces(isPlayer1, i);
                 game.switchTurns(!isPlayer1);
+                if (game.ai == true && game.turn == true) {
+                  isPlayer1 = game.piece;
+                  log('both true!');
+                  int spot = game.aiTurn(isPlayer1);
+                  log('$spot');
+                  setState(() {});
+                  game.placePieces(isPlayer1, spot);
+                  game.switchTurns(!isPlayer1);
+                }
               },
               child: emptySquare(
                 h,
@@ -251,7 +262,8 @@ class _Board extends State<Board> {
                           height * .1, width * .02, true),
                     ]))
               ]));
-        } else {
+        }
+        if (MediaQuery.of(context).orientation == Orientation.landscape) {
           return Scaffold(
               appBar: AppBar(title: Text('${game.name}\'s turn')),
               body: Stack(children: [
@@ -278,6 +290,7 @@ class _Board extends State<Board> {
               ]));
         }
       }
+
       if (winState == 3) {
         if (MediaQuery.of(context).orientation == Orientation.portrait) {
           return Stack(
