@@ -69,9 +69,6 @@ class GameProvider extends ChangeNotifier {
 
   int boardCheck(bool p) {
     //gonna check previous round for a win so p wil always be !piece.
-    if (board.length == 9) {
-      return 3;
-    }
     if (board.isNotEmpty && board.length >= 3) {
       if (board[0] == p && board[1] == p && board[2] == p) {
         //first row win
@@ -112,6 +109,9 @@ class GameProvider extends ChangeNotifier {
         //second diag win
         _winnerName = _player[p]!;
         return 2;
+      }
+      if (board.length == 9) {
+        return 3;
       }
       return 1;
     }
@@ -160,117 +160,139 @@ class GameProvider extends ChangeNotifier {
   }
 
   int aiBlockCheck(bool p) {
+    //it's huge but it doesn't have errors
     if (aiBoard.isNotEmpty && aiBoard.length >= 3) {
-      if (aiBoard[0] != p && aiBoard[1] != p ||
-          aiBoard[0] != p && aiBoard[2] != p ||
-          aiBoard[1] != p && aiBoard[2] != p) {
+      if ((aiBoard[0] == p && aiBoard[1] == p)) {
         //player potentially wins row 1
         if (!spaceCheck(0)) {
           return 0;
         }
+      }
+      if ((aiBoard[0] == p && aiBoard[2] == p)) {
         if (!spaceCheck(1)) {
           return 1;
         }
+      }
+      if ((aiBoard[1] == p && aiBoard[2] == p)) {
         if (!spaceCheck(2)) {
           return 2;
         }
       }
-      if (aiBoard[0] != p && aiBoard[3] != p ||
-          aiBoard[0] != p && aiBoard[6] != p ||
-          aiBoard[3] != p && aiBoard[6] != p) {
+      if ((aiBoard[0] == p && aiBoard[3] == p)) {
         //player potentially wins column 1
-        if (!spaceCheck(0)) {
-          return 0;
-        }
-        if (!spaceCheck(3)) {
-          return 3;
-        }
         if (!spaceCheck(6)) {
           return 6;
         }
       }
-      if (aiBoard[0] != p && aiBoard[4] != p ||
-          aiBoard[0] != p && aiBoard[8] != p ||
-          aiBoard[4] != p && aiBoard[8] != p) {
-        //player potentially wins diag 1
+      if ((aiBoard[0] == p && aiBoard[6] == p)) {
+        if (!spaceCheck(3)) {
+          return 3;
+        }
+      }
+      if ((aiBoard[3] == p && aiBoard[6] == p)) {
         if (!spaceCheck(0)) {
           return 0;
         }
-        if (!spaceCheck(4)) {
-          return 4;
-        }
+      }
+
+      if ((aiBoard[0] == p && aiBoard[4] == p)) {
+        //player potentially wins diag 1
         if (!spaceCheck(8)) {
           return 8;
         }
       }
-      if (aiBoard[3] != p && aiBoard[4] != p ||
-          aiBoard[3] != p && aiBoard[5] != p ||
-          aiBoard[4] != p && aiBoard[5] != p) {
-        //player potentially wins row 2
-        if (!spaceCheck(3)) {
-          return 3;
-        }
+      if (aiBoard[0] == p && aiBoard[8] == p) {
         if (!spaceCheck(4)) {
           return 4;
         }
+      }
+      if (aiBoard[4] == p && aiBoard[8] == p) {
+        if (!spaceCheck(0)) {
+          return 0;
+        }
+      }
+
+      if ((aiBoard[3] == p && aiBoard[4] == p)) {
+        //player potentially wins row 2
         if (!spaceCheck(5)) {
           return 5;
         }
       }
-      if (aiBoard[6] != p && aiBoard[7] != p ||
-          aiBoard[6] != p && aiBoard[8] != p ||
-          aiBoard[7] != p && aiBoard[8] != p) {
+      if (aiBoard[3] == p && aiBoard[5] == p) {
+        if (!spaceCheck(4)) {
+          return 4;
+        }
+      }
+      if (aiBoard[4] == p && aiBoard[5] == p) {
+        if (!spaceCheck(3)) {
+          return 3;
+        }
+      }
+
+      if ((aiBoard[6] == p && aiBoard[7] == p)) {
         //player potentially wins row 3
-        if (!spaceCheck(6)) {
-          return 6;
-        }
-        if (!spaceCheck(7)) {
-          return 7;
-        }
         if (!spaceCheck(8)) {
           return 8;
         }
       }
-      if (aiBoard[1] != p && aiBoard[4] != p ||
-          aiBoard[1] != p && aiBoard[7] != p ||
-          aiBoard[4] != p && aiBoard[7] != p) {
+      if ((aiBoard[6] == p && aiBoard[8] == p)) {
+        if (!spaceCheck(7)) {
+          return 7;
+        }
+      }
+      if ((aiBoard[7] == p && aiBoard[8] == p)) {
+        if (!spaceCheck(6)) {
+          return 6;
+        }
+      }
+
+      if ((aiBoard[1] == p && aiBoard[4] == p)) {
         //player potentially wins column 2
+        if (!spaceCheck(7)) {
+          return 7;
+        }
+      }
+      if (aiBoard[1] == p && aiBoard[7] == p) {
+        if (!spaceCheck(4)) {
+          return 4;
+        }
+      }
+      if ((aiBoard[4] == p && aiBoard[7] == p)) {
         if (!spaceCheck(1)) {
           return 1;
         }
-        if (!spaceCheck(4)) {
-          return 4;
-        }
-        if (!spaceCheck(7)) {
-          return 7;
-        }
       }
-      if (aiBoard[2] != p && aiBoard[5] != p ||
-          aiBoard[2] != p && aiBoard[8] != p ||
-          aiBoard[5] != p && aiBoard[8] != p) {
+
+      if ((aiBoard[2] == p && aiBoard[5] == p)) {
         //player potentially wins column 3
-        if (!spaceCheck(2)) {
-          return 2;
-        }
-        if (!spaceCheck(5)) {
-          return 5;
-        }
         if (!spaceCheck(8)) {
           return 8;
         }
       }
-      if (aiBoard[2] != p && aiBoard[4] != p ||
-          aiBoard[2] != p && aiBoard[6] != p ||
-          aiBoard[4] != p && aiBoard[6] != p) {
-        //player potentially wins diag 2
+      if ((aiBoard[2] == p && aiBoard[8] == p)) {
+        if (!spaceCheck(5)) {
+          return 5;
+        }
+      }
+      if ((aiBoard[5] == p && aiBoard[8] == p)) {
         if (!spaceCheck(2)) {
           return 2;
         }
+      }
+      if ((aiBoard[2] == p && aiBoard[4] == p)) {
+        //player potentially wins diag 2
+        if (!spaceCheck(6)) {
+          return 6;
+        }
+      }
+      if (aiBoard[2] == p && aiBoard[6] == p) {
         if (!spaceCheck(4)) {
           return 4;
         }
-        if (!spaceCheck(6)) {
-          return 6;
+      }
+      if (aiBoard[4] == p && aiBoard[6] == p) {
+        if (!spaceCheck(2)) {
+          return 2;
         }
       }
     }
@@ -304,15 +326,17 @@ class GameProvider extends ChangeNotifier {
       board.forEach((key, value) {
         if (!aiBoard.containsKey(key)) {
           aiBoard.addEntries([MapEntry(key, value)]);
+          log('${aiBoard[key]}');
         }
       }); //make or update the aiBoard
       log('finished board');
       log('checking for blocks');
-      if (aiBlockCheck(p) != -1) {
-        return aiBlockCheck(p);
+      if (aiBlockCheck(!p) != -1) {
+        return aiBlockCheck(!p);
       }
       log('checking for wins');
       for (int i = 0; i <= 8; i++) {
+        log('${aiBoard[i]}');
         if (!spaceCheck(i)) {
           if (aiWinCheck(p, i)) {
             _turn = false;
