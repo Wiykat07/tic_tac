@@ -58,11 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //   OutlinedButton(
-            //       onPressed: () {
-            //         Navigator.pushNamed(context, '/single');
-            //       },
-            //      child: const Text('One Player')),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/single');
+                },
+                child: const Text('One Player')),
             OutlinedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/two');
