@@ -15,13 +15,17 @@ Compatible with landscape or portrait game style.
 
 Sprays confetti when you win!
 
+Single player mode with multiple types of AI
+
+Three seperate themes with more as requested
+
 Future Features:
 
-Single player mode with a basic AI.
+*Single player mode with a basic AI.* DONE AS OF 3/10/2023
 
-Multiple AI types (once I get one working, I will make more difficult and aggressive AI).
+*Multiple AI types (once I get one working, I will make more difficult and aggressive AI).* DONE AS OF 3/18/2023
 
-Themes (at least a dark mode and a color blind mode)!
+*Themes (at least a dark mode and a color blind mode)!* DONE AS OF 3/18/2023
 
 Confetti Xs and Os (had to drop this because it was taking too much time, but once all the other features are working, I will try again).
 
