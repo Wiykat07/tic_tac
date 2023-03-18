@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
 
+import '../themes.dart';
+
 class XAndO extends CustomPainter {
   bool oOrX = false;
   bool isStart = false;
+  int color = -1;
 
-  XAndO(this.isStart, this.oOrX);
+  XAndO(this.isStart, this.oOrX, this.color);
+
+  ThemeData themePicker() {
+    if (color == 0) {
+      return themeStandard;
+    }
+    if (color == 1) {
+      return themeBlackWhite;
+    }
+    if (color == 2) {
+      return themeMichigan;
+    }
+
+    return themeStandard;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
+    ThemeData theme = themePicker();
+
     if (size.width > size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = Colors.yellow
+        ..color = theme.primaryColor
         ..style = PaintingStyle.stroke;
       if (!isStart) {
         if (oOrX) {
@@ -32,7 +51,7 @@ class XAndO extends CustomPainter {
     if (size.width <= size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = Colors.yellow
+        ..color = theme.primaryColor
         ..style = PaintingStyle.stroke;
       if (!isStart) {
         if (oOrX) {
@@ -57,13 +76,30 @@ class XAndO extends CustomPainter {
 }
 
 class BoardMaker extends CustomPainter {
-  BoardMaker();
+  int color = -1;
+  BoardMaker(this.color);
+
+  ThemeData themePicker() {
+    if (color == 0) {
+      return themeStandard;
+    }
+    if (color == 1) {
+      return themeBlackWhite;
+    }
+    if (color == 2) {
+      return themeMichigan;
+    }
+
+    return themeStandard;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    ThemeData theme = themePicker();
     if (size.width <= size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = Colors.yellow
+        ..color = theme.primaryColor
         ..style = PaintingStyle.stroke;
 
       final board = Path();
@@ -93,7 +129,7 @@ class BoardMaker extends CustomPainter {
     if (size.width > size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = Colors.yellow
+        ..color = theme.primaryColor
         ..style = PaintingStyle.stroke;
 
       final board = Path();
