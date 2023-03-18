@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
+import 'dart:math' as math;
 
 class GameProvider extends ChangeNotifier {
   final Map<bool, String> _player = {};
@@ -317,39 +318,94 @@ class GameProvider extends ChangeNotifier {
     return false;
   }
 
-  int aiTurn(bool p) {
-    if (!spaceCheck(4)) {
-      log('picked center');
-      _turn = false;
-      return 4;
-    } else if (spaceCheck(4)) {
-      board.forEach((key, value) {
-        if (!aiBoard.containsKey(key)) {
-          aiBoard.addEntries([MapEntry(key, value)]);
-          log('${aiBoard[key]}');
+  int aiTurn(bool p, int difficulty) {
+    if (difficulty == 0) {
+      if (!spaceCheck(4)) {
+        log('picked center');
+        _turn = false;
+        return 4;
+      } else if (spaceCheck(4)) {
+        board.forEach((key, value) {
+          if (!aiBoard.containsKey(key)) {
+            aiBoard.addEntries([MapEntry(key, value)]);
+            log('${aiBoard[key]}');
+          }
+        }); //make or update the aiBoard
+        log('finished board');
+        log('checking for wins');
+        for (int i = 0; i <= 8; i++) {
+          log('${aiBoard[i]}');
+          if (!spaceCheck(i)) {
+            if (aiWinCheck(p, i)) {
+              _turn = false;
+              return i;
+            }
+          }
         }
-      }); //make or update the aiBoard
-      log('finished board');
-      log('checking for wins');
-      for (int i = 0; i <= 8; i++) {
-        log('${aiBoard[i]}');
-        if (!spaceCheck(i)) {
-          if (aiWinCheck(p, i)) {
+        log('checking for blocks');
+        if (aiBlockCheck(!p) != -1) {
+          return aiBlockCheck(!p);
+        }
+
+        for (int i = 0; i <= 8; i++) {
+          if (!spaceCheck(i)) {
+            log('randomly picked $i');
             _turn = false;
             return i;
           }
         }
       }
-      log('checking for blocks');
-      if (aiBlockCheck(!p) != -1) {
-        return aiBlockCheck(!p);
+    }
+    if (difficulty == 1) {
+      if (!spaceCheck(4)) {
+        log('picked center');
+        _turn = false;
+        return 4;
+      } else if (spaceCheck(4)) {
+        board.forEach((key, value) {
+          if (!aiBoard.containsKey(key)) {
+            aiBoard.addEntries([MapEntry(key, value)]);
+            log('${aiBoard[key]}');
+          }
+        }); //make or update the aiBoard
+        log('finished board');
+        log('checking for wins');
+        for (int i = 0; i <= 8; i++) {
+          log('${aiBoard[i]}');
+          if (!spaceCheck(i)) {
+            if (aiWinCheck(p, i)) {
+              _turn = false;
+              return i;
+            }
+          }
+        }
+        for (int i = 0; i <= 8; i++) {
+          if (!spaceCheck(i)) {
+            log('randomly picked $i');
+            _turn = false;
+            return i;
+          }
+        }
       }
+    }
+    if (difficulty == 2) {
+      int total = 9;
+      board.forEach((key, value) {
+        total--; //remove the taken spaces from random options.
+      });
+
+      math.Random random = math.Random();
+      int piece =
+          random.nextInt(total) + 1; //pick a random number for the piece
 
       for (int i = 0; i <= 8; i++) {
-        if (!spaceCheck(i)) {
-          log('randomly picked $i');
-          _turn = false;
-          return i;
+        if (!spaceCheck(i)) //if space not taken
+        {
+          piece--; //remove one square from piece
+          if (piece == 0) //if we've hit the right amount of squares...
+          {
+            return i; //return the piece!
+          }
         }
       }
     }
