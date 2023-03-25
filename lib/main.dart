@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/settings');
                 },
-                child: const Text('settings'))
+                child: const Text('Settings'))
           ],
         ),
       ),
