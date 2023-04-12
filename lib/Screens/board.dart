@@ -116,8 +116,8 @@ class _Board extends State<Board> {
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/');
                       game.emptyBoard();
+                      Navigator.pushNamed(context, '/');
                     },
                     child: const Text('Let\'s Play Again!'))
               ],
@@ -129,8 +129,8 @@ class _Board extends State<Board> {
             actions: <Widget>[
               TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/');
                     game.emptyBoard();
+                    Navigator.pushNamed(context, '/');
                   },
                   child: const Text('Let\'s Play Again!'))
             ],
@@ -243,7 +243,14 @@ class _Board extends State<Board> {
           isPlayer1 = game.piece;
           if (MediaQuery.of(context).orientation == Orientation.portrait) {
             return Scaffold(
-                appBar: AppBar(title: Text('${game.name}\'s turn')),
+                appBar: AppBar(
+                    leading: BackButton(
+                      onPressed: () {
+                        game.emptyBoard();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    title: Text('${game.name}\'s turn')),
                 body: Stack(children: [
                   SizedBox(
                     height: height,
@@ -268,7 +275,14 @@ class _Board extends State<Board> {
           }
           if (MediaQuery.of(context).orientation == Orientation.landscape) {
             return Scaffold(
-                appBar: AppBar(title: Text('${game.name}\'s turn')),
+                appBar: AppBar(
+                    leading: BackButton(
+                      onPressed: () {
+                        game.emptyBoard();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    title: Text('${game.name}\'s turn')),
                 body: Stack(children: [
                   SizedBox(
                     height: height,
