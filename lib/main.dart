@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         },
         title: 'TicTac',
         theme: themePicker(),
-        home: const MyHomePage(title: 'TicTac Main Page'),
+        home: const MyHomePage(title: 'TicTac'),
       );
     });
   }
@@ -68,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
