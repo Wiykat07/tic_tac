@@ -124,7 +124,7 @@ class _Roll extends State<Roll> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('Flipping a coin...'),
-          ElevatedButton(
+          OutlinedButton(
               onPressed: () {
                 rollsResults();
               },
