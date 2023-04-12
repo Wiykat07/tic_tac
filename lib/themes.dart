@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 ThemeData themeStandard = ThemeData(
-  appBarTheme: const AppBarTheme(color: Colors.green),
+  appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.green, foregroundColor: Colors.yellow),
   outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.green),
-    foregroundColor: MaterialStateProperty.all(Colors.yellow),
+    backgroundColor: MaterialStateProperty.all(Colors.yellow),
+    foregroundColor: MaterialStateProperty.all(Colors.green),
   )),
   primaryColor: Colors.yellow,
   colorScheme: const ColorScheme(
@@ -30,7 +31,8 @@ ThemeData themeStandard = ThemeData(
 );
 
 ThemeData themeBlackWhite = ThemeData(
-  appBarTheme: const AppBarTheme(color: Colors.black),
+  appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.black, foregroundColor: Colors.white),
   outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
     backgroundColor: MaterialStateProperty.all(Colors.black),
@@ -56,11 +58,12 @@ ThemeData themeBlackWhite = ThemeData(
   scaffoldBackgroundColor: Colors.white,
 );
 ThemeData themeMichigan = ThemeData(
-  appBarTheme: AppBarTheme(color: Colors.blue[900]),
+  appBarTheme: AppBarTheme(
+      backgroundColor: Colors.blue[900], foregroundColor: Colors.yellow),
   outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.blue[900]),
-    foregroundColor: MaterialStateProperty.all(Colors.yellow),
+    backgroundColor: MaterialStateProperty.all(Colors.yellow),
+    foregroundColor: MaterialStateProperty.all(Colors.blue[900]),
   )),
   primaryColor: Colors.yellow,
   colorScheme: ColorScheme(
