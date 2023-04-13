@@ -393,13 +393,13 @@ class _Board extends State<Board> {
                       dy: height * .07,
                       child: Column(children: [
                         buildRows(height * .2, width * .125, [0, 1, 2],
-                            height * .1, width * .012, true),
+                            height * .1, width * .012, false),
                         SizedBox(height: height * .009, width: width * .012),
                         buildRows(height * .2, width * .125, [3, 4, 5],
-                            height * .1, width * .012, true),
+                            height * .1, width * .012, false),
                         SizedBox(height: height * .03, width: width * .012),
                         buildRows(height * .2, width * .125, [6, 7, 8],
-                            height * .1, width * .012, true),
+                            height * .1, width * .012, false),
                       ]),
                     )
                   ],
