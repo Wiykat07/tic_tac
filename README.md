@@ -27,7 +27,11 @@ Future Features:
 
 *Themes (at least a dark mode and a color blind mode)!* DONE AS OF 3/18/2023
 
-Confetti Xs and Os (had to drop this because it was taking too much time, but once all the other features are working, I will try again).
+Custom color: Make a theme that allows the user to pick the colors.
+
+Emoji mode: Make a couple of themes that use emojis as pieces.
+
+Confetti Xs and Os (had to drop this because it was taking too much time, may eventually come back to it).
 
 
 If you have any other questions about the project or want to know why I did something, please let me know: katherinewiykovics@gmail.com
