@@ -8,6 +8,12 @@ ThemeData themeStandard = ThemeData(
     backgroundColor: MaterialStateProperty.all(Colors.yellow),
     foregroundColor: MaterialStateProperty.all(Colors.green),
   )),
+  dialogTheme: const DialogTheme(
+    backgroundColor: Colors.green,
+    titleTextStyle: TextStyle(
+      color: Colors.yellow,
+    ),
+  ),
   primaryColor: Colors.yellow,
   colorScheme: const ColorScheme(
       brightness: Brightness.light,
@@ -38,6 +44,12 @@ ThemeData themeBlackWhite = ThemeData(
     backgroundColor: MaterialStateProperty.all(Colors.black),
     foregroundColor: MaterialStateProperty.all(Colors.white),
   )),
+  dialogTheme: const DialogTheme(
+    backgroundColor: Colors.white,
+    titleTextStyle: TextStyle(
+      color: Colors.black,
+    ),
+  ),
   primaryColor: Colors.black,
   colorScheme: const ColorScheme(
       brightness: Brightness.light,
@@ -65,6 +77,12 @@ ThemeData themeMichigan = ThemeData(
     backgroundColor: MaterialStateProperty.all(Colors.yellow),
     foregroundColor: MaterialStateProperty.all(Colors.blue[900]),
   )),
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.blue[900],
+    titleTextStyle: const TextStyle(
+      color: Colors.yellow,
+    ),
+  ),
   primaryColor: Colors.yellow,
   colorScheme: ColorScheme(
       brightness: Brightness.dark,

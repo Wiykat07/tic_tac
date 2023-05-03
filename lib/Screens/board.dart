@@ -112,7 +112,10 @@ class _Board extends State<Board> {
           if (win) {
             return AlertDialog(
               title: const Text('Winner!'),
-              content: Text('${game.winnerName} won!'),
+              content: Text(
+                '${game.winnerName} won!',
+                textAlign: TextAlign.center,
+              ),
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
@@ -125,7 +128,10 @@ class _Board extends State<Board> {
           }
           return AlertDialog(
             title: const Text('Tie?'),
-            content: const Text('Nobody won!'),
+            content: const Text(
+              'Nobody won!',
+              textAlign: TextAlign.center,
+            ),
             actions: <Widget>[
               TextButton(
                   onPressed: () {

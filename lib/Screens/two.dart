@@ -103,9 +103,10 @@ class _Roll extends State<Roll> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Who Goes First?'),
-              content: Center(
-                  child: Text(
-                      '${Provider.of<GameProvider>(context).name} goes first.')),
+              content: Text(
+                '${Provider.of<GameProvider>(context).name} goes first.',
+                textAlign: TextAlign.center,
+              ),
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
