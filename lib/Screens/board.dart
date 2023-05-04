@@ -115,19 +115,34 @@ class _Board extends State<Board> {
                 '${game.winnerName} won!',
                 textAlign: TextAlign.center,
               ),
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      Navigator.pushNamed(context, '/single');
-                    },
-                    child: const Text('Change Difficulty!')),
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Let\'s Play Again!'))
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          Navigator.pushNamed(context, '/single');
+                        },
+                        child: const Text('Change Difficulty')),
+                  ],
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            game.resetBoard();
+                            Navigator.pushNamed(context, '/');
+                          },
+                          child: const Text('Quit')),
+                      TextButton(
+                          onPressed: () {
+                            game.resetBoard();
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Play Again!'))
+                    ])
               ],
             );
           }
@@ -139,19 +154,35 @@ class _Board extends State<Board> {
                 textAlign: TextAlign.center,
               ),
               actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      game.swapTurns();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Switch Turns!')),
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Let\'s Play Again!'))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          game.swapTurns();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Switch Turns!')),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: const Text('Quit')),
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Play Again!')),
+                  ],
+                )
               ],
             );
           }
@@ -163,19 +194,35 @@ class _Board extends State<Board> {
                 textAlign: TextAlign.center,
               ),
               actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      game.swapTurns();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Switch Turns!')),
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Let\'s Play Again!'))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          game.swapTurns();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Switch Turns!')),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: const Text('Quit')),
+                    TextButton(
+                        onPressed: () {
+                          game.resetBoard();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Play Again!')),
+                  ],
+                )
               ],
             );
           }
@@ -186,18 +233,31 @@ class _Board extends State<Board> {
               textAlign: TextAlign.center,
             ),
             actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    game.resetBoard();
-                    Navigator.pushNamed(context, '/single');
-                  },
-                  child: const Text('Change Difficulty!')),
-              TextButton(
-                  onPressed: () {
-                    game.resetBoard();
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Let\'s Play Again!'))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        game.resetBoard();
+                        Navigator.pushNamed(context, '/single');
+                      },
+                      child: const Text('Change Difficulty')),
+                ],
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: const Text('Quit')),
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Play Again!'))
+              ])
             ],
           );
         }
