@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../themes.dart';
-
 class XAndO extends CustomPainter {
   bool oOrX = false;
   bool isStart = false;
