@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 class GameProvider extends ChangeNotifier {
-  final Map<bool, String> _player = {};
+  Map<bool, String> _player = {};
   String _name = '';
   String _winnerName = '';
   bool _piece = false;
@@ -62,6 +62,14 @@ class GameProvider extends ChangeNotifier {
       turnOn();
     }
     notifyListeners();
+  }
+
+  void swapTurns() {
+    Map<bool, String> newOrder = {};
+    newOrder[true] = _player[false]!;
+    newOrder[false] = _player[true]!;
+
+    _player = newOrder;
   }
 
   void placePieces(bool piece, int location) {
@@ -412,6 +420,13 @@ class GameProvider extends ChangeNotifier {
     _turn = false;
     log('oops');
     return -1;
+  }
+
+  void resetBoard() {
+    board.clear();
+    aiBoard.clear();
+    switchTurns(false);
+    notifyListeners();
   }
 
   void emptyBoard() {

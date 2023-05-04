@@ -69,9 +69,7 @@ class _Board extends State<Board> {
                         isPlayer1); //check winstate to make sure there wasn't a winning play
                     if (winState == 1) {
                       isPlayer1 = game.piece;
-                      log('both true!');
                       int spot = game.aiTurn(isPlayer1, pref.difficulty);
-                      log('$spot');
                       game.placePieces(isPlayer1, spot);
                       game.switchTurns(!isPlayer1);
                     }
@@ -109,7 +107,7 @@ class _Board extends State<Board> {
         }
 
         AlertDialog winOrTie(bool win) {
-          if (win) {
+          if (win && game.ai) {
             return AlertDialog(
               title: const Text('Winner!'),
               content: Text(
@@ -119,8 +117,56 @@ class _Board extends State<Board> {
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
-                      game.emptyBoard();
-                      Navigator.pushNamed(context, '/');
+                      game.resetBoard();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Let\'s Play Again!'))
+              ],
+            );
+          }
+          if (win && !game.ai) {
+            return AlertDialog(
+              title: const Text('Winner!'),
+              content: Text(
+                '${game.winnerName} won!',
+                textAlign: TextAlign.center,
+              ),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
+                      game.swapTurns();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Switch Turns!')),
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Let\'s Play Again!'))
+              ],
+            );
+          }
+          if (!game.ai) {
+            return AlertDialog(
+              title: const Text('Tie?'),
+              content: const Text(
+                'Nobody won!',
+                textAlign: TextAlign.center,
+              ),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
+                      game.swapTurns();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Switch Turns!')),
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
+                      Navigator.pop(context);
                     },
                     child: const Text('Let\'s Play Again!'))
               ],
@@ -135,8 +181,8 @@ class _Board extends State<Board> {
             actions: <Widget>[
               TextButton(
                   onPressed: () {
-                    game.emptyBoard();
-                    Navigator.pushNamed(context, '/');
+                    game.resetBoard();
+                    Navigator.pop(context);
                   },
                   child: const Text('Let\'s Play Again!'))
             ],
