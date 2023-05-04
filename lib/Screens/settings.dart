@@ -36,7 +36,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _ScreenState extends State<SettingsScreen> {
   String color = 'Green';
-  String secondColor = 'Yellow';
+  String secondColor = 'Green';
 
   Container colorContainer(Color c) {
     return Container(
