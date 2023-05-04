@@ -119,6 +119,12 @@ class _Board extends State<Board> {
                 TextButton(
                     onPressed: () {
                       game.resetBoard();
+                      Navigator.pushNamed(context, '/single');
+                    },
+                    child: const Text('Change Difficulty!')),
+                TextButton(
+                    onPressed: () {
+                      game.resetBoard();
                       Navigator.pop(context);
                     },
                     child: const Text('Let\'s Play Again!'))
@@ -180,6 +186,12 @@ class _Board extends State<Board> {
               textAlign: TextAlign.center,
             ),
             actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    game.resetBoard();
+                    Navigator.pushNamed(context, '/single');
+                  },
+                  child: const Text('Change Difficulty!')),
               TextButton(
                   onPressed: () {
                     game.resetBoard();
