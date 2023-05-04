@@ -32,7 +32,7 @@ class _Board extends State<Board> {
         return SizedBox(
           height: h,
           width: w,
-          child: CustomPaint(painter: XAndO(false, p, pref.colorScheme)),
+          child: CustomPaint(painter: XAndO(false, p, pref.secondary)),
         );
       }
 
@@ -230,7 +230,7 @@ class _Board extends State<Board> {
                     SizedBox(
                       height: height,
                       width: width,
-                      child: CustomPaint(painter: BoardMaker(pref.colorScheme)),
+                      child: CustomPaint(painter: BoardMaker(pref.secondary)),
                     ),
                     AlignPositioned(
                       alignment: Alignment.topLeft,
@@ -279,7 +279,7 @@ class _Board extends State<Board> {
                     SizedBox(
                       height: height,
                       width: width,
-                      child: CustomPaint(painter: BoardMaker(pref.colorScheme)),
+                      child: CustomPaint(painter: BoardMaker(pref.secondary)),
                     ),
                     AlignPositioned(
                       alignment: Alignment.topLeft,
@@ -320,7 +320,7 @@ class _Board extends State<Board> {
                   SizedBox(
                     height: height,
                     width: width,
-                    child: CustomPaint(painter: BoardMaker(pref.colorScheme)),
+                    child: CustomPaint(painter: BoardMaker(pref.secondary)),
                   ),
                   AlignPositioned(
                       alignment: Alignment.topLeft,
@@ -352,7 +352,7 @@ class _Board extends State<Board> {
                   SizedBox(
                     height: height,
                     width: width,
-                    child: CustomPaint(painter: BoardMaker(pref.colorScheme)),
+                    child: CustomPaint(painter: BoardMaker(pref.secondary)),
                   ),
                   AlignPositioned(
                       alignment: Alignment.topLeft,
@@ -400,8 +400,7 @@ class _Board extends State<Board> {
                       SizedBox(
                         height: height,
                         width: width,
-                        child:
-                            CustomPaint(painter: BoardMaker(pref.colorScheme)),
+                        child: CustomPaint(painter: BoardMaker(pref.secondary)),
                       ),
                       AlignPositioned(
                         alignment: Alignment.topLeft,
@@ -446,11 +445,10 @@ class _Board extends State<Board> {
                 body: Center(
                     child: Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       height: height,
                       width: width,
-                      color: Colors.green,
-                      child: CustomPaint(painter: BoardMaker(pref.colorScheme)),
+                      child: CustomPaint(painter: BoardMaker(pref.secondary)),
                     ),
                     AlignPositioned(
                       alignment: Alignment.topLeft,

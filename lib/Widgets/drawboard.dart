@@ -6,31 +6,40 @@ class XAndO extends CustomPainter {
   bool oOrX = false;
   bool isStart = false;
   int color = -1;
+  Color s = Colors.yellowAccent;
 
   XAndO(this.isStart, this.oOrX, this.color);
 
-  ThemeData themePicker() {
-    if (color == 0) {
-      return themeStandard;
+  Color colorPicker() {
+    switch (color) {
+      case 0:
+        s = Colors.greenAccent;
+        break;
+      case 1:
+        s = Colors.blueAccent;
+        break;
+      case 2:
+        s = Colors.redAccent;
+        break;
+      case 3:
+        s = Colors.yellowAccent;
+        break;
+      case 4:
+        s = Colors.purpleAccent;
+        break;
+      default:
+        s = Colors.yellowAccent;
     }
-    if (color == 1) {
-      return themeBlackWhite;
-    }
-    if (color == 2) {
-      return themeMichigan;
-    }
-
-    return themeStandard;
+    return s;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    ThemeData theme = themePicker();
-
+    s = colorPicker();
     if (size.width > size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = theme.primaryColor
+        ..color = s
         ..style = PaintingStyle.stroke;
       if (!isStart) {
         if (oOrX) {
@@ -51,7 +60,7 @@ class XAndO extends CustomPainter {
     if (size.width <= size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = theme.primaryColor
+        ..color = s
         ..style = PaintingStyle.stroke;
       if (!isStart) {
         if (oOrX) {
@@ -78,28 +87,39 @@ class XAndO extends CustomPainter {
 class BoardMaker extends CustomPainter {
   int color = -1;
   BoardMaker(this.color);
+  Color s = Colors.yellowAccent;
 
-  ThemeData themePicker() {
-    if (color == 0) {
-      return themeStandard;
+  Color colorPicker() {
+    switch (color) {
+      case 0:
+        s = Colors.greenAccent;
+        break;
+      case 1:
+        s = Colors.blueAccent;
+        break;
+      case 2:
+        s = Colors.redAccent;
+        break;
+      case 3:
+        s = Colors.yellowAccent;
+        break;
+      case 4:
+        s = Colors.purpleAccent;
+        break;
+      default:
+        s = Colors.yellowAccent;
     }
-    if (color == 1) {
-      return themeBlackWhite;
-    }
-    if (color == 2) {
-      return themeMichigan;
-    }
-
-    return themeStandard;
+    return s;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    ThemeData theme = themePicker();
+    s = colorPicker();
+
     if (size.width <= size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = theme.primaryColor
+        ..color = s
         ..style = PaintingStyle.stroke;
 
       final board = Path();
@@ -129,7 +149,7 @@ class BoardMaker extends CustomPainter {
     if (size.width > size.height) {
       final paint = Paint()
         ..strokeWidth = 5
-        ..color = theme.primaryColor
+        ..color = s
         ..style = PaintingStyle.stroke;
 
       final board = Path();

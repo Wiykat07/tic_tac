@@ -21,19 +21,48 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color p = Colors.green;
+    Color s = Colors.yellowAccent;
+
     return Consumer<Preferences>(builder: (context, pref, child) {
       ThemeData themePicker() {
-        if (pref.colorScheme == 0) {
-          return themeStandard;
+        switch (pref.primary) {
+          case 1:
+            p = Colors.blue;
+            break;
+          case 2:
+            p = Colors.red;
+            break;
+          case 3:
+            p = Colors.yellow;
+            break;
+          case 4:
+            p = Colors.purple;
+            break;
+          default:
+            p = Colors.green;
         }
-        if (pref.colorScheme == 1) {
-          return themeBlackWhite;
+        switch (pref.secondary) {
+          case 0:
+            s = Colors.greenAccent;
+            break;
+          case 1:
+            s = Colors.blueAccent;
+            break;
+          case 2:
+            s = Colors.redAccent;
+            break;
+          case 3:
+            s = Colors.yellowAccent;
+            break;
+          case 4:
+            s = Colors.purpleAccent;
+            break;
+          default:
+            s = Colors.yellowAccent;
         }
-        if (pref.colorScheme == 2) {
-          return themeMichigan;
-        }
-
-        return themeStandard;
+        ThemeData theme = CustomTheme(primary: p, secondary: s).theme();
+        return theme;
       }
 
       return MaterialApp(
