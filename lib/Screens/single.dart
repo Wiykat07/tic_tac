@@ -3,14 +3,40 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/provider.dart';
 
-class Single extends StatelessWidget {
+class Single extends StatefulWidget {
   const Single({super.key});
 
   @override
+  State<Single> createState() => _SingleState();
+}
+
+class _SingleState extends State<Single> {
+  String diff = 'Tic';
+  List<String> difficulty = ['Tic', 'Tac', 'Toe'];
+  int ai = -1;
+  TextEditingController player1Controller = TextEditingController();
+  List<String> names = [];
+  String description = '';
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController player1Controller = TextEditingController();
     double height = MediaQuery.of(context).size.height;
-    List<String> names = [];
+
+    int difficult(String c) {
+      if (c == 'Tic') {
+        description = 'The best AI you will ever face.';
+        return 0;
+      }
+      if (c == 'Tac') {
+        description = 'It kind of knows how the game is played.';
+        return 1;
+      }
+      if (c == 'Toe') {
+        description = 'About as dumb as a toe. Does what it wants.';
+        return 2;
+      }
+      return -1;
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Enter your name')),
@@ -32,6 +58,28 @@ class Single extends StatelessWidget {
             SizedBox.fromSize(
               size: Size.fromHeight(height * .05),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Difficulty: '),
+                DropdownButton(
+                    value: diff,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: difficulty.map((String diff) {
+                      return DropdownMenuItem(value: diff, child: Text(diff));
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        diff = newValue!;
+                        ai = difficult(diff);
+                      });
+                    }),
+              ],
+            ),
+            Text(description),
+            SizedBox.fromSize(
+              size: Size.fromHeight(height * .05),
+            ),
             OutlinedButton(
                 onPressed: () {
                   names.add(player1Controller.text);
@@ -43,7 +91,7 @@ class Single extends StatelessWidget {
                       .addPlayer(false, names[0]);
                   Provider.of<GameProvider>(context, listen: false)
                       .switchTurns(false);
-                  Navigator.pushNamed(context, '/board');
+                  Navigator.pushNamed(context, '/board', arguments: ai);
                 },
                 child: const Text('Let\'s play!'))
           ],

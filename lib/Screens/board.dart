@@ -25,6 +25,7 @@ class _Board extends State<Board> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final args = ModalRoute.of(context)!.settings.arguments as int;
 
     return Consumer<Preferences>(builder: (context, pref, child) {
       SizedBox piecePlaced(double h, double w, bool p) {
@@ -69,7 +70,7 @@ class _Board extends State<Board> {
                         isPlayer1); //check winstate to make sure there wasn't a winning play
                     if (winState == 1) {
                       isPlayer1 = game.piece;
-                      int spot = game.aiTurn(isPlayer1, pref.difficulty);
+                      int spot = game.aiTurn(isPlayer1, args);
                       game.placePieces(isPlayer1, spot);
                       game.switchTurns(!isPlayer1);
                     }

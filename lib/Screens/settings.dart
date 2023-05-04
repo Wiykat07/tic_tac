@@ -5,21 +5,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences extends ChangeNotifier {
   int _colorScheme = 0;
-  int _difficulty = 0;
 
   int get colorScheme {
     return _colorScheme;
-  }
-
-  int get difficulty {
-    return _difficulty;
   }
 
   void updatePrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('color', _colorScheme);
-    await prefs.setInt('difficulty', _difficulty);
 
     notifyListeners();
   }
@@ -36,9 +30,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _ScreenState extends State<SettingsScreen> {
   String color = 'Green/Yellow';
-  String diff = 'Tic';
   List<String> displayColor = ['Green/Yellow', 'Black/White', 'Blue/Yellow'];
-  List<String> difficulty = ['Tic', 'Tac', 'Toe'];
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +44,6 @@ class _ScreenState extends State<SettingsScreen> {
           return 1;
         }
         if (c == 'Blue/Yellow') {
-          return 2;
-        }
-        return -1;
-      }
-
-      int diffPref(String d) {
-        if (d == 'Tic') {
-          return 0;
-        }
-        if (d == 'Tac') {
-          return 1;
-        }
-        if (d == 'Toe') {
           return 2;
         }
         return -1;
@@ -90,24 +69,6 @@ class _ScreenState extends State<SettingsScreen> {
                       setState(() {
                         color = newValue!;
                         prefs._colorScheme = colorPref(color);
-                        prefs.updatePrefs();
-                      });
-                    }),
-              ],
-            ),
-            Row(
-              children: [
-                const Text('Difficulty: '),
-                DropdownButton(
-                    value: diff,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: difficulty.map((String diff) {
-                      return DropdownMenuItem(value: diff, child: Text(diff));
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        diff = newValue!;
-                        prefs._difficulty = diffPref(diff);
                         prefs.updatePrefs();
                       });
                     }),
