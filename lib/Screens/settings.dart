@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences extends ChangeNotifier {
-  int _primary = 0;
-  int _secondary = 0;
+  Color _primary = Colors.green;
+  Color _secondary = Colors.yellowAccent;
+  String colors = 'Green';
+  String secondColors = 'Yellow';
 
-  int get primary {
+  Box colorBox = Hive.box('Colors');
+
+  Color get primary {
     return _primary;
   }
 
-  int get secondary {
+  Color get secondary {
     return _secondary;
   }
 
-  void updatePrefs() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  String get color {
+    return colors;
+  }
 
-    await prefs.setInt('color', _primary);
-    await prefs.setInt('second color', _secondary);
+  String get secondColor {
+    return secondColors;
+  }
+
+  void updatePrefs() async {
+    await Hive.openBox('Colors');
+    colorBox.put(1, _primary);
+    colorBox.put(2, _secondary);
+    colorBox.put(3, colors);
+    colorBox.put(4, secondColors);
 
     notifyListeners();
   }
@@ -35,9 +47,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _ScreenState extends State<SettingsScreen> {
-  String color = 'Green';
-  String secondColor = 'Green';
-
   Container colorContainer(Color c) {
     return Container(
         height: 50,
@@ -54,31 +63,12 @@ class _ScreenState extends State<SettingsScreen> {
 
     return Consumer<Preferences>(
         builder: (BuildContext context, Preferences prefs, Widget? child) {
-      int colorPref(String c) {
-        if (c == 'Green') {
-          return 0;
-        }
-        if (c == 'Blue') {
-          return 1;
-        }
-        if (c == 'Red') {
-          return 2;
-        }
-        if (c == 'Yellow') {
-          return 3;
-        }
-        if (c == 'Purple') {
-          return 4;
-        }
-        return -1;
-      }
-
       GestureDetector primaryColor(String col, Color c) {
         return GestureDetector(
             onTap: () {
               setState(() {
-                color = col;
-                prefs._primary = colorPref(col);
+                prefs.colors = col;
+                prefs._primary = c;
                 prefs.updatePrefs();
               });
             },
@@ -89,8 +79,8 @@ class _ScreenState extends State<SettingsScreen> {
         return GestureDetector(
           onTap: () {
             setState(() {
-              secondColor = col;
-              prefs._secondary = colorPref(col);
+              prefs.secondColors = col;
+              prefs._secondary = c;
               prefs.updatePrefs();
             });
           },
@@ -113,7 +103,7 @@ class _ScreenState extends State<SettingsScreen> {
               style: TextStyle(fontSize: 28),
             ),
             Text(
-              color,
+              prefs.color,
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(
@@ -154,7 +144,7 @@ class _ScreenState extends State<SettingsScreen> {
               style: TextStyle(fontSize: 28),
             ),
             Text(
-              secondColor,
+              prefs.secondColor,
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(

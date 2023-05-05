@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/Screens/board.dart';
 import 'package:tic_tac/Screens/settings.dart';
 import 'package:tic_tac/Screens/single.dart';
-
 import 'package:tic_tac/Screens/two.dart';
 import 'package:tic_tac/provider.dart';
 import 'package:tic_tac/themes.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(ColorAdapter());
+
+  await Hive.openBox('Colors');
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),
     ChangeNotifierProvider<Preferences>(create: ((context) => Preferences())),
@@ -21,47 +27,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Color p = Colors.green;
-    Color s = Colors.yellowAccent;
-
     return Consumer<Preferences>(builder: (context, pref, child) {
       ThemeData themePicker() {
-        switch (pref.primary) {
-          case 1:
-            p = Colors.blue;
-            break;
-          case 2:
-            p = Colors.red;
-            break;
-          case 3:
-            p = Colors.yellow;
-            break;
-          case 4:
-            p = Colors.purple;
-            break;
-          default:
-            p = Colors.green;
-        }
-        switch (pref.secondary) {
-          case 0:
-            s = Colors.greenAccent;
-            break;
-          case 1:
-            s = Colors.blueAccent;
-            break;
-          case 2:
-            s = Colors.redAccent;
-            break;
-          case 3:
-            s = Colors.yellowAccent;
-            break;
-          case 4:
-            s = Colors.purpleAccent;
-            break;
-          default:
-            s = Colors.yellowAccent;
-        }
-        ThemeData theme = CustomTheme(primary: p, secondary: s).theme();
+        ThemeData theme =
+            CustomTheme(primary: pref.primary, secondary: pref.secondary)
+                .theme();
         return theme;
       }
 

@@ -16,7 +16,6 @@ class Board extends StatefulWidget {
 }
 
 class _Board extends State<Board> {
-  CustomPaint paint = CustomPaint(painter: XAndO(true, false, -1));
   bool isPlayer1 = true; //player 1 is X, player 2 is O
   int winState = 0; //1 is no win, 2 is win, and 3 is tie
   bool update = false;
@@ -28,6 +27,8 @@ class _Board extends State<Board> {
     final args = ModalRoute.of(context)!.settings.arguments as int;
 
     return Consumer<Preferences>(builder: (context, pref, child) {
+      CustomPaint paint =
+          CustomPaint(painter: XAndO(true, false, pref.secondary));
       SizedBox piecePlaced(double h, double w, bool p) {
         return SizedBox(
           height: h,

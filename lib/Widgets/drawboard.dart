@@ -3,37 +3,12 @@ import 'package:flutter/material.dart';
 class XAndO extends CustomPainter {
   bool oOrX = false;
   bool isStart = false;
-  int color = -1;
   Color s = Colors.yellowAccent;
 
-  XAndO(this.isStart, this.oOrX, this.color);
-
-  Color colorPicker() {
-    switch (color) {
-      case 0:
-        s = Colors.greenAccent;
-        break;
-      case 1:
-        s = Colors.blueAccent;
-        break;
-      case 2:
-        s = Colors.redAccent;
-        break;
-      case 3:
-        s = Colors.yellowAccent;
-        break;
-      case 4:
-        s = Colors.purpleAccent;
-        break;
-      default:
-        s = Colors.yellowAccent;
-    }
-    return s;
-  }
+  XAndO(this.isStart, this.oOrX, this.s);
 
   @override
   void paint(Canvas canvas, Size size) {
-    s = colorPicker();
     if (size.width > size.height) {
       final paint = Paint()
         ..strokeWidth = 5
@@ -83,37 +58,11 @@ class XAndO extends CustomPainter {
 }
 
 class BoardMaker extends CustomPainter {
-  int color = -1;
-  BoardMaker(this.color);
   Color s = Colors.yellowAccent;
-
-  Color colorPicker() {
-    switch (color) {
-      case 0:
-        s = Colors.greenAccent;
-        break;
-      case 1:
-        s = Colors.blueAccent;
-        break;
-      case 2:
-        s = Colors.redAccent;
-        break;
-      case 3:
-        s = Colors.yellowAccent;
-        break;
-      case 4:
-        s = Colors.purpleAccent;
-        break;
-      default:
-        s = Colors.yellowAccent;
-    }
-    return s;
-  }
+  BoardMaker(this.s);
 
   @override
   void paint(Canvas canvas, Size size) {
-    s = colorPicker();
-
     if (size.width <= size.height) {
       final paint = Paint()
         ..strokeWidth = 5
