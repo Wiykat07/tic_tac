@@ -17,10 +17,6 @@ class Board extends StatefulWidget {
 }
 
 class _Board extends State<Board> {
-  bool isPlayer1 = true; //player 1 is X, player 2 is O
-  int winState = 0; //1 is no win, 2 is win, and 3 is tie
-  bool update = false;
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -41,16 +37,16 @@ class _Board extends State<Board> {
             return GestureDetector(
                 onTap: () {
                   setState(() {});
-                  game.placePieces(isPlayer1, i);
-                  game.switchTurns(!isPlayer1);
+                  game.placePieces(game.isPlayer1, i);
+                  game.switchTurns(!game.isPlayer1);
                   if (game.ai == true && game.turn == true) {
-                    winState = game.boardCheck(
-                        isPlayer1); //check winstate to make sure there wasn't a winning play
-                    if (winState == 1) {
-                      isPlayer1 = game.piece;
-                      int spot = game.aiTurn(isPlayer1, args);
-                      game.placePieces(isPlayer1, spot);
-                      game.switchTurns(!isPlayer1);
+                    game.boardCheck(game
+                        .isPlayer1); //check winstate to make sure there wasn't a winning play
+                    if (game.winState == 1) {
+                      game.isPlayer1 = game.piece;
+                      int spot = game.aiTurn(game.isPlayer1, args);
+                      game.placePieces(game.isPlayer1, spot);
+                      game.switchTurns(!game.isPlayer1);
                     }
                   }
                 },
@@ -82,8 +78,8 @@ class _Board extends State<Board> {
           );
         }
 
-        winState = game.boardCheck(isPlayer1);
-        if (winState == 2) {
+        game.boardCheck(game.isPlayer1);
+        if (game.winState == 2) {
           if (MediaQuery.of(context).orientation == Orientation.portrait) {
             return Stack(children: [
               SizedBox(child: Builder(
@@ -184,8 +180,8 @@ class _Board extends State<Board> {
             ]);
           }
         }
-        if (winState == 1) {
-          isPlayer1 = game.piece;
+        if (game.winState == 1) {
+          game.isPlayer1 = game.piece;
           if (MediaQuery.of(context).orientation == Orientation.portrait) {
             return Scaffold(
                 appBar: AppBar(
@@ -252,7 +248,7 @@ class _Board extends State<Board> {
           }
         }
 
-        if (winState == 3) {
+        if (game.winState == 3) {
           if (MediaQuery.of(context).orientation == Orientation.portrait) {
             return Stack(
               children: [

@@ -13,7 +13,7 @@ class Single extends StatefulWidget {
 class _SingleState extends State<Single> {
   String diff = 'Tic';
   List<String> difficulty = ['Tic', 'Tac', 'Toe'];
-  int ai = -1;
+  int ai = 0;
   TextEditingController player1Controller = TextEditingController();
   List<String> names = [];
   String description = 'The best AI you will ever face.';

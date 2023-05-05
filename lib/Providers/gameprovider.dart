@@ -11,6 +11,8 @@ class GameProvider extends ChangeNotifier {
   bool _ai = false; //is the AI on?
   bool _turn = false; // is it the AI's turn?
   Map<int, bool> aiBoard = {};
+  bool isPlayer1 = false; //player 1 is X, player 2 is O
+  int winState = 0; //1 is no win, 2 is win, and 3 is tie
 
   String get name {
     return _name;
@@ -76,55 +78,49 @@ class GameProvider extends ChangeNotifier {
     board.addEntries([MapEntry(location, piece)]);
   }
 
-  int boardCheck(bool p) {
+  void boardCheck(bool p) {
     //gonna check previous round for a win so p wil always be !piece.
     if (board.isNotEmpty && board.length >= 3) {
       if (board[0] == p && board[1] == p && board[2] == p) {
         //first row win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[0] == p && board[3] == p && board[6] == p) {
+        winState = 2;
+      } else if (board[0] == p && board[3] == p && board[6] == p) {
         //first column win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[0] == p && board[4] == p && board[8] == p) {
+        winState = 2;
+      } else if (board[0] == p && board[4] == p && board[8] == p) {
         //diag 1 win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[3] == p && board[4] == p && board[5] == p) {
+        winState = 2;
+      } else if (board[3] == p && board[4] == p && board[5] == p) {
         //second row win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[6] == p && board[7] == p && board[8] == p) {
+        winState = 2;
+      } else if (board[6] == p && board[7] == p && board[8] == p) {
         //third row win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[1] == p && board[4] == p && board[7] == p) {
+        winState = 2;
+      } else if (board[1] == p && board[4] == p && board[7] == p) {
         //second column win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[2] == p && board[5] == p && board[8] == p) {
+        winState = 2;
+      } else if (board[2] == p && board[5] == p && board[8] == p) {
         //third column win
         _winnerName = _player[p]!;
-        return 2;
-      }
-      if (board[2] == p && board[4] == p && board[6] == p) {
+        winState = 2;
+      } else if (board[2] == p && board[4] == p && board[6] == p) {
         //second diag win
         _winnerName = _player[p]!;
-        return 2;
+        winState = 2;
+      } else if (board.length == 9) {
+        winState = 3;
+      } else {
+        winState = 1;
       }
-      if (board.length == 9) {
-        return 3;
-      }
-      return 1;
+    } else {
+      winState = 1;
     }
-    return 1;
   }
 
   bool aiWinCheck(bool p, int i) {
