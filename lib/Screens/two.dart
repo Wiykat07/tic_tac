@@ -5,13 +5,19 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/provider.dart';
 
-class Two extends StatelessWidget {
+class Two extends StatefulWidget {
   const Two({super.key});
 
   @override
+  State<Two> createState() => _TwoState();
+}
+
+class _TwoState extends State<Two> {
+  TextEditingController player1Controller = TextEditingController();
+  TextEditingController player2Controller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController player1Controller = TextEditingController();
-    TextEditingController player2Controller = TextEditingController();
     double height = MediaQuery.of(context).size.height;
     List<String> names = [];
 
