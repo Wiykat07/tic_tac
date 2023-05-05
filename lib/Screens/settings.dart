@@ -1,41 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:provider/provider.dart';
-
-class Preferences extends ChangeNotifier {
-  Color _primary = Colors.green;
-  Color _secondary = Colors.yellowAccent;
-  String colors = 'Green';
-  String secondColors = 'Yellow';
-
-  Box colorBox = Hive.box('Colors');
-
-  Color get primary {
-    return _primary;
-  }
-
-  Color get secondary {
-    return _secondary;
-  }
-
-  String get color {
-    return colors;
-  }
-
-  String get secondColor {
-    return secondColors;
-  }
-
-  void updatePrefs() async {
-    await Hive.openBox('Colors');
-    colorBox.put(1, _primary);
-    colorBox.put(2, _secondary);
-    colorBox.put(3, colors);
-    colorBox.put(4, secondColors);
-
-    notifyListeners();
-  }
-}
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -68,7 +33,7 @@ class _ScreenState extends State<SettingsScreen> {
             onTap: () {
               setState(() {
                 prefs.colors = col;
-                prefs._primary = c;
+                prefs.primary = c;
                 prefs.updatePrefs();
               });
             },
@@ -80,7 +45,7 @@ class _ScreenState extends State<SettingsScreen> {
           onTap: () {
             setState(() {
               prefs.secondColors = col;
-              prefs._secondary = c;
+              prefs.secondary = c;
               prefs.updatePrefs();
             });
           },
@@ -93,91 +58,153 @@ class _ScreenState extends State<SettingsScreen> {
           centerTitle: true,
           title: const Text('Settings'),
         ),
-        body: Column(
-          children: [
-            SizedBox.fromSize(
-              size: Size.fromHeight(height * .05),
-            ),
-            const Text(
-              'Board Color: ',
-              style: TextStyle(fontSize: 28),
-            ),
-            Text(
-              prefs.color,
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(
-              height: 20,
-              width: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                primaryColor('Green', Colors.green),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                primaryColor('Blue', Colors.blue),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                primaryColor('Red', Colors.red),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                primaryColor('Yellow', Colors.yellow),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                primaryColor('Purple', Colors.purple),
-              ],
-            ),
-            SizedBox.fromSize(
-              size: Size.fromHeight(height * .05),
-            ),
-            const Text(
-              'Piece Color: ',
-              style: TextStyle(fontSize: 28),
-            ),
-            Text(
-              prefs.secondColor,
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(
-              height: 20,
-              width: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                secondaryColor('Green', Colors.greenAccent),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                secondaryColor('Blue', Colors.blueAccent),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                secondaryColor('Red', Colors.redAccent),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                secondaryColor('Yellow', Colors.yellowAccent),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                ),
-                secondaryColor('Purple', Colors.purpleAccent),
-              ],
-            )
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox.fromSize(
+                size: Size.fromHeight(height * .05),
+              ),
+              const Text(
+                'Board Color: ',
+                style: TextStyle(fontSize: 28),
+              ),
+              Text(
+                prefs.color,
+                style: const TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 20,
+                width: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  primaryColor('Green', Colors.green),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Blue', Colors.blue),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Red', Colors.red),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Yellow', Colors.yellow),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Purple', Colors.purple),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+                width: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  primaryColor('Orange', Colors.orange),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Black', Colors.black),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('White', Colors.white),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Indigo', Colors.indigo),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  primaryColor('Cyan', Colors.cyan),
+                ],
+              ),
+              SizedBox.fromSize(
+                size: Size.fromHeight(height * .05),
+              ),
+              const Text(
+                'Piece Color: ',
+                style: TextStyle(fontSize: 28),
+              ),
+              Text(
+                prefs.secondColor,
+                style: const TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 20,
+                width: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  secondaryColor('Green', Colors.greenAccent),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Blue', Colors.blueAccent),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Red', Colors.redAccent),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Yellow', Colors.yellowAccent),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Purple', Colors.purpleAccent),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+                width: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  secondaryColor('Orange', Colors.orangeAccent),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Black', Colors.black),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('White', Colors.white),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Indigo', Colors.indigoAccent),
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                  ),
+                  secondaryColor('Cyan', Colors.cyanAccent),
+                ],
+              )
+            ],
+          ),
         ),
       );
     });

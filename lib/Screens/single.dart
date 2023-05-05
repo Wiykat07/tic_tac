@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/provider.dart';
+import 'package:tic_tac/Providers/gameprovider.dart';
 
 class Single extends StatefulWidget {
   const Single({super.key});

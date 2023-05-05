@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/provider.dart';
+import 'package:tic_tac/Providers/gameprovider.dart';
 
 class Two extends StatefulWidget {
   const Two({super.key});
@@ -116,7 +116,7 @@ class _Roll extends State<Roll> {
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/board', arguments: 0);
+                      Navigator.pushNamed(context, '/board', arguments: -1);
                     },
                     child: const Text('Let\'s Play!'))
               ],

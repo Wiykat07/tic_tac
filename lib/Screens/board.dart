@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:developer';
 import 'package:align_positioned/align_positioned.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/Screens/settings.dart';
+import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:tic_tac/Widgets/confetti.dart';
 import 'package:tic_tac/Widgets/drawboard.dart';
+import 'package:tic_tac/Widgets/boardsquares.dart';
 
-import '../provider.dart';
+import '../Widgets/winortie.dart';
+import 'package:tic_tac/Providers/gameprovider.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
@@ -27,39 +28,15 @@ class _Board extends State<Board> {
     final args = ModalRoute.of(context)!.settings.arguments as int;
 
     return Consumer<Preferences>(builder: (context, pref, child) {
-      CustomPaint paint =
-          CustomPaint(painter: XAndO(true, false, pref.secondary));
-      SizedBox piecePlaced(double h, double w, bool p) {
-        return SizedBox(
-          height: h,
-          width: w,
-          child: CustomPaint(painter: XAndO(false, p, pref.secondary)),
-        );
-      }
-
-      SizedBox emptySquare(double h, double w) {
-        return SizedBox(
-          height: h,
-          width: w,
-          child: paint,
-        );
-      }
-
       return Consumer<GameProvider>(builder: (context, game, child) {
-        Builder square(double h, double w, int i) {
+        Builder interactiveSquare(
+          double h,
+          double w,
+          int i,
+        ) {
           return Builder(builder: ((context) {
             if (game.spaceCheck(i)) {
-              return piecePlaced(
-                  height * .115, width * .25, game.pieceCheck(i));
-            }
-            return emptySquare(height * .115, width * .25);
-          }));
-        }
-
-        Builder interactiveSquare(double h, double w, int i) {
-          return Builder(builder: ((context) {
-            if (game.spaceCheck(i)) {
-              return piecePlaced(h, w, game.pieceCheck(i));
+              return piecePlaced(h, w, game.pieceCheck(i), pref.secondary);
             }
             return GestureDetector(
                 onTap: () {
@@ -77,10 +54,7 @@ class _Board extends State<Board> {
                     }
                   }
                 },
-                child: emptySquare(
-                  h,
-                  w,
-                ));
+                child: emptySquare(h, w, pref.secondary));
           }));
         }
 
@@ -99,166 +73,11 @@ class _Board extends State<Board> {
           }
           return Row(
             children: [
-              square(h, w, i[0]),
+              square(h, w, i[0], game, pref),
               SizedBox(height: sh, width: sw),
-              square(h, w, i[1]),
+              square(h, w, i[1], game, pref),
               SizedBox(height: sh, width: sw),
-              square(h, w, i[2]),
-            ],
-          );
-        }
-
-        AlertDialog winOrTie(bool win) {
-          if (win && game.ai) {
-            return AlertDialog(
-              title: const Text('Winner!'),
-              content: Text(
-                '${game.winnerName} won!',
-                textAlign: TextAlign.center,
-              ),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          Navigator.pushNamed(context, '/single');
-                        },
-                        child: const Text('Change Difficulty')),
-                  ],
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            game.resetBoard();
-                            Navigator.pushNamed(context, '/');
-                          },
-                          child: const Text('Quit')),
-                      TextButton(
-                          onPressed: () {
-                            game.resetBoard();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Play Again!'))
-                    ])
-              ],
-            );
-          }
-          if (win && !game.ai) {
-            return AlertDialog(
-              title: const Text('Winner!'),
-              content: Text(
-                '${game.winnerName} won!',
-                textAlign: TextAlign.center,
-              ),
-              actions: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          game.swapTurns();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Switch Turns!')),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          Navigator.pushNamed(context, '/');
-                        },
-                        child: const Text('Quit')),
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Play Again!')),
-                  ],
-                )
-              ],
-            );
-          }
-          if (!game.ai) {
-            return AlertDialog(
-              title: const Text('Tie?'),
-              content: const Text(
-                'Nobody won!',
-                textAlign: TextAlign.center,
-              ),
-              actions: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          game.swapTurns();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Switch Turns!')),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          Navigator.pushNamed(context, '/');
-                        },
-                        child: const Text('Quit')),
-                    TextButton(
-                        onPressed: () {
-                          game.resetBoard();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Play Again!')),
-                  ],
-                )
-              ],
-            );
-          }
-          return AlertDialog(
-            title: const Text('Tie?'),
-            content: const Text(
-              'Nobody won!',
-              textAlign: TextAlign.center,
-            ),
-            actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        game.resetBoard();
-                        Navigator.pushNamed(context, '/single');
-                      },
-                      child: const Text('Change Difficulty')),
-                ],
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      Navigator.pushNamed(context, '/');
-                    },
-                    child: const Text('Quit')),
-                TextButton(
-                    onPressed: () {
-                      game.resetBoard();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Play Again!'))
-              ])
+              square(h, w, i[2], game, pref),
             ],
           );
         }
@@ -273,7 +92,7 @@ class _Board extends State<Board> {
                     showDialog(
                         context: context,
                         builder: ((BuildContext context) {
-                          return winOrTie(true);
+                          return winOrTie(true, game, context);
                         }));
                   });
                   return const SizedBox();
@@ -322,7 +141,7 @@ class _Board extends State<Board> {
                     showDialog(
                         context: context,
                         builder: ((BuildContext context) {
-                          return winOrTie(true);
+                          return winOrTie(true, game, context);
                         }));
                   });
                   return const SizedBox();
@@ -443,7 +262,7 @@ class _Board extends State<Board> {
                       showDialog(
                           context: context,
                           builder: ((BuildContext context) {
-                            return winOrTie(false);
+                            return winOrTie(false, game, context);
                           }));
                     });
                     return const SizedBox();
@@ -491,7 +310,7 @@ class _Board extends State<Board> {
                     showDialog(
                         context: context,
                         builder: ((BuildContext context) {
-                          return winOrTie(false);
+                          return winOrTie(false, game, context);
                         }));
                   });
                   return const SizedBox();

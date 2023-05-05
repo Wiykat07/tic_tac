@@ -5,7 +5,8 @@ import 'package:tic_tac/Screens/board.dart';
 import 'package:tic_tac/Screens/settings.dart';
 import 'package:tic_tac/Screens/single.dart';
 import 'package:tic_tac/Screens/two.dart';
-import 'package:tic_tac/provider.dart';
+import 'package:tic_tac/Providers/gameprovider.dart';
+import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:tic_tac/themes.dart';
 
 void main() async {
