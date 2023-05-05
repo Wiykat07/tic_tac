@@ -9,6 +9,8 @@ import 'package:tic_tac/Providers/gameprovider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:tic_tac/themes.dart';
 
+import 'Screens/roll.dart';
+
 void main() async {
   await Hive.initFlutter();
 
