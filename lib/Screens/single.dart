@@ -16,7 +16,7 @@ class _SingleState extends State<Single> {
   int ai = -1;
   TextEditingController player1Controller = TextEditingController();
   List<String> names = [];
-  String description = '';
+  String description = 'The best AI you will ever face.';
 
   @override
   Widget build(BuildContext context) {
