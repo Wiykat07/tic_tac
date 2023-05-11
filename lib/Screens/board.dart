@@ -25,59 +25,6 @@ class _Board extends State<Board> {
 
     return Consumer<Preferences>(builder: (context, pref, child) {
       return Consumer<GameProvider>(builder: (context, game, child) {
-        Builder interactiveSquare(
-          double h,
-          double w,
-          int i,
-        ) {
-          return Builder(builder: ((context) {
-            if (game.spaceCheck(i)) {
-              return piecePlaced(h, w, game.pieceCheck(i), pref.secondary);
-            }
-            return GestureDetector(
-                onTap: () {
-                  setState(() {});
-                  game.placePieces(game.isPlayer1, i);
-                  game.switchTurns(!game.isPlayer1);
-                  if (game.ai == true && game.turn == true) {
-                    game.boardCheck(game
-                        .isPlayer1); //check winstate to make sure there wasn't a winning play
-                    if (game.winState == 1) {
-                      game.isPlayer1 = game.piece;
-                      int spot = game.aiTurn(game.isPlayer1, args);
-                      game.placePieces(game.isPlayer1, spot);
-                      game.switchTurns(!game.isPlayer1);
-                    }
-                  }
-                },
-                child: emptySquare(h, w, pref.secondary));
-          }));
-        }
-
-        Row buildRows(
-            double h, double w, List<int> i, double sh, double sw, bool inter) {
-          if (inter) {
-            return Row(
-              children: [
-                interactiveSquare(h, w, i[0]),
-                SizedBox(height: sh, width: sw),
-                interactiveSquare(h, w, i[1]),
-                SizedBox(height: sh, width: sw),
-                interactiveSquare(h, w, i[2]),
-              ],
-            );
-          }
-          return Row(
-            children: [
-              square(h, w, i[0], game, pref),
-              SizedBox(height: sh, width: sw),
-              square(h, w, i[1], game, pref),
-              SizedBox(height: sh, width: sw),
-              square(h, w, i[2], game, pref),
-            ],
-          );
-        }
-
         game.boardCheck(game.isPlayer1);
         if (game.winState == 2) {
           if (MediaQuery.of(context).orientation == Orientation.portrait) {
@@ -114,13 +61,13 @@ class _Board extends State<Board> {
                       dy: height * .18,
                       child: Column(children: [
                         buildRows(height * .115, width * .25, [0, 1, 2],
-                            height * .1, width * .02, false),
+                            height * .1, width * .02, false, game, pref, args),
                         SizedBox(height: height * .007, width: width * .04),
                         buildRows(height * .115, width * .25, [3, 4, 5],
-                            height * .1, width * .02, false),
+                            height * .1, width * .02, false, game, pref, args),
                         SizedBox(height: height * .007, width: width * .04),
                         buildRows(height * .115, width * .25, [6, 7, 8],
-                            height * .1, width * .02, false),
+                            height * .1, width * .02, false, game, pref, args),
                       ]),
                     )
                   ],
@@ -163,13 +110,13 @@ class _Board extends State<Board> {
                       dy: height * .07,
                       child: Column(children: [
                         buildRows(height * .2, width * .125, [0, 1, 2],
-                            height * .1, width * .012, false),
+                            height * .1, width * .012, false, game, pref, args),
                         SizedBox(height: height * .009, width: width * .012),
                         buildRows(height * .2, width * .125, [3, 4, 5],
-                            height * .1, width * .012, false),
+                            height * .1, width * .012, false, game, pref, args),
                         SizedBox(height: height * .03, width: width * .012),
                         buildRows(height * .2, width * .125, [6, 7, 8],
-                            height * .1, width * .012, false),
+                            height * .1, width * .012, false, game, pref, args),
                       ]),
                     )
                   ],
@@ -204,13 +151,13 @@ class _Board extends State<Board> {
                       dy: height * .18,
                       child: Column(children: [
                         buildRows(height * .115, width * .25, [0, 1, 2],
-                            height * .1, width * .02, true),
+                            height * .1, width * .02, true, game, pref, args),
                         SizedBox(height: height * .007, width: width * .04),
                         buildRows(height * .115, width * .25, [3, 4, 5],
-                            height * .1, width * .02, true),
+                            height * .1, width * .02, true, game, pref, args),
                         SizedBox(height: height * .007, width: width * .04),
                         buildRows(height * .115, width * .25, [6, 7, 8],
-                            height * .1, width * .02, true),
+                            height * .1, width * .02, true, game, pref, args),
                       ]))
                 ]));
           }
@@ -236,13 +183,13 @@ class _Board extends State<Board> {
                       dy: height * .07,
                       child: Column(children: [
                         buildRows(height * .2, width * .125, [0, 1, 2],
-                            height * .1, width * .012, true),
+                            height * .1, width * .012, true, game, pref, args),
                         SizedBox(height: height * .009, width: width * .012),
                         buildRows(height * .2, width * .125, [3, 4, 5],
-                            height * .1, width * .012, true),
+                            height * .1, width * .012, true, game, pref, args),
                         SizedBox(height: height * .03, width: width * .012),
                         buildRows(height * .2, width * .125, [6, 7, 8],
-                            height * .1, width * .012, true),
+                            height * .1, width * .012, true, game, pref, args),
                       ]))
                 ]));
           }
@@ -283,14 +230,38 @@ class _Board extends State<Board> {
                         dx: width * .095,
                         dy: height * .18,
                         child: Column(children: [
-                          buildRows(height * .115, width * .25, [0, 1, 2],
-                              height * .1, width * .02, false),
+                          buildRows(
+                              height * .115,
+                              width * .25,
+                              [0, 1, 2],
+                              height * .1,
+                              width * .02,
+                              false,
+                              game,
+                              pref,
+                              args),
                           SizedBox(height: height * .007, width: width * .04),
-                          buildRows(height * .115, width * .25, [3, 4, 5],
-                              height * .1, width * .02, false),
+                          buildRows(
+                              height * .115,
+                              width * .25,
+                              [3, 4, 5],
+                              height * .1,
+                              width * .02,
+                              false,
+                              game,
+                              pref,
+                              args),
                           SizedBox(height: height * .007, width: width * .04),
-                          buildRows(height * .115, width * .25, [6, 7, 8],
-                              height * .1, width * .02, false),
+                          buildRows(
+                              height * .115,
+                              width * .25,
+                              [6, 7, 8],
+                              height * .1,
+                              width * .02,
+                              false,
+                              game,
+                              pref,
+                              args),
                         ]),
                       )
                     ],
@@ -332,13 +303,13 @@ class _Board extends State<Board> {
                       dy: height * .07,
                       child: Column(children: [
                         buildRows(height * .2, width * .125, [0, 1, 2],
-                            height * .1, width * .012, false),
+                            height * .1, width * .012, false, game, pref, args),
                         SizedBox(height: height * .009, width: width * .012),
                         buildRows(height * .2, width * .125, [3, 4, 5],
-                            height * .1, width * .012, false),
+                            height * .1, width * .012, false, game, pref, args),
                         SizedBox(height: height * .03, width: width * .012),
                         buildRows(height * .2, width * .125, [6, 7, 8],
-                            height * .1, width * .012, false),
+                            height * .1, width * .012, false, game, pref, args),
                       ]),
                     )
                   ],
