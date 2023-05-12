@@ -7,7 +7,7 @@ import 'package:tic_tac/Widgets/boardsquares.dart';
 import '../Providers/settingsprovider.dart';
 import 'drawboard.dart';
 
-class LandscapeScaffold extends StatefulWidget {
+class LandscapeScaffold extends StatelessWidget {
   final String title;
   final double height;
   final double width;
@@ -21,11 +21,6 @@ class LandscapeScaffold extends StatefulWidget {
       required this.inter});
 
   @override
-  State<LandscapeScaffold> createState() => _LandscapeScaffoldState();
-}
-
-class _LandscapeScaffoldState extends State<LandscapeScaffold> {
-  @override
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(builder: (context, game, child) {
       return Scaffold(
@@ -36,11 +31,11 @@ class _LandscapeScaffoldState extends State<LandscapeScaffold> {
                   Navigator.of(context).pop();
                 },
               ),
-              title: Text(widget.title)),
+              title: Text(title)),
           body: Stack(children: [
             SizedBox(
-              height: widget.height,
-              width: widget.width,
+              height: height,
+              width: width,
               child: CustomPaint(
                   painter: BoardMaker(
                       Provider.of<Preferences>(context, listen: false)
@@ -48,26 +43,21 @@ class _LandscapeScaffoldState extends State<LandscapeScaffold> {
             ),
             AlignPositioned(
                 alignment: Alignment.topLeft,
-                dx: widget.width * .2,
-                dy: widget.height * .07,
+                dx: width * .2,
+                dy: height * .07,
                 child: Column(children: [
-                  buildRows(widget.height, widget.width, false, [0, 1, 2],
-                      widget.inter, game),
-                  SizedBox(
-                      height: widget.height * .009, width: widget.width * .012),
-                  buildRows(widget.height, widget.width, false, [3, 4, 5],
-                      widget.inter, game),
-                  SizedBox(
-                      height: widget.height * .03, width: widget.width * .012),
-                  buildRows(widget.height, widget.width, false, [6, 7, 8],
-                      widget.inter, game),
+                  buildRows(height, width, false, [0, 1, 2], inter),
+                  SizedBox(height: height * .009, width: width * .012),
+                  buildRows(height, width, false, [3, 4, 5], inter),
+                  SizedBox(height: height * .03, width: width * .012),
+                  buildRows(height, width, false, [6, 7, 8], inter),
                 ]))
           ]));
     });
   }
 }
 
-class PortraitScaffold extends StatefulWidget {
+class PortraitScaffold extends StatelessWidget {
   final String title;
   final double height;
   final double width;
@@ -81,11 +71,6 @@ class PortraitScaffold extends StatefulWidget {
       required this.inter});
 
   @override
-  State<PortraitScaffold> createState() => _PortraitScaffoldState();
-}
-
-class _PortraitScaffoldState extends State<PortraitScaffold> {
-  @override
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(builder: (context, game, child) {
       return Scaffold(
@@ -96,13 +81,13 @@ class _PortraitScaffoldState extends State<PortraitScaffold> {
                 Navigator.of(context).pop();
               },
             ),
-            title: Text(widget.title)),
+            title: Text(title)),
         body: Center(
             child: Stack(
           children: [
             SizedBox(
-              height: widget.height,
-              width: widget.width,
+              height: height,
+              width: width,
               child: CustomPaint(
                   painter: BoardMaker(
                       Provider.of<Preferences>(context, listen: false)
@@ -110,19 +95,14 @@ class _PortraitScaffoldState extends State<PortraitScaffold> {
             ),
             AlignPositioned(
               alignment: Alignment.topLeft,
-              dx: widget.width * .095,
-              dy: widget.height * .18,
+              dx: width * .095,
+              dy: height * .18,
               child: Column(children: [
-                buildRows(widget.height, widget.width, true, [0, 1, 2],
-                    widget.inter, game),
-                SizedBox(
-                    height: widget.height * .007, width: widget.width * .04),
-                buildRows(widget.height, widget.width, true, [3, 4, 5],
-                    widget.inter, game),
-                SizedBox(
-                    height: widget.height * .007, width: widget.width * .04),
-                buildRows(widget.height, widget.width, true, [6, 7, 8],
-                    widget.inter, game),
+                buildRows(height, width, true, [0, 1, 2], inter),
+                SizedBox(height: height * .007, width: width * .04),
+                buildRows(height, width, true, [3, 4, 5], inter),
+                SizedBox(height: height * .007, width: width * .04),
+                buildRows(height, width, true, [6, 7, 8], inter),
               ]),
             )
           ],
