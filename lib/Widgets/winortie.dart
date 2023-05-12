@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../Providers/gameprovider.dart';
 
+SizedBox alertBox(bool win, GameProvider game) {
+  return SizedBox(child: Builder(builder: ((context) {
+    Future.delayed(const Duration(seconds: 5), () {
+      showDialog(
+          context: context,
+          builder: ((BuildContext context) {
+            return winOrTie(true, game, context);
+          }));
+    });
+    return const SizedBox();
+  })));
+}
+
 AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
   if (win && game.ai) {
     return AlertDialog(
