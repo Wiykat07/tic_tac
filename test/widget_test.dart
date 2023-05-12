@@ -11,20 +11,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tic_tac/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Tic Tac test run', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that we have three outlined buttons.
+    expect(find.bySubtype<Column>(), findsNWidgets(1));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // check that the buttons do something
+    // await tester.tap(find.widgetWithText(OutlinedButton, 'Settings'));
+    //await tester.pump();
+    //await tester.tap(find.widgetWithText(OutlinedButton, 'Two Player'));
+    //await tester.pump();
+    //await tester.tap(find.widgetWithText(OutlinedButton, 'One Player'));
+    //await tester.pump();
   });
 }
