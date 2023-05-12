@@ -34,53 +34,54 @@ Builder square(double h, double w, int i) {
   }));
 }
 
-Builder interactiveSquare(double h, double w, int i, GameProvider game) {
+Builder interactiveSquare(double h, double w, int i) {
   return Builder(builder: ((context) {
-    if (game.spaceCheck(i)) {
-      return piecePlaced(h, w, game.pieceCheck(i),
-          Provider.of<Preferences>(context, listen: false).secondary);
-    }
-    return GestureDetector(
-        onTap: () {
-          game.placePieces(game.isPlayer1, i);
-          game.switchTurns(!game.isPlayer1);
-          if (game.ai == true && game.turn == true) {
-            game.boardCheck(game
-                .isPlayer1); //check winstate to make sure there wasn't a winning play
-            if (game.winState == 1) {
-              game.isPlayer1 = game.piece;
-              int spot = game.aiTurn(game.isPlayer1);
-              game.placePieces(game.isPlayer1, spot);
-              game.switchTurns(!game.isPlayer1);
+    return Consumer<GameProvider>(builder: (context, game, child) {
+      if (game.spaceCheck(i)) {
+        return piecePlaced(h, w, game.pieceCheck(i),
+            Provider.of<Preferences>(context, listen: false).secondary);
+      }
+      return GestureDetector(
+          onTap: () {
+            game.placePieces(game.isPlayer1, i);
+            game.switchTurns(!game.isPlayer1);
+            if (game.ai == true && game.turn == true) {
+              game.boardCheck(game
+                  .isPlayer1); //check winstate to make sure there wasn't a winning play
+              if (game.winState == 1) {
+                game.isPlayer1 = game.piece;
+                int spot = game.aiTurn(game.isPlayer1);
+                game.placePieces(game.isPlayer1, spot);
+                game.switchTurns(!game.isPlayer1);
+              }
             }
-          }
-        },
-        child: emptySquare(
-            h, w, Provider.of<Preferences>(context, listen: false).secondary));
+          },
+          child: emptySquare(h, w,
+              Provider.of<Preferences>(context, listen: false).secondary));
+    });
   }));
 }
 
-Row buildRows(
-    double h, double w, bool port, List<int> i, bool inter, GameProvider game) {
+Row buildRows(double h, double w, bool port, List<int> i, bool inter) {
   if (inter) {
     if (port) {
       return Row(
         children: [
-          interactiveSquare(h * .115, w * .25, i[0], game),
+          interactiveSquare(h * .115, w * .25, i[0]),
           SizedBox(height: h * .1, width: w * .02),
-          interactiveSquare(h * .115, w * .25, i[1], game),
+          interactiveSquare(h * .115, w * .25, i[1]),
           SizedBox(height: h * .1, width: w * .02),
-          interactiveSquare(h * .115, w * .25, i[2], game),
+          interactiveSquare(h * .115, w * .25, i[2]),
         ],
       );
     }
     return Row(
       children: [
-        interactiveSquare(h * .2, w * .125, i[0], game),
+        interactiveSquare(h * .2, w * .125, i[0]),
         SizedBox(height: h * .1, width: w * .012),
-        interactiveSquare(h * .2, w * .125, i[1], game),
+        interactiveSquare(h * .2, w * .125, i[1]),
         SizedBox(height: h * .1, width: w * .012),
-        interactiveSquare(h * .2, w * .125, i[2], game),
+        interactiveSquare(h * .2, w * .125, i[2]),
       ],
     );
   }
