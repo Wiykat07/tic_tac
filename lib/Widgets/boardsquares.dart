@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:tic_tac/Widgets/drawboard.dart';
 import 'package:tic_tac/Providers/gameprovider.dart';
@@ -19,21 +20,25 @@ SizedBox emptySquare(double h, double w, Color c) {
   );
 }
 
-Builder square(
-    double h, double w, int i, GameProvider game, Preferences preferences) {
+Builder square(double h, double w, int i) {
   return Builder(builder: ((context) {
-    if (game.spaceCheck(i)) {
-      return piecePlaced(h, w, game.pieceCheck(i), preferences.secondary);
+    if (Provider.of<GameProvider>(context, listen: false).spaceCheck(i)) {
+      return piecePlaced(
+          h,
+          w,
+          Provider.of<GameProvider>(context, listen: false).pieceCheck(i),
+          Provider.of<Preferences>(context, listen: false).secondary);
     }
-    return emptySquare(h, w, preferences.secondary);
+    return emptySquare(
+        h, w, Provider.of<Preferences>(context, listen: false).secondary);
   }));
 }
 
-Builder interactiveSquare(double h, double w, int i, GameProvider game,
-    Preferences preferences, int args) {
+Builder interactiveSquare(double h, double w, int i, GameProvider game) {
   return Builder(builder: ((context) {
     if (game.spaceCheck(i)) {
-      return piecePlaced(h, w, game.pieceCheck(i), preferences.secondary);
+      return piecePlaced(h, w, game.pieceCheck(i),
+          Provider.of<Preferences>(context, listen: false).secondary);
     }
     return GestureDetector(
         onTap: () {
@@ -44,36 +49,59 @@ Builder interactiveSquare(double h, double w, int i, GameProvider game,
                 .isPlayer1); //check winstate to make sure there wasn't a winning play
             if (game.winState == 1) {
               game.isPlayer1 = game.piece;
-              int spot = game.aiTurn(game.isPlayer1, args);
+              int spot = game.aiTurn(game.isPlayer1);
               game.placePieces(game.isPlayer1, spot);
               game.switchTurns(!game.isPlayer1);
             }
           }
         },
-        child: emptySquare(h, w, preferences.secondary));
+        child: emptySquare(
+            h, w, Provider.of<Preferences>(context, listen: false).secondary));
   }));
 }
 
-Row buildRows(double h, double w, List<int> i, double sh, double sw, bool inter,
-    GameProvider game, Preferences preferences, int args) {
+Row buildRows(
+    double h, double w, bool port, List<int> i, bool inter, GameProvider game) {
   if (inter) {
+    if (port) {
+      return Row(
+        children: [
+          interactiveSquare(h * .115, w * .25, i[0], game),
+          SizedBox(height: h * .1, width: w * .02),
+          interactiveSquare(h * .115, w * .25, i[1], game),
+          SizedBox(height: h * .1, width: w * .02),
+          interactiveSquare(h * .115, w * .25, i[2], game),
+        ],
+      );
+    }
     return Row(
       children: [
-        interactiveSquare(h, w, i[0], game, preferences, args),
-        SizedBox(height: sh, width: sw),
-        interactiveSquare(h, w, i[1], game, preferences, args),
-        SizedBox(height: sh, width: sw),
-        interactiveSquare(h, w, i[2], game, preferences, args),
+        interactiveSquare(h * .2, w * .125, i[0], game),
+        SizedBox(height: h * .1, width: w * .012),
+        interactiveSquare(h * .2, w * .125, i[1], game),
+        SizedBox(height: h * .1, width: w * .012),
+        interactiveSquare(h * .2, w * .125, i[2], game),
+      ],
+    );
+  }
+  if (port) {
+    return Row(
+      children: [
+        square(h * .115, w * .25, i[0]),
+        SizedBox(height: h * .1, width: w * .02),
+        square(h * .115, w * .25, i[1]),
+        SizedBox(height: h * .1, width: w * .02),
+        square(h * .115, w * .25, i[2]),
       ],
     );
   }
   return Row(
     children: [
-      square(h, w, i[0], game, preferences),
-      SizedBox(height: sh, width: sw),
-      square(h, w, i[1], game, preferences),
-      SizedBox(height: sh, width: sw),
-      square(h, w, i[2], game, preferences),
+      square(h * .2, w * .125, i[0]),
+      SizedBox(height: h * .1, width: w * .012),
+      square(h * .2, w * .125, i[1]),
+      SizedBox(height: h * .1, width: w * .012),
+      square(h * .2, w * .125, i[2]),
     ],
   );
 }
