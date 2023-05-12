@@ -13,6 +13,7 @@ class GameProvider extends ChangeNotifier {
   Map<int, bool> aiBoard = {};
   bool isPlayer1 = false; //player 1 is X, player 2 is O
   int winState = 0; //1 is no win, 2 is win, and 3 is tie
+  int difficulty = 0; //ai difficulty level
 
   String get name {
     return _name;
@@ -45,6 +46,10 @@ class GameProvider extends ChangeNotifier {
 
   void turnOn() {
     _turn = true;
+  }
+
+  void difficultySet(int d) {
+    difficulty = d;
   }
 
   void addPlayer(bool piece, String player) {
@@ -322,7 +327,7 @@ class GameProvider extends ChangeNotifier {
     return false;
   }
 
-  int aiTurn(bool p, int difficulty) {
+  int aiTurn(bool p) {
     if (difficulty == 0) {
       if (!spaceCheck(4)) {
         log('picked center');
