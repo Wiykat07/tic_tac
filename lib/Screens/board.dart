@@ -43,7 +43,7 @@ class _Board extends State<Board> {
       if (game.winState == 2) {
         if (MediaQuery.of(context).orientation == Orientation.portrait) {
           return Stack(children: [
-            alertBox(true, game),
+            alertBox(true, game.ai),
             PortraitScaffold(
                 title: 'Winner!', height: height, width: width, inter: false),
             const ConfettiWidgets(
@@ -51,7 +51,7 @@ class _Board extends State<Board> {
           ]);
         } else {
           return Stack(children: [
-            alertBox(true, game),
+            alertBox(true, game.ai),
             LandscapeScaffold(
                 title: 'Winner!', height: height, width: width, inter: false),
             const ConfettiWidgets(
@@ -63,14 +63,14 @@ class _Board extends State<Board> {
         if (MediaQuery.of(context).orientation == Orientation.portrait) {
           return Stack(
             children: [
-              alertBox(false, game),
+              alertBox(false, game.ai),
               PortraitScaffold(
                   title: 'Tie?', height: height, width: width, inter: false)
             ],
           );
         } else {
           return Stack(children: [
-            alertBox(false, game),
+            alertBox(false, game.ai),
             LandscapeScaffold(
                 title: 'Tie?', height: height, width: width, inter: false)
           ]);

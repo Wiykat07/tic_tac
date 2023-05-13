@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Providers/gameprovider.dart';
 
-SizedBox alertBox(bool win, GameProvider game) {
+SizedBox alertBox(bool win, bool ai) {
   return SizedBox(child: Builder(builder: ((context) {
     Future.delayed(const Duration(seconds: 5), () {
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: ((BuildContext context) {
-            return winOrTie(true, game, context);
+            return winOrTie(win, ai, context);
           }));
     });
     return const SizedBox();
   })));
 }
 
-AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
-  if (win && game.ai) {
+AlertDialog winOrTie(bool win, bool ai, BuildContext context) {
+  if (win && ai) {
     return AlertDialog(
       title: const Text('Winner!'),
       content: Text(
-        '${game.winnerName} won!',
+        '${Provider.of<GameProvider>(context, listen: false).winnerName} won!',
         textAlign: TextAlign.center,
       ),
       actions: [
@@ -30,7 +31,8 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
           children: [
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
                   Navigator.pushNamed(context, '/single');
                 },
                 child: const Text('Change Difficulty')),
@@ -39,13 +41,13 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           TextButton(
               onPressed: () {
-                game.resetBoard();
+                Provider.of<GameProvider>(context, listen: false).resetBoard();
                 Navigator.pushNamed(context, '/');
               },
               child: const Text('Quit')),
           TextButton(
               onPressed: () {
-                game.resetBoard();
+                Provider.of<GameProvider>(context, listen: false).resetBoard();
                 Navigator.pop(context);
               },
               child: const Text('Play Again!'))
@@ -53,11 +55,11 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
       ],
     );
   }
-  if (win && !game.ai) {
+  if (win && !ai) {
     return AlertDialog(
       title: const Text('Winner!'),
       content: Text(
-        '${game.winnerName} won!',
+        '${Provider.of<GameProvider>(context, listen: false).winnerName} won!',
         textAlign: TextAlign.center,
       ),
       actions: <Widget>[
@@ -66,8 +68,9 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
           children: [
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
-                  game.swapTurns();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
+                  Provider.of<GameProvider>(context, listen: false).swapTurns();
                   Navigator.pop(context);
                 },
                 child: const Text('Switch Turns!')),
@@ -78,13 +81,15 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
           children: [
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
                   Navigator.pushNamed(context, '/');
                 },
                 child: const Text('Quit')),
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
                   Navigator.pop(context);
                 },
                 child: const Text('Play Again!')),
@@ -93,7 +98,7 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
       ],
     );
   }
-  if (!game.ai) {
+  if (!ai) {
     return AlertDialog(
       title: const Text('Tie?'),
       content: const Text(
@@ -106,8 +111,9 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
           children: [
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
-                  game.swapTurns();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
+                  Provider.of<GameProvider>(context, listen: false).swapTurns();
                   Navigator.pop(context);
                 },
                 child: const Text('Switch Turns!')),
@@ -118,13 +124,15 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
           children: [
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
                   Navigator.pushNamed(context, '/');
                 },
                 child: const Text('Quit')),
             TextButton(
                 onPressed: () {
-                  game.resetBoard();
+                  Provider.of<GameProvider>(context, listen: false)
+                      .resetBoard();
                   Navigator.pop(context);
                 },
                 child: const Text('Play Again!')),
@@ -145,7 +153,7 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
         children: [
           TextButton(
               onPressed: () {
-                game.resetBoard();
+                Provider.of<GameProvider>(context, listen: false).resetBoard();
                 Navigator.pushNamed(context, '/single');
               },
               child: const Text('Change Difficulty')),
@@ -154,13 +162,13 @@ AlertDialog winOrTie(bool win, GameProvider game, BuildContext context) {
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         TextButton(
             onPressed: () {
-              game.resetBoard();
+              Provider.of<GameProvider>(context, listen: false).resetBoard();
               Navigator.pushNamed(context, '/');
             },
             child: const Text('Quit')),
         TextButton(
             onPressed: () {
-              game.resetBoard();
+              Provider.of<GameProvider>(context, listen: false).resetBoard();
               Navigator.pop(context);
             },
             child: const Text('Play Again!'))
