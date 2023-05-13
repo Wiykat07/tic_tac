@@ -38,6 +38,7 @@ class _Roll extends State<Roll> {
     Future<void> rollsResults() async {
       diceRoll();
       return showDialog<void>(
+          barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(

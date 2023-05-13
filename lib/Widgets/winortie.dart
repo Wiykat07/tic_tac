@@ -6,6 +6,7 @@ SizedBox alertBox(bool win, GameProvider game) {
   return SizedBox(child: Builder(builder: ((context) {
     Future.delayed(const Duration(seconds: 5), () {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: ((BuildContext context) {
             return winOrTie(true, game, context);
