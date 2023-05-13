@@ -41,39 +41,119 @@ class _Board extends State<Board> {
         }
       }
       if (game.winState == 2) {
-        if (MediaQuery.of(context).orientation == Orientation.portrait) {
-          return Stack(children: [
-            alertBox(true, game.ai),
-            PortraitScaffold(
-                title: 'Winner!', height: height, width: width, inter: false),
-            const ConfettiWidgets(
-                child: Center(child: SizedBox(height: 50, width: 50))),
-          ]);
+        if (game.winnerName == 'Computer') {
+          if (!game.here) {
+            game.here = true;
+            if (MediaQuery.of(context).orientation == Orientation.portrait) {
+              return Stack(children: [
+                alertBox(true, game.ai),
+                PortraitScaffold(
+                    title: 'Winner!',
+                    height: height,
+                    width: width,
+                    inter: false),
+              ]);
+            } else {
+              return Stack(children: [
+                alertBox(true, game.ai),
+                LandscapeScaffold(
+                    title: 'Winner!',
+                    height: height,
+                    width: width,
+                    inter: false),
+              ]);
+            }
+          } else {
+            if (MediaQuery.of(context).orientation == Orientation.portrait) {
+              return Stack(children: [
+                PortraitScaffold(
+                    title: 'Winner!',
+                    height: height,
+                    width: width,
+                    inter: false),
+              ]);
+            } else {
+              return Stack(children: [
+                LandscapeScaffold(
+                    title: 'Winner!',
+                    height: height,
+                    width: width,
+                    inter: false),
+              ]);
+            }
+          }
+        }
+      }
+      if (game.winnerName != 'Computer') {
+        if (!game.here) {
+          game.here = true;
+          if (MediaQuery.of(context).orientation == Orientation.portrait) {
+            return Stack(children: [
+              alertBox(true, game.ai),
+              PortraitScaffold(
+                  title: 'Winner!', height: height, width: width, inter: false),
+              const ConfettiWidgets(
+                  child: Center(child: SizedBox(height: 50, width: 50))),
+            ]);
+          } else {
+            return Stack(children: [
+              alertBox(true, game.ai),
+              LandscapeScaffold(
+                  title: 'Winner!', height: height, width: width, inter: false),
+              const ConfettiWidgets(
+                  child: Center(child: SizedBox(height: 50, width: 50))),
+            ]);
+          }
         } else {
-          return Stack(children: [
-            alertBox(true, game.ai),
-            LandscapeScaffold(
-                title: 'Winner!', height: height, width: width, inter: false),
-            const ConfettiWidgets(
-                child: Center(child: SizedBox(height: 50, width: 50))),
-          ]);
+          if (MediaQuery.of(context).orientation == Orientation.portrait) {
+            return Stack(children: [
+              PortraitScaffold(
+                  title: 'Winner!', height: height, width: width, inter: false),
+              const ConfettiWidgets(
+                  child: Center(child: SizedBox(height: 50, width: 50))),
+            ]);
+          } else {
+            return Stack(children: [
+              LandscapeScaffold(
+                  title: 'Winner!', height: height, width: width, inter: false),
+              const ConfettiWidgets(
+                  child: Center(child: SizedBox(height: 50, width: 50))),
+            ]);
+          }
         }
       }
       if (game.winState == 3) {
-        if (MediaQuery.of(context).orientation == Orientation.portrait) {
-          return Stack(
-            children: [
+        if (!game.here) {
+          game.here = true;
+          if (MediaQuery.of(context).orientation == Orientation.portrait) {
+            return Stack(
+              children: [
+                alertBox(false, game.ai),
+                PortraitScaffold(
+                    title: 'Tie?', height: height, width: width, inter: false)
+              ],
+            );
+          } else {
+            return Stack(children: [
               alertBox(false, game.ai),
-              PortraitScaffold(
+              LandscapeScaffold(
                   title: 'Tie?', height: height, width: width, inter: false)
-            ],
-          );
+            ]);
+          }
         } else {
-          return Stack(children: [
-            alertBox(false, game.ai),
-            LandscapeScaffold(
-                title: 'Tie?', height: height, width: width, inter: false)
-          ]);
+          if (MediaQuery.of(context).orientation == Orientation.portrait) {
+            return Stack(
+              children: [
+                PortraitScaffold(
+                    title: 'Tie?', height: height, width: width, inter: false)
+              ],
+            );
+          } else {
+            return Stack(children: [
+              LandscapeScaffold(
+                  title: 'Tie?', height: height, width: width, inter: false)
+            ]);
+          }
         }
       }
       return const SizedBox();

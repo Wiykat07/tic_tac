@@ -14,6 +14,8 @@ class GameProvider extends ChangeNotifier {
   bool isPlayer1 = false; //player 1 is X, player 2 is O
   int winState = 0; //1 is no win, 2 is win, and 3 is tie
   int difficulty = 0; //ai difficulty level
+  bool here =
+      false; //controls a silly variable needed to prevent errors. No better place for it.
 
   String get name {
     return _name;
@@ -427,6 +429,7 @@ class GameProvider extends ChangeNotifier {
     board.clear();
     aiBoard.clear();
     switchTurns(false);
+    here = false;
     notifyListeners();
   }
 
