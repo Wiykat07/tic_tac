@@ -21,16 +21,16 @@ class _Roll extends State<Roll> {
       chance = random.nextInt(2) + 1;
       if (chance == 1) {
         Provider.of<GameProvider>(context, listen: false)
-            .addPlayer(true, names[0]);
+            .addPlayer(true, names[0], PlayerNumber.player1);
         Provider.of<GameProvider>(context, listen: false)
-            .addPlayer(false, names[1]);
+            .addPlayer(false, names[1], PlayerNumber.player2);
         Provider.of<GameProvider>(context, listen: false).switchTurns(false);
       }
       if (chance == 2) {
         Provider.of<GameProvider>(context, listen: false)
-            .addPlayer(true, names[1]);
+            .addPlayer(true, names[1], PlayerNumber.player1);
         Provider.of<GameProvider>(context, listen: false)
-            .addPlayer(false, names[0]);
+            .addPlayer(false, names[0], PlayerNumber.player2);
         Provider.of<GameProvider>(context, listen: false).switchTurns(false);
       }
     }

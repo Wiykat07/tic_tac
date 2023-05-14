@@ -84,11 +84,10 @@ class _SingleState extends State<Single> {
                 onPressed: () {
                   names.add(player1Controller.text);
                   names.add('Computer');
-                  Provider.of<GameProvider>(context, listen: false).aiOn();
                   Provider.of<GameProvider>(context, listen: false)
-                      .addPlayer(true, names[1]);
+                      .addPlayer(true, names[1], PlayerNumber.ai);
                   Provider.of<GameProvider>(context, listen: false)
-                      .addPlayer(false, names[0]);
+                      .addPlayer(false, names[0], PlayerNumber.player1);
                   Provider.of<GameProvider>(context, listen: false)
                       .switchTurns(false);
                   Navigator.pushNamed(context, '/board', arguments: ai);

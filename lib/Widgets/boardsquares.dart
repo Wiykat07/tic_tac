@@ -43,16 +43,15 @@ Builder interactiveSquare(double h, double w, int i) {
       }
       return GestureDetector(
           onTap: () {
-            game.placePieces(game.isPlayer1, i);
-            game.switchTurns(!game.isPlayer1);
-            if (game.ai == true && game.turn == true) {
-              game.boardCheck(game
-                  .isPlayer1); //check winstate to make sure there wasn't a winning play
+            game.placePieces(game.currentPlayer.piece, i);
+            game.switchTurns(!game.currentPlayer.piece);
+            if (game.currentPlayer.number == PlayerNumber.ai) {
+              game.boardCheck(!game
+                  .piece); //check winstate to make sure there wasn't a winning play
               if (game.winState == 1) {
-                game.isPlayer1 = game.piece;
-                int spot = game.aiTurn(game.isPlayer1);
-                game.placePieces(game.isPlayer1, spot);
-                game.switchTurns(!game.isPlayer1);
+                int spot = game.aiTurn(game.currentPlayer.piece);
+                game.placePieces(game.currentPlayer.piece, spot);
+                game.switchTurns(!game.currentPlayer.piece);
               }
             }
           },

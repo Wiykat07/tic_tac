@@ -3,26 +3,27 @@ import 'package:provider/provider.dart';
 
 import '../Providers/gameprovider.dart';
 
-SizedBox alertBox(bool win, bool ai) {
+SizedBox alertBox(bool win, PlayerNumber ai, String winner) {
   return SizedBox(child: Builder(builder: ((context) {
     Future.delayed(const Duration(seconds: 5), () {
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: ((BuildContext context) {
-            return winOrTie(win, ai, context);
+            return winOrTie(win, ai, winner, context);
           }));
     });
     return const SizedBox();
   })));
 }
 
-AlertDialog winOrTie(bool win, bool ai, BuildContext context) {
-  if (win && ai) {
+AlertDialog winOrTie(
+    bool win, PlayerNumber ai, String winner, BuildContext context) {
+  if (win && ai == PlayerNumber.ai) {
     return AlertDialog(
       title: const Text('Winner!'),
       content: Text(
-        '${Provider.of<GameProvider>(context, listen: false).winnerName} won!',
+        '$winner won!',
         textAlign: TextAlign.center,
       ),
       actions: [
@@ -55,11 +56,11 @@ AlertDialog winOrTie(bool win, bool ai, BuildContext context) {
       ],
     );
   }
-  if (win && !ai) {
+  if (win && !(ai == PlayerNumber.ai)) {
     return AlertDialog(
       title: const Text('Winner!'),
       content: Text(
-        '${Provider.of<GameProvider>(context, listen: false).winnerName} won!',
+        '$winner won!',
         textAlign: TextAlign.center,
       ),
       actions: <Widget>[
@@ -98,7 +99,7 @@ AlertDialog winOrTie(bool win, bool ai, BuildContext context) {
       ],
     );
   }
-  if (!ai) {
+  if (!(ai == PlayerNumber.ai)) {
     return AlertDialog(
       title: const Text('Tie?'),
       content: const Text(

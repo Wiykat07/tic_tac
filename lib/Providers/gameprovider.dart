@@ -2,83 +2,85 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'dart:math' as math;
 
+enum PlayerNumber {
+  player1,
+  player2,
+  ai,
+  none,
+}
+
+class Player {
+  String name = '';
+  bool piece = false;
+  PlayerNumber number = PlayerNumber.none;
+
+  Player({
+    required this.name,
+    required this.piece,
+    required this.number,
+  });
+}
+
 class GameProvider extends ChangeNotifier {
-  Map<bool, String> _player = {};
-  String _name = '';
+  List<Player> players = [];
+  Player currentPlayer =
+      Player(name: '', piece: false, number: PlayerNumber.none);
   String _winnerName = '';
-  bool _piece = false;
   Map<int, bool> board = {};
-  bool _ai = false; //is the AI on?
-  bool _turn = false; // is it the AI's turn?
   Map<int, bool> aiBoard = {};
-  bool isPlayer1 = false; //player 1 is X, player 2 is O
   int winState = 0; //1 is no win, 2 is win, and 3 is tie
   int difficulty = 0; //ai difficulty level
   bool here =
       false; //controls a silly variable needed to prevent errors. No better place for it.
 
   String get name {
-    return _name;
-  }
-
-  Map<bool, String> get player {
-    return _player;
+    return currentPlayer.name;
   }
 
   bool get piece {
-    _piece = _player.keys.firstWhere((element) => _player[element] == _name);
-    return _piece;
+    return currentPlayer.piece;
   }
 
   String get winnerName {
     return _winnerName;
   }
 
-  bool get ai {
-    return _ai;
+  Player get currentP {
+    return currentPlayer;
   }
 
-  bool get turn {
-    return _turn;
-  }
-
-  void aiOn() {
-    _ai = true;
-  }
-
-  void turnOn() {
-    _turn = true;
+  void playerSet(Player p) {
+    currentPlayer = p;
   }
 
   void difficultySet(int d) {
     difficulty = d;
   }
 
-  void addPlayer(bool piece, String player) {
-    //adds a player to the map
-    _player[piece] = player;
-    notifyListeners();
+  void addPlayer(bool piece, String player, PlayerNumber num) {
+    //adds a player to the list
+    Player p = Player(name: player, piece: piece, number: num);
+
+    players.add(p);
   }
 
   void switchTurns(bool turn) {
     //if player one, switch name to player two
     //if player two, switch name to player one
-    if (_player.containsKey(turn)) {
-      _name = _player[turn]!;
-      log(_name);
-    }
-    if (_ai && _name == 'Computer') {
-      turnOn();
-    }
+
+    Player p = players.firstWhere((element) => element.piece == turn);
+
+    currentPlayer = p;
+    log(p.name);
     notifyListeners();
   }
 
   void swapTurns() {
-    Map<bool, String> newOrder = {};
-    newOrder[true] = _player[false]!;
-    newOrder[false] = _player[true]!;
+    List<Player> newOrder = [];
+    newOrder[0] = players[1];
+    newOrder[1] = players[0];
 
-    _player = newOrder;
+    players = newOrder;
   }
 
   void placePieces(bool piece, int location) {
@@ -87,43 +89,42 @@ class GameProvider extends ChangeNotifier {
 
   void boardCheck(bool p) {
     //gonna check previous round for a win so p wil always be !piece.
+    Player player = players.firstWhere((element) => element.piece == p);
     if (board.isNotEmpty && board.length >= 3) {
       if (board[0] == p && board[1] == p && board[2] == p) {
         //first row win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[0] == p && board[3] == p && board[6] == p) {
         //first column win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[0] == p && board[4] == p && board[8] == p) {
         //diag 1 win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[3] == p && board[4] == p && board[5] == p) {
         //second row win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[6] == p && board[7] == p && board[8] == p) {
         //third row win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[1] == p && board[4] == p && board[7] == p) {
         //second column win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[2] == p && board[5] == p && board[8] == p) {
         //third column win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board[2] == p && board[4] == p && board[6] == p) {
         //second diag win
-        _winnerName = _player[p]!;
+        _winnerName = player.name;
         winState = 2;
       } else if (board.length == 9) {
         winState = 3;
-      } else {
-        winState = 1;
       }
     } else {
       winState = 1;
@@ -174,138 +175,90 @@ class GameProvider extends ChangeNotifier {
   int aiBlockCheck(bool p) {
     //it's huge but it doesn't have errors
     if (aiBoard.isNotEmpty && aiBoard.length >= 3) {
-      if ((aiBoard[0] == p && aiBoard[1] == p)) {
+      if (aiBoard[0] == p && aiBoard[1] == p && !spaceCheck(2)) {
         //player potentially wins row 1
-        if (!spaceCheck(0)) {
-          return 0;
-        }
+        return 2;
       }
-      if ((aiBoard[0] == p && aiBoard[2] == p)) {
-        if (!spaceCheck(1)) {
-          return 1;
-        }
+      if (aiBoard[0] == p && aiBoard[2] == p && !spaceCheck(1)) {
+        return 1;
       }
-      if ((aiBoard[1] == p && aiBoard[2] == p)) {
-        if (!spaceCheck(2)) {
-          return 2;
-        }
+      if (aiBoard[1] == p && aiBoard[2] == p && !spaceCheck(0)) {
+        return 0;
       }
-      if ((aiBoard[0] == p && aiBoard[3] == p)) {
+      if (aiBoard[0] == p && aiBoard[3] == p && !spaceCheck(6)) {
         //player potentially wins column 1
-        if (!spaceCheck(6)) {
-          return 6;
-        }
+        return 6;
       }
-      if ((aiBoard[0] == p && aiBoard[6] == p)) {
-        if (!spaceCheck(3)) {
-          return 3;
-        }
+      if (aiBoard[0] == p && aiBoard[6] == p && !spaceCheck(3)) {
+        return 3;
       }
-      if ((aiBoard[3] == p && aiBoard[6] == p)) {
-        if (!spaceCheck(0)) {
-          return 0;
-        }
+      if (aiBoard[3] == p && aiBoard[6] == p && !spaceCheck(0)) {
+        return 0;
       }
-
-      if ((aiBoard[0] == p && aiBoard[4] == p)) {
+      if (aiBoard[0] == p && aiBoard[4] == p && !spaceCheck(8)) {
         //player potentially wins diag 1
-        if (!spaceCheck(8)) {
-          return 8;
-        }
+        return 8;
       }
-      if (aiBoard[0] == p && aiBoard[8] == p) {
-        if (!spaceCheck(4)) {
-          return 4;
-        }
+      if (aiBoard[0] == p && aiBoard[8] == p && !spaceCheck(4)) {
+        return 4;
       }
-      if (aiBoard[4] == p && aiBoard[8] == p) {
-        if (!spaceCheck(0)) {
-          return 0;
-        }
+      if (aiBoard[4] == p && aiBoard[8] == p && !spaceCheck(0)) {
+        return 0;
       }
-
-      if ((aiBoard[3] == p && aiBoard[4] == p)) {
+      if (aiBoard[3] == p && aiBoard[4] == p && !spaceCheck(5)) {
         //player potentially wins row 2
-        if (!spaceCheck(5)) {
-          return 5;
-        }
+        return 5;
       }
       if (aiBoard[3] == p && aiBoard[5] == p) {
         if (!spaceCheck(4)) {
           return 4;
         }
       }
-      if (aiBoard[4] == p && aiBoard[5] == p) {
-        if (!spaceCheck(3)) {
-          return 3;
-        }
+      if (aiBoard[4] == p && aiBoard[5] == p && !spaceCheck(3)) {
+        return 3;
       }
 
-      if ((aiBoard[6] == p && aiBoard[7] == p)) {
+      if (aiBoard[6] == p && aiBoard[7] == p && !spaceCheck(8)) {
         //player potentially wins row 3
-        if (!spaceCheck(8)) {
-          return 8;
-        }
+        return 8;
       }
-      if ((aiBoard[6] == p && aiBoard[8] == p)) {
-        if (!spaceCheck(7)) {
-          return 7;
-        }
+      if (aiBoard[6] == p && aiBoard[8] == p && !spaceCheck(7)) {
+        return 7;
       }
-      if ((aiBoard[7] == p && aiBoard[8] == p)) {
-        if (!spaceCheck(6)) {
-          return 6;
-        }
+      if (aiBoard[7] == p && aiBoard[8] == p && !spaceCheck(6)) {
+        return 6;
       }
 
-      if ((aiBoard[1] == p && aiBoard[4] == p)) {
+      if (aiBoard[1] == p && aiBoard[4] == p && !spaceCheck(7)) {
         //player potentially wins column 2
-        if (!spaceCheck(7)) {
-          return 7;
-        }
+        return 7;
       }
-      if (aiBoard[1] == p && aiBoard[7] == p) {
-        if (!spaceCheck(4)) {
-          return 4;
-        }
+      if (aiBoard[1] == p && aiBoard[7] == p && !spaceCheck(4)) {
+        return 4;
       }
-      if ((aiBoard[4] == p && aiBoard[7] == p)) {
-        if (!spaceCheck(1)) {
-          return 1;
-        }
+      if (aiBoard[4] == p && aiBoard[7] == p && !spaceCheck(1)) {
+        return 1;
       }
 
-      if ((aiBoard[2] == p && aiBoard[5] == p)) {
+      if (aiBoard[2] == p && aiBoard[5] == p && !spaceCheck(8)) {
         //player potentially wins column 3
-        if (!spaceCheck(8)) {
-          return 8;
-        }
+        return 8;
       }
-      if ((aiBoard[2] == p && aiBoard[8] == p)) {
-        if (!spaceCheck(5)) {
-          return 5;
-        }
+      if (aiBoard[2] == p && aiBoard[8] == p && !spaceCheck(5)) {
+        return 5;
       }
-      if ((aiBoard[5] == p && aiBoard[8] == p)) {
-        if (!spaceCheck(2)) {
-          return 2;
-        }
+      if (aiBoard[5] == p && aiBoard[8] == p && !spaceCheck(2)) {
+        return 2;
       }
-      if ((aiBoard[2] == p && aiBoard[4] == p)) {
+      if (aiBoard[2] == p && aiBoard[4] == p && !spaceCheck(6)) {
         //player potentially wins diag 2
-        if (!spaceCheck(6)) {
-          return 6;
-        }
+        return 6;
       }
-      if (aiBoard[2] == p && aiBoard[6] == p) {
-        if (!spaceCheck(4)) {
-          return 4;
-        }
+      if (aiBoard[2] == p && aiBoard[6] == p && !spaceCheck(4)) {
+        return 4;
       }
-      if (aiBoard[4] == p && aiBoard[6] == p) {
-        if (!spaceCheck(2)) {
-          return 2;
-        }
+      if (aiBoard[4] == p && aiBoard[6] == p && !spaceCheck(2)) {
+        return 2;
       }
     }
     return -1;
@@ -319,12 +272,8 @@ class GameProvider extends ChangeNotifier {
   }
 
   bool pieceCheck(int i) {
-    if (board[i] != null) {
-      if (board[i] == true) {
-        return true;
-      } else {
-        return false;
-      }
+    if (spaceCheck(i) && board[i] == true) {
+      return true;
     }
     return false;
   }
@@ -333,7 +282,6 @@ class GameProvider extends ChangeNotifier {
     if (difficulty == 0) {
       if (!spaceCheck(4)) {
         log('picked center');
-        _turn = false;
         return 4;
       } else if (spaceCheck(4)) {
         board.forEach((key, value) {
@@ -346,11 +294,8 @@ class GameProvider extends ChangeNotifier {
         log('checking for wins');
         for (int i = 0; i <= 8; i++) {
           log('${aiBoard[i]}');
-          if (!spaceCheck(i)) {
-            if (aiWinCheck(p, i)) {
-              _turn = false;
-              return i;
-            }
+          if (!spaceCheck(i) && aiWinCheck(p, i)) {
+            return i;
           }
         }
         log('checking for blocks');
@@ -361,7 +306,6 @@ class GameProvider extends ChangeNotifier {
         for (int i = 0; i <= 8; i++) {
           if (!spaceCheck(i)) {
             log('randomly picked $i');
-            _turn = false;
             return i;
           }
         }
@@ -370,7 +314,6 @@ class GameProvider extends ChangeNotifier {
     if (difficulty == 1) {
       if (!spaceCheck(4)) {
         log('picked center');
-        _turn = false;
         return 4;
       } else if (spaceCheck(4)) {
         board.forEach((key, value) {
@@ -383,17 +326,14 @@ class GameProvider extends ChangeNotifier {
         log('checking for wins');
         for (int i = 0; i <= 8; i++) {
           log('${aiBoard[i]}');
-          if (!spaceCheck(i)) {
-            if (aiWinCheck(p, i)) {
-              _turn = false;
-              return i;
-            }
+          if (!spaceCheck(i) && aiWinCheck(p, i)) {
+            return i;
           }
         }
         for (int i = 0; i <= 8; i++) {
           if (!spaceCheck(i)) {
             log('randomly picked $i');
-            _turn = false;
+
             return i;
           }
         }
@@ -420,7 +360,6 @@ class GameProvider extends ChangeNotifier {
         }
       }
     }
-    _turn = false;
     log('oops');
     return -1;
   }
@@ -434,10 +373,11 @@ class GameProvider extends ChangeNotifier {
   }
 
   void emptyBoard() {
-    //clears out board when game is done and makes sure AI is turned off
+    //clears out board when game is done
     board.clear();
     aiBoard.clear();
-    _ai = false;
+    players.clear();
+    here = false;
     notifyListeners();
   }
 }
