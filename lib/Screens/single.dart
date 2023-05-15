@@ -17,6 +17,7 @@ class _SingleState extends State<Single> {
   TextEditingController player1Controller = TextEditingController();
   List<String> names = [];
   String description = 'The best AI you will ever face.';
+  final _player1Key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +45,27 @@ class _SingleState extends State<Single> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                width: 200,
-                child: TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Player One\'s name:'),
-                  keyboardType: TextInputType.name,
-                  controller: player1Controller,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-z]')),
-                  ],
+              Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                key: _player1Key,
+                child: SizedBox(
+                  width: 200,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please put in a name.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration:
+                        const InputDecoration(labelText: 'Player One\'s name:'),
+                    keyboardType: TextInputType.name,
+                    controller: player1Controller,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-z]')),
+                    ],
+                  ),
                 ),
               ),
               SizedBox.fromSize(
@@ -83,6 +95,9 @@ class _SingleState extends State<Single> {
               ),
               OutlinedButton(
                   onPressed: () {
+                    if (!_player1Key.currentState!.validate()) {
+                      return;
+                    }
                     names.add(player1Controller.text);
                     names.add('Computer');
                     Provider.of<GameProvider>(context, listen: false)

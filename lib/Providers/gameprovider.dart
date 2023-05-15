@@ -59,6 +59,7 @@ class GameProvider extends ChangeNotifier {
 
   void addPlayer(bool piece, String player, PlayerNumber num) {
     //adds a player to the list
+    if (player == '') {}
     Player p = Player(name: player, piece: piece, number: num);
 
     players.add(p);

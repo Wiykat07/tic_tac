@@ -11,6 +11,7 @@ class Two extends StatefulWidget {
 class _TwoState extends State<Two> {
   TextEditingController player1Controller = TextEditingController();
   TextEditingController player2Controller = TextEditingController();
+  final _player2Key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,43 +24,64 @@ class _TwoState extends State<Two> {
         title: const Text('What are your names?'),
       ),
       body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              width: 200,
-              child: TextField(
-                decoration:
-                    const InputDecoration(labelText: 'Player One\'s name:'),
-                keyboardType: TextInputType.name,
-                controller: player1Controller,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-z]')),
-                ],
+        child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: _player2Key,
+          child: Column(
+            children: [
+              SizedBox(
+                width: 200,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please put in a name.';
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration:
+                      const InputDecoration(labelText: 'Player One\'s name:'),
+                  keyboardType: TextInputType.name,
+                  controller: player1Controller,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-z]')),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              width: 200,
-              child: TextField(
-                decoration:
-                    const InputDecoration(labelText: 'Player Two\'s name:'),
-                keyboardType: TextInputType.name,
-                controller: player2Controller,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-z]')),
-                ],
+              SizedBox(
+                width: 200,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please put in a name.';
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration:
+                      const InputDecoration(labelText: 'Player Two\'s name:'),
+                  keyboardType: TextInputType.name,
+                  controller: player2Controller,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-z]')),
+                  ],
+                ),
               ),
-            ),
-            SizedBox.fromSize(
-              size: Size.fromHeight(height * .05),
-            ),
-            OutlinedButton(
-                onPressed: () {
-                  names.add(player1Controller.text);
-                  names.add(player2Controller.text);
-                  Navigator.pushNamed(context, '/roll', arguments: names);
-                },
-                child: const Text('Who goes first?'))
-          ],
+              SizedBox.fromSize(
+                size: Size.fromHeight(height * .05),
+              ),
+              OutlinedButton(
+                  onPressed: () {
+                    if (!_player2Key.currentState!.validate()) {
+                      return;
+                    }
+                    names.add(player1Controller.text);
+                    names.add(player2Controller.text);
+                    Navigator.pushNamed(context, '/roll', arguments: names);
+                  },
+                  child: const Text('Who goes first?'))
+            ],
+          ),
         ),
       ),
     );
