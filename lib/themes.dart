@@ -21,11 +21,13 @@ class CustomTheme {
           color: secondary,
         ),
       ),
+      inputDecorationTheme:
+          InputDecorationTheme(labelStyle: TextStyle(color: secondary)),
       primaryColor: secondary,
       colorScheme: ColorScheme(
           brightness: Brightness.light,
           background: primary!,
-          error: Colors.red,
+          error: secondary!,
           onBackground: primary!,
           onError: const Color.fromRGBO(238, 238, 238, 1),
           onPrimary: const Color.fromRGBO(238, 238, 238, 1),
@@ -39,6 +41,7 @@ class CustomTheme {
       canvasColor: primary,
       textTheme: TextTheme(
           bodyMedium: TextStyle(color: secondary),
+          labelMedium: TextStyle(color: secondary),
           titleMedium: TextStyle(color: secondary)),
       scaffoldBackgroundColor: primary,
     );
