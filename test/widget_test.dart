@@ -7,15 +7,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/Providers/gameprovider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
+import 'package:hive_test/hive_test.dart';
 
 import 'package:tic_tac/main.dart';
 
 void main() {
+  setUp(() async {
+    await setUpTestHive();
+    await Hive.openBox('Colors');
+  });
   testWidgets('Tic Tac test run', (WidgetTester tester) async {
     // Build our app and trigger a frame.
+
     await tester.pumpWidget(MultiProvider(
       providers: [
         ChangeNotifierProvider<GameProvider>(
@@ -30,10 +37,11 @@ void main() {
     expect(find.bySubtype<Column>(), findsNWidgets(1));
 
     // check that the buttons do something
-    // await tester.tap(find.widgetWithText(OutlinedButton, 'Settings'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Settings'));
 
-    //await tester.tap(find.widgetWithText(OutlinedButton, 'Two Player'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Two Player'));
 
-    //await tester.tap(find.widgetWithText(OutlinedButton, 'One Player'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'One Player'));
   });
+  tearDown(() async => await tearDownTestHive());
 }
