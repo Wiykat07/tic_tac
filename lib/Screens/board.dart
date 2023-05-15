@@ -40,12 +40,12 @@ class _Board extends State<Board> {
         }
       }
       if (game.winState == 2) {
-        if (game.winnerName == 'C0mputer') {
+        if (game.winnerName == 'Computer') {
           if (!game.here) {
             game.here = true;
             if (MediaQuery.of(context).orientation == Orientation.portrait) {
               return Stack(children: [
-                alertBox(true, game.currentPlayer.number, 'Computer'),
+                alertBox(true, game.currentPlayer.number, game.winnerName),
                 PortraitScaffold(
                     title: 'Winner!',
                     height: height,
@@ -54,7 +54,7 @@ class _Board extends State<Board> {
               ]);
             } else {
               return Stack(children: [
-                alertBox(true, game.currentPlayer.number, 'Computer'),
+                alertBox(true, game.currentPlayer.number, game.winnerName),
                 LandscapeScaffold(
                     title: 'Winner!',
                     height: height,
@@ -82,7 +82,7 @@ class _Board extends State<Board> {
             }
           }
         }
-        if (game.winnerName != 'C0mputer') {
+        if (game.winnerName != 'Computer') {
           if (!game.here) {
             game.here = true;
             if (MediaQuery.of(context).orientation == Orientation.portrait) {
