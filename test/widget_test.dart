@@ -7,23 +7,33 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac/Providers/gameprovider.dart';
+import 'package:tic_tac/Providers/settingsprovider.dart';
 
 import 'package:tic_tac/main.dart';
 
 void main() {
   testWidgets('Tic Tac test run', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MultiProvider(
+      providers: [
+        ChangeNotifierProvider<GameProvider>(
+            create: (context) => GameProvider()),
+        ChangeNotifierProvider<Preferences>(
+            create: ((context) => Preferences())),
+      ],
+      child: const MyApp(),
+    ));
 
     // Verify that we have three outlined buttons.
     expect(find.bySubtype<Column>(), findsNWidgets(1));
 
     // check that the buttons do something
     // await tester.tap(find.widgetWithText(OutlinedButton, 'Settings'));
-    //await tester.pump();
+
     //await tester.tap(find.widgetWithText(OutlinedButton, 'Two Player'));
-    //await tester.pump();
+
     //await tester.tap(find.widgetWithText(OutlinedButton, 'One Player'));
-    //await tester.pump();
   });
 }
