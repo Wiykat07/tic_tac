@@ -17,8 +17,7 @@ class Preferences extends ChangeNotifier {
     return secondColors;
   }
 
-  void updatePrefs() async {
-    await Hive.openBox('Colors');
+  void updatePrefs() {
     colorBox.put(1, primary);
     colorBox.put(2, secondary);
     colorBox.put(3, colors);
