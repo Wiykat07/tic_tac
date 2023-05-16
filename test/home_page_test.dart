@@ -12,36 +12,34 @@ import 'package:provider/provider.dart';
 import 'package:tic_tac/Providers/gameprovider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:hive_test/hive_test.dart';
+import 'package:tic_tac/Screens/homepage.dart';
 
-import 'package:tic_tac/main.dart';
+import 'package:tic_tac/themes.dart';
 
 void main() {
   setUp(() async {
     await setUpTestHive();
     await Hive.openBox('Colors');
   });
-  testWidgets('Tic Tac test run', (WidgetTester tester) async {
+
+  Widget createTestWidget() {
+    return MaterialApp(
+        title: 'TicTac',
+        theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+            .theme(),
+        home: const MyHomePage(title: 'TicTac'));
+  }
+
+  testWidgets('Column and Buttons are there', (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
-    await tester.pumpWidget(MultiProvider(
-      providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ],
-      child: const MyApp(),
-    ));
+    await tester.pumpWidget(MultiProvider(providers: [
+      ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),
+      ChangeNotifierProvider<Preferences>(create: ((context) => Preferences())),
+    ], child: createTestWidget()));
 
-    // Verify that we have three outlined buttons.
-    expect(find.bySubtype<Column>(), findsNWidgets(1));
-
-    // check that the buttons do something
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Settings'));
-
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Two Player'));
-
-    await tester.tap(find.widgetWithText(OutlinedButton, 'One Player'));
+    // Verify that we have three outlined buttons and a column.
+    expect(find.byType(Column), findsOneWidget);
+    expect(find.byType(OutlinedButton), findsNWidgets(3));
   });
-  tearDown(() async => await tearDownTestHive());
 }

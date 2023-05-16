@@ -12,8 +12,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _ScreenState extends State<SettingsScreen> {
-  Container colorContainer(Color c) {
+  Container colorContainer(Color c, Key key) {
     return Container(
+        key: key,
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -28,7 +29,7 @@ class _ScreenState extends State<SettingsScreen> {
 
     return Consumer<Preferences>(
         builder: (BuildContext context, Preferences prefs, Widget? child) {
-      GestureDetector primaryColor(String col, Color c) {
+      GestureDetector primaryColor(String col, Color c, Key key) {
         return GestureDetector(
             onTap: () {
               setState(() {
@@ -37,10 +38,10 @@ class _ScreenState extends State<SettingsScreen> {
                 prefs.updatePrefs();
               });
             },
-            child: colorContainer(c));
+            child: colorContainer(c, key));
       }
 
-      GestureDetector secondaryColor(String col, Color c) {
+      GestureDetector secondaryColor(String col, Color c, Key key) {
         return GestureDetector(
           onTap: () {
             setState(() {
@@ -49,7 +50,7 @@ class _ScreenState extends State<SettingsScreen> {
               prefs.updatePrefs();
             });
           },
-          child: colorContainer(c),
+          child: colorContainer(c, key),
         );
       }
 
@@ -79,27 +80,27 @@ class _ScreenState extends State<SettingsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  primaryColor('Green', Colors.green),
+                  primaryColor('Green', Colors.green, const Key('green')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Blue', Colors.blue),
+                  primaryColor('Blue', Colors.blue, const Key('blue')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Red', Colors.red),
+                  primaryColor('Red', Colors.red, const Key('red')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Yellow', Colors.yellow),
+                  primaryColor('Yellow', Colors.yellow, const Key('yellow')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Purple', Colors.purple),
+                  primaryColor('Purple', Colors.purple, const Key('purple')),
                 ],
               ),
               const SizedBox(
@@ -109,27 +110,27 @@ class _ScreenState extends State<SettingsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  primaryColor('Orange', Colors.orange),
+                  primaryColor('Orange', Colors.orange, const Key('orange')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Black', Colors.black),
+                  primaryColor('Black', Colors.black, const Key('black')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('White', Colors.white),
+                  primaryColor('White', Colors.white, const Key('white')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Indigo', Colors.indigo),
+                  primaryColor('Indigo', Colors.indigo, const Key('indigo')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  primaryColor('Cyan', Colors.cyan),
+                  primaryColor('Cyan', Colors.cyan, const Key('cyan')),
                 ],
               ),
               SizedBox.fromSize(
@@ -150,27 +151,30 @@ class _ScreenState extends State<SettingsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  secondaryColor('Green', Colors.greenAccent),
+                  secondaryColor(
+                      'Green', Colors.greenAccent, const Key('green2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Blue', Colors.blueAccent),
+                  secondaryColor('Blue', Colors.blueAccent, const Key('blue2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Red', Colors.redAccent),
+                  secondaryColor('Red', Colors.redAccent, const Key('red2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Yellow', Colors.yellowAccent),
+                  secondaryColor(
+                      'Yellow', Colors.yellowAccent, const Key('yellow2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Purple', Colors.purpleAccent),
+                  secondaryColor(
+                      'Purple', Colors.purpleAccent, const Key('purple2')),
                 ],
               ),
               const SizedBox(
@@ -180,27 +184,29 @@ class _ScreenState extends State<SettingsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  secondaryColor('Orange', Colors.orangeAccent),
+                  secondaryColor(
+                      'Orange', Colors.orangeAccent, const Key('orange2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Black', Colors.black),
+                  secondaryColor('Black', Colors.black, const Key('black2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('White', Colors.white),
+                  secondaryColor('White', Colors.white, const Key('white2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Indigo', Colors.indigoAccent),
+                  secondaryColor(
+                      'Indigo', Colors.indigoAccent, const Key('indigo2')),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
-                  secondaryColor('Cyan', Colors.cyanAccent),
+                  secondaryColor('Cyan', Colors.cyanAccent, const Key('cyan2')),
                 ],
               )
             ],

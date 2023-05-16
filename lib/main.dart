@@ -31,21 +31,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<Preferences>(builder: (context, pref, child) {
-      return MaterialApp(
-        initialRoute: '/',
-        routes: {
-          '/single': (context) => const Single(),
-          '/two': (context) => const Two(),
-          '/roll': (context) => const Roll(),
-          '/settings': (context) => const SettingsScreen(),
-          '/board': (context) => const Board(),
-        },
-        title: 'TicTac',
-        theme: CustomTheme(primary: pref.primary, secondary: pref.secondary)
-            .theme(),
-        home: const MyHomePage(title: 'TicTac'),
-      );
-    });
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/single': (context) => const Single(),
+        '/two': (context) => const Two(),
+        '/roll': (context) => const Roll(),
+        '/settings': (context) => const SettingsScreen(),
+        '/board': (context) => const Board(),
+      },
+      title: 'TicTac',
+      theme: CustomTheme(
+              primary: Provider.of<Preferences>(context, listen: true).primary,
+              secondary:
+                  Provider.of<Preferences>(context, listen: true).secondary)
+          .theme(),
+      home: const MyHomePage(title: 'TicTac'),
+    );
   }
 }
