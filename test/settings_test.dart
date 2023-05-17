@@ -71,4 +71,7 @@ void main() {
       await tester.tap(find.byKey(keys2[i]));
     }
   });
+  tearDown(() async {
+    await tearDownTestHive();
+  });
 }
