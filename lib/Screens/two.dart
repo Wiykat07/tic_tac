@@ -5,18 +5,19 @@ class Two extends StatefulWidget {
   const Two({super.key});
 
   @override
-  State<Two> createState() => _TwoState();
+  State<Two> createState() => TwoState();
 }
 
-class _TwoState extends State<Two> {
+@visibleForTesting
+class TwoState extends State<Two> {
   TextEditingController player1Controller = TextEditingController();
   TextEditingController player2Controller = TextEditingController();
   final _player2Key = GlobalKey<FormState>();
+  List<String> names = [];
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    List<String> names = [];
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -39,6 +40,7 @@ class _TwoState extends State<Two> {
                       return null;
                     }
                   },
+                  key: const Key('First Player'),
                   decoration:
                       const InputDecoration(labelText: 'Player One\'s name:'),
                   keyboardType: TextInputType.name,
@@ -58,6 +60,7 @@ class _TwoState extends State<Two> {
                       return null;
                     }
                   },
+                  key: const Key('Second Player'),
                   decoration:
                       const InputDecoration(labelText: 'Player Two\'s name:'),
                   keyboardType: TextInputType.name,
