@@ -7,10 +7,11 @@ class Single extends StatefulWidget {
   const Single({super.key});
 
   @override
-  State<Single> createState() => _SingleState();
+  State<Single> createState() => SingleState();
 }
 
-class _SingleState extends State<Single> {
+@visibleForTesting
+class SingleState extends State<Single> {
   String diff = 'Tic';
   List<String> difficulty = ['Tic', 'Tac', 'Toe'];
   int ai = 0;
@@ -19,25 +20,25 @@ class _SingleState extends State<Single> {
   String description = 'The best AI you will ever face.';
   final _player1Key = GlobalKey<FormState>();
 
+  int difficult(String c) {
+    if (c == 'Tic') {
+      description = 'The best AI you will ever face.';
+      return 0;
+    }
+    if (c == 'Tac') {
+      description = 'It kind of knows how the game is played.';
+      return 1;
+    }
+    if (c == 'Toe') {
+      description = 'About as dumb as a toe. Does what it wants.';
+      return 2;
+    }
+    return -1;
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-
-    int difficult(String c) {
-      if (c == 'Tic') {
-        description = 'The best AI you will ever face.';
-        return 0;
-      }
-      if (c == 'Tac') {
-        description = 'It kind of knows how the game is played.';
-        return 1;
-      }
-      if (c == 'Toe') {
-        description = 'About as dumb as a toe. Does what it wants.';
-        return 2;
-      }
-      return -1;
-    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Enter your name')),
