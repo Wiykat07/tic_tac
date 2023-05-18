@@ -16,18 +16,6 @@ void main() {
     await Hive.openBox('Colors');
   });
 
-  Widget createTestWidget() {
-    return MaterialApp(
-        title: 'TicTac',
-        routes: {
-          '/two': (context) => const Two(),
-          '/roll': (context) => const Roll(),
-        },
-        theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-            .theme(),
-        home: const Two());
-  }
-
   group('Unit Tests', () {
     test('Is names initalized?', () {
       expect(state.names, []);
@@ -36,12 +24,23 @@ void main() {
 
   group('Widget Tests', () {
     testWidgets('Is everything there?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/two': (context) => const Two(),
+                '/roll': (context) => const Roll(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Two())));
 
       expect(find.byType(Column), findsOneWidget);
       expect(find.byType(TextFormField), findsNWidgets(2));
@@ -50,23 +49,45 @@ void main() {
     });
 
     testWidgets('Do the textformfields work?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/two': (context) => const Two(),
+                '/roll': (context) => const Roll(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Two())));
 
       await tester.enterText(find.byKey(const Key('First Player')), 'name');
       await tester.enterText(find.byKey(const Key('Second Player')), 'name2');
     });
     testWidgets('Does the button work?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/two': (context) => const Two(),
+                '/roll': (context) => const Roll(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Two())));
 
       final TwoState state2 = tester.state(find.byType(Two));
 

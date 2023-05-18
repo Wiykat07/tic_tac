@@ -22,21 +22,21 @@ void main() {
     await Hive.openBox('Colors');
   });
 
-  Widget createTestWidget() {
-    return MaterialApp(
-        title: 'TicTac',
-        theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-            .theme(),
-        home: const MyHomePage(title: 'TicTac'));
-  }
-
   testWidgets('Column and Buttons are there', (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
-    await tester.pumpWidget(MultiProvider(providers: [
-      ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),
-      ChangeNotifierProvider<Preferences>(create: ((context) => Preferences())),
-    ], child: createTestWidget()));
+    await tester.pumpWidget(MultiProvider(
+        providers: [
+          ChangeNotifierProvider<GameProvider>(
+              create: (context) => GameProvider()),
+          ChangeNotifierProvider<Preferences>(
+              create: ((context) => Preferences())),
+        ],
+        child: MaterialApp(
+            title: 'TicTac',
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: const MyHomePage(title: 'TicTac'))));
 
     // Verify that we have three outlined buttons and a column.
     expect(find.byType(Column), findsOneWidget);

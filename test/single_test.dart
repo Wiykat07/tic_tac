@@ -17,18 +17,6 @@ void main() {
     await Hive.openBox('Colors');
   });
 
-  Widget createTestWidget() {
-    return MaterialApp(
-        title: 'TicTac',
-        routes: {
-          '/single': (context) => const Single(),
-          '/board': (context) => const Board(),
-        },
-        theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-            .theme(),
-        home: const Single());
-  }
-
   group('Unit Tests', () {
     test('Is everything initialized?', () {
       expect(myWidgetState.diff, 'Tic');
@@ -46,12 +34,23 @@ void main() {
 
   group('Widget Tests', () {
     testWidgets('Is everything there?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/single': (context) => const Single(),
+                '/board': (context) => const Board(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Single())));
 
       expect(find.byType(SingleChildScrollView), findsOneWidget);
       expect(find.byType(Column), findsOneWidget);
@@ -63,23 +62,45 @@ void main() {
     });
 
     testWidgets('Does the textformfield do it\'s job?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/single': (context) => const Single(),
+                '/board': (context) => const Board(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Single())));
 
       await tester.enterText(find.byType(TextFormField), 'name');
     });
 
     testWidgets('Does the dropdown button work?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/single': (context) => const Single(),
+                '/board': (context) => const Board(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Single())));
 
       final SingleState state = tester.state(find.byType(Single));
 
@@ -97,12 +118,23 @@ void main() {
     });
 
     testWidgets('Does the outlinebutton work?', (tester) async {
-      await tester.pumpWidget(MultiProvider(providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(
-            create: ((context) => Preferences())),
-      ], child: createTestWidget()));
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<GameProvider>(
+                create: (context) => GameProvider()),
+            ChangeNotifierProvider<Preferences>(
+                create: ((context) => Preferences())),
+          ],
+          child: MaterialApp(
+              title: 'TicTac',
+              routes: {
+                '/single': (context) => const Single(),
+                '/board': (context) => const Board(),
+              },
+              theme:
+                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                      .theme(),
+              home: const Single())));
 
       final SingleState state = tester.state(find.byType(Single));
 
