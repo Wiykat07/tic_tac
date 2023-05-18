@@ -19,6 +19,16 @@ class Player {
     required this.piece,
     required this.number,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      other is Player &&
+      other.name == name &&
+      other.number == number &&
+      other.piece == piece;
+
+  @override
+  int get hashCode => name.hashCode;
 }
 
 class GameProvider extends ChangeNotifier {
@@ -47,6 +57,11 @@ class GameProvider extends ChangeNotifier {
 
   Player get currentP {
     return currentPlayer;
+  }
+
+  //added only for testing purposes
+  void winnerSet(String s) {
+    _winnerName = s;
   }
 
   void playerSet(Player p) {
@@ -78,8 +93,8 @@ class GameProvider extends ChangeNotifier {
 
   void swapTurns() {
     List<Player> newOrder = [];
-    newOrder[0] = players[1];
-    newOrder[1] = players[0];
+    newOrder.add(players[1]);
+    newOrder.add(players[0]);
 
     players = newOrder;
   }
@@ -210,10 +225,8 @@ class GameProvider extends ChangeNotifier {
         //player potentially wins row 2
         return 5;
       }
-      if (aiBoard[3] == p && aiBoard[5] == p) {
-        if (!spaceCheck(4)) {
-          return 4;
-        }
+      if (aiBoard[3] == p && aiBoard[5] == p && !spaceCheck(4)) {
+        return 4;
       }
       if (aiBoard[4] == p && aiBoard[5] == p && !spaceCheck(3)) {
         return 3;
