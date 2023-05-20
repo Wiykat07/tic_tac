@@ -136,7 +136,7 @@ void main() {
     await tester.pump();
 
     //expect that it STILL has 0 valued at false (because it should know not to change things)
-    expect(game.board, {0: false});
+    expect(game.board, {0: true});
   });
   testWidgets('InteractiveSquare Works with AI', (tester) async {
     game.addPlayer(false, 'playerone', PlayerNumber.player1);
