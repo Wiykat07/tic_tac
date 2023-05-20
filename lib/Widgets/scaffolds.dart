@@ -45,11 +45,14 @@ class LandscapeScaffold extends StatelessWidget {
               dx: width * .2,
               dy: height * .07,
               child: Column(children: [
-                buildRows(height, width, false, [0, 1, 2], inter),
+                buildRows(height, width, false, [0, 1, 2],
+                    ['zero', 'one', 'two'], inter),
                 SizedBox(height: height * .009, width: width * .012),
-                buildRows(height, width, false, [3, 4, 5], inter),
+                buildRows(height, width, false, [3, 4, 5],
+                    ['three', 'four', 'five'], inter),
                 SizedBox(height: height * .03, width: width * .012),
-                buildRows(height, width, false, [6, 7, 8], inter),
+                buildRows(height, width, false, [6, 7, 8],
+                    ['six', 'seven', 'eight'], inter),
               ]))
         ]));
   }
@@ -95,11 +98,14 @@ class PortraitScaffold extends StatelessWidget {
             dx: width * .095,
             dy: height * .18,
             child: Column(children: [
-              buildRows(height, width, true, [0, 1, 2], inter),
+              buildRows(height, width, true, [0, 1, 2], ['zero', 'one', 'two'],
+                  inter),
               SizedBox(height: height * .007, width: width * .04),
-              buildRows(height, width, true, [3, 4, 5], inter),
+              buildRows(height, width, true, [3, 4, 5],
+                  ['three', 'four', 'five'], inter),
               SizedBox(height: height * .007, width: width * .04),
-              buildRows(height, width, true, [6, 7, 8], inter),
+              buildRows(height, width, true, [6, 7, 8],
+                  ['six', 'seven', 'eight'], inter),
             ]),
           )
         ],

@@ -4,42 +4,45 @@ import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:tic_tac/Widgets/drawboard.dart';
 import 'package:tic_tac/Providers/gameprovider.dart';
 
-SizedBox piecePlaced(double h, double w, bool p, Color c) {
+SizedBox piecePlaced(double h, double w, bool p, Color c, String k) {
   return SizedBox(
     height: h,
     width: w,
+    key: Key(k),
     child: CustomPaint(painter: XAndO(false, p, c)),
   );
 }
 
-SizedBox emptySquare(double h, double w, Color c) {
+SizedBox emptySquare(double h, double w, Color c, String k) {
   return SizedBox(
     height: h,
     width: w,
+    key: Key(k),
     child: CustomPaint(painter: XAndO(true, false, c)),
   );
 }
 
-Builder square(double h, double w, int i) {
+Builder square(double h, double w, int i, String k) {
   return Builder(builder: ((context) {
     if (Provider.of<GameProvider>(context, listen: false).spaceCheck(i)) {
       return piecePlaced(
           h,
           w,
           Provider.of<GameProvider>(context, listen: false).pieceCheck(i),
-          Provider.of<Preferences>(context, listen: false).secondary);
+          Provider.of<Preferences>(context, listen: false).secondary,
+          k);
     }
     return emptySquare(
-        h, w, Provider.of<Preferences>(context, listen: false).secondary);
+        h, w, Provider.of<Preferences>(context, listen: false).secondary, k);
   }));
 }
 
-Builder interactiveSquare(double h, double w, int i) {
+Builder interactiveSquare(double h, double w, int i, String k) {
   return Builder(builder: ((context) {
     return Consumer<GameProvider>(builder: (context, game, child) {
       if (game.spaceCheck(i)) {
         return piecePlaced(h, w, game.pieceCheck(i),
-            Provider.of<Preferences>(context, listen: false).secondary);
+            Provider.of<Preferences>(context, listen: false).secondary, k);
       }
       return GestureDetector(
           onTap: () {
@@ -56,52 +59,53 @@ Builder interactiveSquare(double h, double w, int i) {
             }
           },
           child: emptySquare(h, w,
-              Provider.of<Preferences>(context, listen: false).secondary));
+              Provider.of<Preferences>(context, listen: false).secondary, k));
     });
   }));
 }
 
-Row buildRows(double h, double w, bool port, List<int> i, bool inter) {
+Row buildRows(
+    double h, double w, bool port, List<int> i, List<String> k, bool inter) {
   if (inter) {
     if (port) {
       return Row(
         children: [
-          interactiveSquare(h * .115, w * .25, i[0]),
+          interactiveSquare(h * .115, w * .25, i[0], k[0]),
           SizedBox(height: h * .1, width: w * .02),
-          interactiveSquare(h * .115, w * .25, i[1]),
+          interactiveSquare(h * .115, w * .25, i[1], k[1]),
           SizedBox(height: h * .1, width: w * .02),
-          interactiveSquare(h * .115, w * .25, i[2]),
+          interactiveSquare(h * .115, w * .25, i[2], k[2]),
         ],
       );
     }
     return Row(
       children: [
-        interactiveSquare(h * .2, w * .125, i[0]),
+        interactiveSquare(h * .2, w * .125, i[0], k[0]),
         SizedBox(height: h * .1, width: w * .012),
-        interactiveSquare(h * .2, w * .125, i[1]),
+        interactiveSquare(h * .2, w * .125, i[1], k[1]),
         SizedBox(height: h * .1, width: w * .012),
-        interactiveSquare(h * .2, w * .125, i[2]),
+        interactiveSquare(h * .2, w * .125, i[2], k[2]),
       ],
     );
   }
   if (port) {
     return Row(
       children: [
-        square(h * .115, w * .25, i[0]),
+        square(h * .115, w * .25, i[0], k[0]),
         SizedBox(height: h * .1, width: w * .02),
-        square(h * .115, w * .25, i[1]),
+        square(h * .115, w * .25, i[1], k[1]),
         SizedBox(height: h * .1, width: w * .02),
-        square(h * .115, w * .25, i[2]),
+        square(h * .115, w * .25, i[2], k[2]),
       ],
     );
   }
   return Row(
     children: [
-      square(h * .2, w * .125, i[0]),
+      square(h * .2, w * .125, i[0], k[0]),
       SizedBox(height: h * .1, width: w * .012),
-      square(h * .2, w * .125, i[1]),
+      square(h * .2, w * .125, i[1], k[1]),
       SizedBox(height: h * .1, width: w * .012),
-      square(h * .2, w * .125, i[2]),
+      square(h * .2, w * .125, i[2], k[2]),
     ],
   );
 }
