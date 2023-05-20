@@ -34,7 +34,6 @@ void main() {
     await Hive.openBox('Colors');
     p1 = Player(name: 'playerone', piece: false, number: PlayerNumber.player1);
     p2 = Player(name: 'playertwo', piece: true, number: PlayerNumber.player2);
-    p3 = Player(name: 'Computer', piece: true, number: PlayerNumber.ai);
   });
 
   testWidgets('Initial widgets are all there', (WidgetTester tester) async {
