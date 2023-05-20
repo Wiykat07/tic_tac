@@ -15,7 +15,6 @@ void main() {
   late GameProvider game;
   late Player p1;
   late Player p2;
-  late Player p3;
 
   List<String> keys = [
     'zero',
