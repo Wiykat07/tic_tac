@@ -14,10 +14,10 @@ class ColorsDatabase {
 
   //runs first time ever opening this app
   void createInitialColors() {
-    primary = Colors.green;
-    secondary = Colors.yellowAccent;
-    colors = 'Green';
-    secondColors = 'Yellow';
+    colorBox.put(1, primary);
+    colorBox.put(2, secondary);
+    colorBox.put(3, colors);
+    colorBox.put(4, secondColors);
   }
 
   void loadData() {

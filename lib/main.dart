@@ -24,7 +24,7 @@ void main() async {
         ChangeNotifierProvider<GameProvider>(
           create: (context) => GameProvider(),
         ),
-        ChangeNotifierProvider<Preferences>(
+        ListenableProvider<Preferences>(
           create: (context) => Preferences(),
         ),
       ],

@@ -8,19 +8,19 @@ class Preferences extends ChangeNotifier {
   final colorBox = Hive.box('Colors');
 
   String get color {
-    return db.colors;
+    return db.colorBox.get(3) as String;
   }
 
   Color get primary {
-    return db.primary;
+    return db.colorBox.get(1, defaultValue: Colors.green) as Color;
   }
 
   Color get secondary {
-    return db.secondary;
+    return db.colorBox.get(2, defaultValue: Colors.yellowAccent) as Color;
   }
 
   String get secondColor {
-    return db.secondColors;
+    return db.colorBox.get(4) as String;
   }
 
   void initialPrefs() {
@@ -29,7 +29,6 @@ class Preferences extends ChangeNotifier {
     } else {
       db.loadData();
     }
-    notifyListeners();
   }
 
   Future<void> updatePrefs() async {
