@@ -31,7 +31,7 @@ class Preferences extends ChangeNotifier {
     }
   }
 
-  Future<void> updatePrefs() async {
+  void updatePrefs() {
     db.loadData();
     notifyListeners();
   }
