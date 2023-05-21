@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_test/hive_test.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/Providers/gameprovider.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
+import 'package:tic_tac/Providers/game_provider.dart';
+import 'package:tic_tac/Providers/settings_provider.dart';
 import 'package:tic_tac/Screens/board.dart';
 import 'package:tic_tac/Screens/single.dart';
 import 'package:tic_tac/themes.dart';
@@ -27,30 +27,37 @@ void main() {
     });
     test('Does Difficult do it\'s job?', () {
       expect(myWidgetState.difficult('Tac'), 1);
-      expect(myWidgetState.description,
-          'It kind of knows how the game is played.',);
+      expect(
+        myWidgetState.description,
+        'It kind of knows how the game is played.',
+      );
     });
   });
 
   group('Widget Tests', () {
     testWidgets('Is everything there?', (tester) async {
-      await tester.pumpWidget(MultiProvider(
+      await tester.pumpWidget(
+        MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider(),),
+              create: (context) => GameProvider(),
+            ),
             ChangeNotifierProvider<Preferences>(
-                create: (context) => Preferences(),),
+              create: (context) => Preferences(),
+            ),
           ],
           child: MaterialApp(
-              title: 'TicTac',
-              routes: {
-                '/single': (context) => const Single(),
-                '/board': (context) => const Board(),
-              },
-              theme:
-                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                      .theme(),
-              home: const Single(),),),);
+            title: 'TicTac',
+            routes: {
+              '/single': (context) => const Single(),
+              '/board': (context) => const Board(),
+            },
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: const Single(),
+          ),
+        ),
+      );
 
       expect(find.byType(SingleChildScrollView), findsOneWidget);
       expect(find.byType(Column), findsOneWidget);
@@ -62,45 +69,55 @@ void main() {
     });
 
     testWidgets('Does the textformfield do it\'s job?', (tester) async {
-      await tester.pumpWidget(MultiProvider(
+      await tester.pumpWidget(
+        MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider(),),
+              create: (context) => GameProvider(),
+            ),
             ChangeNotifierProvider<Preferences>(
-                create: (context) => Preferences(),),
+              create: (context) => Preferences(),
+            ),
           ],
           child: MaterialApp(
-              title: 'TicTac',
-              routes: {
-                '/single': (context) => const Single(),
-                '/board': (context) => const Board(),
-              },
-              theme:
-                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                      .theme(),
-              home: const Single(),),),);
+            title: 'TicTac',
+            routes: {
+              '/single': (context) => const Single(),
+              '/board': (context) => const Board(),
+            },
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: const Single(),
+          ),
+        ),
+      );
 
       await tester.enterText(find.byType(TextFormField), 'name');
     });
 
     testWidgets('Does the dropdown button work?', (tester) async {
-      await tester.pumpWidget(MultiProvider(
+      await tester.pumpWidget(
+        MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider(),),
+              create: (context) => GameProvider(),
+            ),
             ChangeNotifierProvider<Preferences>(
-                create: (context) => Preferences(),),
+              create: (context) => Preferences(),
+            ),
           ],
           child: MaterialApp(
-              title: 'TicTac',
-              routes: {
-                '/single': (context) => const Single(),
-                '/board': (context) => const Board(),
-              },
-              theme:
-                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                      .theme(),
-              home: const Single(),),),);
+            title: 'TicTac',
+            routes: {
+              '/single': (context) => const Single(),
+              '/board': (context) => const Board(),
+            },
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: const Single(),
+          ),
+        ),
+      );
 
       final SingleState state = tester.state(find.byType(Single));
 
@@ -118,23 +135,28 @@ void main() {
     });
 
     testWidgets('Does the outlinebutton work?', (tester) async {
-      await tester.pumpWidget(MultiProvider(
+      await tester.pumpWidget(
+        MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider(),),
+              create: (context) => GameProvider(),
+            ),
             ChangeNotifierProvider<Preferences>(
-                create: (context) => Preferences(),),
+              create: (context) => Preferences(),
+            ),
           ],
           child: MaterialApp(
-              title: 'TicTac',
-              routes: {
-                '/single': (context) => const Single(),
-                '/board': (context) => const Board(),
-              },
-              theme:
-                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                      .theme(),
-              home: const Single(),),),);
+            title: 'TicTac',
+            routes: {
+              '/single': (context) => const Single(),
+              '/board': (context) => const Board(),
+            },
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: const Single(),
+          ),
+        ),
+      );
 
       final SingleState state = tester.state(find.byType(Single));
 

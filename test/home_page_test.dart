@@ -10,9 +10,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_test/hive_test.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/Providers/gameprovider.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
-import 'package:tic_tac/Screens/homepage.dart';
+import 'package:tic_tac/Providers/game_provider.dart';
+import 'package:tic_tac/Providers/settings_provider.dart';
+import 'package:tic_tac/Screens/home_page.dart';
 import 'package:tic_tac/themes.dart';
 
 void main() {
@@ -24,18 +24,24 @@ void main() {
   testWidgets('Column and Buttons are there', (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(
-              create: (context) => GameProvider(),),
+            create: (context) => GameProvider(),
+          ),
           ChangeNotifierProvider<Preferences>(
-              create: (context) => Preferences(),),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: const MyHomePage(title: 'TicTac'),),),);
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: const MyHomePage(title: 'TicTac'),
+        ),
+      ),
+    );
 
     // Verify that we have three outlined buttons and a column.
     expect(find.byType(Column), findsOneWidget);

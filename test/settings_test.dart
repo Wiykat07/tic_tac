@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_test/hive_test.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
+import 'package:tic_tac/Providers/settings_provider.dart';
 import 'package:tic_tac/Screens/settings.dart';
 
 import 'package:tic_tac/themes.dart';
@@ -42,16 +42,21 @@ void main() {
   });
 
   testWidgets('All the buttons are there!', (tester) async {
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<Preferences>(
-              create: (context) => Preferences(),),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: const SettingsScreen(),),),);
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: const SettingsScreen(),
+        ),
+      ),
+    );
 
     expect(find.byType(Column), findsOneWidget);
     expect(find.byType(Row), findsNWidgets(4));
@@ -60,16 +65,21 @@ void main() {
   });
 
   testWidgets('Buttons work!', (tester) async {
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<Preferences>(
-              create: (context) => Preferences(),),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: const SettingsScreen(),),),);
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: const SettingsScreen(),
+        ),
+      ),
+    );
 
     //primary color buttons work
     for (int i = 0; i < keys1.length; i++) {

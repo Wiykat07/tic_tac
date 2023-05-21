@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_test/hive_test.dart';
-import 'package:tic_tac/Providers/gameprovider.dart';
+import 'package:tic_tac/Providers/game_provider.dart';
 
 void main() {
   late GameProvider sut;
@@ -14,8 +14,10 @@ void main() {
 
   test('Initial Values', () {
     expect(sut.players, []);
-    expect(sut.currentPlayer,
-        Player(name: '', piece: false, number: PlayerNumber.none),);
+    expect(
+      sut.currentPlayer,
+      Player(name: '', piece: false, number: PlayerNumber.none),
+    );
     expect(sut.winnerName, '');
     expect(sut.board, {});
     expect(sut.aiBoard, {});
@@ -26,7 +28,8 @@ void main() {
 
   test('Does get name work?', () {
     expect(sut.name, '');
-    final Player p = Player(name: 'hi', piece: false, number: PlayerNumber.none);
+    final Player p =
+        Player(name: 'hi', piece: false, number: PlayerNumber.none);
 
     sut.playerSet(p);
 
@@ -53,10 +56,13 @@ void main() {
   });
 
   test('Does get currentP work?', () {
-    expect(sut.currentPlayer,
-        Player(name: '', piece: false, number: PlayerNumber.none),);
+    expect(
+      sut.currentPlayer,
+      Player(name: '', piece: false, number: PlayerNumber.none),
+    );
 
-    final Player p = Player(name: 'hi', piece: true, number: PlayerNumber.player1);
+    final Player p =
+        Player(name: 'hi', piece: true, number: PlayerNumber.player1);
 
     sut.playerSet(p);
 
@@ -64,10 +70,13 @@ void main() {
   });
 
   test('Does playerSet work?', () {
-    expect(sut.currentPlayer,
-        Player(name: '', piece: false, number: PlayerNumber.none),);
+    expect(
+      sut.currentPlayer,
+      Player(name: '', piece: false, number: PlayerNumber.none),
+    );
 
-    final Player p = Player(name: 'hi', piece: true, number: PlayerNumber.player1);
+    final Player p =
+        Player(name: 'hi', piece: true, number: PlayerNumber.player1);
 
     sut.playerSet(p);
 
@@ -85,7 +94,8 @@ void main() {
   test('Does addPlayer work?', () {
     expect(sut.players, []);
 
-    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p =
+        Player(name: 'me', piece: false, number: PlayerNumber.player1);
 
     sut.addPlayer(false, 'me', PlayerNumber.player1);
 
@@ -93,8 +103,10 @@ void main() {
   });
 
   test('Does switchTurns work?', () {
-    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
-    final Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
+    final Player p =
+        Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p2 =
+        Player(name: 'you', piece: true, number: PlayerNumber.player2);
 
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
@@ -107,8 +119,10 @@ void main() {
   });
 
   test('Does swapTurns work?', () {
-    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
-    final Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
+    final Player p =
+        Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p2 =
+        Player(name: 'you', piece: true, number: PlayerNumber.player2);
 
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
@@ -687,8 +701,10 @@ void main() {
     sut.aiBoard.addEntries([const MapEntry(4, true)]);
     sut.aiBoard.addEntries([const MapEntry(2, false)]);
     sut.aiBoard.addEntries([const MapEntry(5, true)]);
-    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
-    final Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
+    final Player p =
+        Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p2 =
+        Player(name: 'you', piece: true, number: PlayerNumber.player2);
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
     sut.here = true;

@@ -1,7 +1,8 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/Providers/gameprovider.dart';
+import 'package:tic_tac/Providers/game_provider.dart';
 
 class Roll extends StatefulWidget {
   const Roll({super.key});
@@ -38,40 +39,44 @@ class _Roll extends State<Roll> {
     Future<void> rollsResults() async {
       diceRoll();
       return showDialog<void>(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Who Goes First?'),
-              content: Text(
-                '${Provider.of<GameProvider>(context).name} goes first.',
-                textAlign: TextAlign.center,
-              ),
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/board', arguments: -1);
-                    },
-                    child: const Text('Let\'s Play!'),)
-              ],
-            );
-          },);
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Who Goes First?'),
+            content: Text(
+              '${Provider.of<GameProvider>(context).name} goes first.',
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/board', arguments: -1);
+                },
+                child: const Text('Let\'s Play!'),
+              )
+            ],
+          );
+        },
+      );
     }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Who gets to go first?')),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Flipping a coin...'),
-          OutlinedButton(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Flipping a coin...'),
+            OutlinedButton(
               onPressed: () {
                 rollsResults();
               },
-              child: const Text('Press to flip'),),
-        ],
-      ),),
+              child: const Text('Press to flip'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-import 'package:tic_tac/Providers/gameprovider.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
+import 'package:tic_tac/Providers/game_provider.dart';
+import 'package:tic_tac/Providers/settings_provider.dart';
 import 'package:tic_tac/Screens/board.dart';
-import 'package:tic_tac/Screens/homepage.dart';
+import 'package:tic_tac/Screens/home_page.dart';
 import 'package:tic_tac/Screens/settings.dart';
 import 'package:tic_tac/Screens/single.dart';
 import 'package:tic_tac/Screens/two.dart';
@@ -18,10 +18,16 @@ void main() async {
 
   final colorBox = await Hive.openBox('Colors');
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),
-    ChangeNotifierProvider<Preferences>(create: (context) => Preferences()),
-  ], child: const MyApp(),),);
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<GameProvider>(
+            create: (context) => GameProvider()),
+        ChangeNotifierProvider<Preferences>(create: (context) => Preferences()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,10 +47,9 @@ class MyApp extends StatelessWidget {
       },
       title: 'TicTac',
       theme: CustomTheme(
-              primary: Provider.of<Preferences>(context, listen: true).primary,
-              secondary:
-                  Provider.of<Preferences>(context, listen: true).secondary,)
-          .theme(),
+        primary: Provider.of<Preferences>(context, listen: true).primary,
+        secondary: Provider.of<Preferences>(context, listen: true).secondary,
+      ).theme(),
       home: const MyHomePage(title: 'TicTac'),
     );
   }
