@@ -22,8 +22,11 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
-        ChangeNotifierProvider<Preferences>(create: (context) => Preferences()),
+          create: (context) => GameProvider(),
+        ),
+        ChangeNotifierProvider<Preferences>(
+          create: (context) => Preferences(),
+        ),
       ],
       child: const MyApp(),
     ),

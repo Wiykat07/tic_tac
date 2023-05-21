@@ -21,11 +21,11 @@ class ColorsDatabase {
   }
 
   void loadData() {
-    primary = colorBox.get(1);
-    secondary = colorBox.get(2);
-    colors = colorBox.get(3);
+    primary = colorBox.get(1) as Color;
+    secondary = colorBox.get(2) as Color;
+    colors = colorBox.get(3) as String;
     log('Color is $colors');
-    secondColors = colorBox.get(4);
+    secondColors = colorBox.get(4) as String;
   }
 
   void updatePrimary(Color p, String c) {

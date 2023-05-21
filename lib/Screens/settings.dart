@@ -13,19 +13,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _ScreenState extends State<SettingsScreen> {
-  Container colorContainer(Color c, Key key) {
-    return Container(
-      key: key,
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        color: c,
-        border: Border.all(width: 1),
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -165,12 +152,19 @@ class _ScreenState extends State<SettingsScreen> {
                       width: 20,
                     ),
                     secondaryColor(
-                        'Blue', Colors.blueAccent, const Key('blue2')),
+                      'Blue',
+                      Colors.blueAccent,
+                      const Key('blue2'),
+                    ),
                     const SizedBox(
                       height: 20,
                       width: 20,
                     ),
-                    secondaryColor('Red', Colors.redAccent, const Key('red2')),
+                    secondaryColor(
+                      'Red',
+                      Colors.redAccent,
+                      const Key('red2'),
+                    ),
                     const SizedBox(
                       height: 20,
                       width: 20,
@@ -227,7 +221,10 @@ class _ScreenState extends State<SettingsScreen> {
                       width: 20,
                     ),
                     secondaryColor(
-                        'Cyan', Colors.cyanAccent, const Key('cyan2')),
+                      'Cyan',
+                      Colors.cyanAccent,
+                      const Key('cyan2'),
+                    ),
                   ],
                 )
               ],
@@ -235,6 +232,19 @@ class _ScreenState extends State<SettingsScreen> {
           ),
         );
       },
+    );
+  }
+
+  Container colorContainer(Color c, Key key) {
+    return Container(
+      key: key,
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+        color: c,
+        border: Border.all(width: 1),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      ),
     );
   }
 }
