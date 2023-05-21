@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tic_tac/colordata.dart';
+import 'package:tic_tac/color_data.dart';
 
 class Preferences extends ChangeNotifier {
   ColorsDatabase db = ColorsDatabase();
@@ -11,16 +11,16 @@ class Preferences extends ChangeNotifier {
     return db.colors;
   }
 
-  String get secondColor {
-    return db.secondColors;
-  }
-
   Color get primary {
     return db.primary;
   }
 
   Color get secondary {
     return db.secondary;
+  }
+
+  String get secondColor {
+    return db.secondColors;
   }
 
   void initialPrefs() {
