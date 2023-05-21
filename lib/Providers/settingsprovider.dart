@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tic_tac/colordata.dart';
 
 class Preferences extends ChangeNotifier {
-  Color primary = Colors.green;
-  Color secondary = Colors.yellowAccent;
-  String colors = 'Green';
-  String secondColors = 'Yellow';
+  ColorsDatabase db = ColorsDatabase();
 
-  Box colorBox = Hive.box('Colors');
+  final colorBox = Hive.box('Colors');
 
   String get color {
-    return colors;
+    return db.colors;
   }
 
   String get secondColor {
-    return secondColors;
+    return db.secondColors;
   }
 
-  void updatePrefs() {
-    colorBox.put(1, primary);
-    colorBox.put(2, secondary);
-    colorBox.put(3, colors);
-    colorBox.put(4, secondColors);
+  Color get primary {
+    return db.primary;
+  }
 
+  Color get secondary {
+    return db.secondary;
+  }
+
+  void initialPrefs() {
+    if (colorBox.get(3) == null || colorBox.get(1) == null) {
+      db.createInitialColors();
+    } else {
+      db.loadData();
+    }
+    notifyListeners();
+  }
+
+  void updatePrefs() async {
+    db.loadData();
     notifyListeners();
   }
 }

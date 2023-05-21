@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -27,14 +28,15 @@ class _ScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
 
+    final colorBox = Hive.box('Colors');
+
     return Consumer<Preferences>(
         builder: (BuildContext context, Preferences prefs, Widget? child) {
       GestureDetector primaryColor(String col, Color c, Key key) {
         return GestureDetector(
             onTap: () {
               setState(() {
-                prefs.colors = col;
-                prefs.primary = c;
+                prefs.db.updatePrimary(c, col);
                 prefs.updatePrefs();
               });
             },
@@ -45,8 +47,7 @@ class _ScreenState extends State<SettingsScreen> {
         return GestureDetector(
           onTap: () {
             setState(() {
-              prefs.secondColors = col;
-              prefs.secondary = c;
+              prefs.db.updateSecondary(c, col);
               prefs.updatePrefs();
             });
           },

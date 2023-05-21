@@ -7,6 +7,7 @@ import 'package:tic_tac/Screens/single.dart';
 import 'package:tic_tac/Screens/two.dart';
 import 'package:tic_tac/Providers/gameprovider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
+import 'package:tic_tac/colordata.dart';
 import 'package:tic_tac/themes.dart';
 import 'package:tic_tac/Screens/homepage.dart';
 
@@ -14,10 +15,9 @@ import 'Screens/roll.dart';
 
 void main() async {
   await Hive.initFlutter();
-
   Hive.registerAdapter(ColorAdapter());
 
-  await Hive.openBox('Colors');
+  var colorBox = await Hive.openBox('Colors');
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),

@@ -1,45 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_test/hive_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:tic_tac/colordata.dart';
+
+class MockColors extends Mock implements ColorsDatabase {}
 
 void main() {
-  late Preferences sut;
+  late ColorsDatabase db;
 
   setUp(() async {
     await setUpTestHive();
-    Hive.registerAdapter(ColorAdapter());
     await Hive.openBox('Colors');
-    sut = Preferences();
+    db = ColorsDatabase();
   });
   test('Initial values', () {
-    expect(sut.primary, Colors.green);
-    expect(sut.colors, 'Green');
-    expect(sut.secondary, Colors.yellowAccent);
-    expect(sut.secondColors, 'Yellow');
+    expect(db.primary, Colors.green);
+    expect(db.secondary, Colors.yellowAccent);
+    expect(db.colors, 'Green');
+    expect(db.secondColors, 'Yellow');
   });
   test('Gets colors', () {
-    sut.colors = 'Blue';
-    expect(sut.color, sut.colors);
-    sut.secondColors = 'Red';
-    expect(sut.secondColor, sut.secondColors);
+    expect(db.primary, Colors.green);
+    expect(db.secondary, Colors.yellowAccent);
+    expect(db.colors, 'Green');
+    expect(db.secondColors, 'Yellow');
   });
   test('updates colors', () {
-    sut.primary = Colors.red;
-    sut.secondary = Colors.blue;
-    sut.colors = "Red";
-    sut.secondColors = "Blue";
+    db.primary = Colors.black;
+    db.secondary = Colors.white;
+    db.colors = 'Black';
+    db.secondColors = 'White';
 
-    sut.updatePrefs();
+    expect(db.colorBox.get(1), Colors.black);
+    expect(db.colorBox.get(3), 'Black');
+  });
 
-    expect(sut.colorBox.get(1), Colors.red);
-    expect(sut.colorBox.get(2), Colors.blue);
-    expect(sut.colorBox.get(3), 'Red');
-    expect(sut.colorBox.get(4), 'Blue');
-  });
-  tearDown(() async {
-    await tearDownTestHive();
-  });
+  tearDown(() => tearDownTestHive());
 }

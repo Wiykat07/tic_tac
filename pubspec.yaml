@@ -39,7 +39,6 @@ dependencies:
   align_positioned: ^3.0.0
   provider: ^6.0.5
   confetti: ^0.7.0
-  shared_preferences: ^2.0.18
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 

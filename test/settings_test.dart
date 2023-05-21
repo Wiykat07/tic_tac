@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_test/hive_test.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
-import 'package:hive_test/hive_test.dart';
 import 'package:tic_tac/Screens/settings.dart';
 
 import 'package:tic_tac/themes.dart';
@@ -36,6 +38,7 @@ void main() {
   setUp(() async {
     await setUpTestHive();
     await Hive.openBox('Colors');
+    await Hive.openBox('Names');
   });
 
   testWidgets('All the buttons are there!', (tester) async {
@@ -70,14 +73,17 @@ void main() {
 
     //primary color buttons work
     for (int i = 0; i < keys1.length; i++) {
+      log('button $i');
       await tester.tap(find.byKey(keys1[i]));
+      await tester.pump();
     }
     //secondary color buttons work
     for (int i = 0; i < keys2.length; i++) {
+      log('second button $i');
       await tester.tap(find.byKey(keys2[i]));
+      await tester.pump();
     }
-  });
-  tearDown(() async {
-    await tearDownTestHive();
+
+    expect(find.byType(Container), findsNWidgets(20));
   });
 }
