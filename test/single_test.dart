@@ -28,7 +28,7 @@ void main() {
     test('Does Difficult do it\'s job?', () {
       expect(myWidgetState.difficult('Tac'), 1);
       expect(myWidgetState.description,
-          'It kind of knows how the game is played.');
+          'It kind of knows how the game is played.',);
     });
   });
 
@@ -37,9 +37,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -50,7 +50,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Single())));
+              home: const Single(),),),);
 
       expect(find.byType(SingleChildScrollView), findsOneWidget);
       expect(find.byType(Column), findsOneWidget);
@@ -65,9 +65,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -78,7 +78,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Single())));
+              home: const Single(),),),);
 
       await tester.enterText(find.byType(TextFormField), 'name');
     });
@@ -87,9 +87,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -100,7 +100,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Single())));
+              home: const Single(),),),);
 
       final SingleState state = tester.state(find.byType(Single));
 
@@ -121,9 +121,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -134,7 +134,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Single())));
+              home: const Single(),),),);
 
       final SingleState state = tester.state(find.byType(Single));
 

@@ -10,7 +10,7 @@ import 'package:tic_tac/Screens/roll.dart';
 import 'package:tic_tac/themes.dart';
 
 void main() {
-  List<String> names = ['a', 'b'];
+  final List<String> names = ['a', 'b'];
   setUp(() async {
     await setUpTestHive();
     await Hive.openBox('Colors');
@@ -18,58 +18,70 @@ void main() {
 
   group('Widget Tests', () {
     testWidgets('Is everything there?', (tester) async {
-      await tester.pumpWidget(MultiProvider(
+      await tester.pumpWidget(
+        MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+              create: (context) => GameProvider(),
+            ),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+              create: (context) => Preferences(),
+            ),
           ],
           child: MaterialApp(
-              title: 'TicTac',
-              routes: {
-                '/roll': (context) => const Roll(),
-                '/board': (context) => const Board(),
+            title: 'TicTac',
+            routes: {
+              '/roll': (context) => const Roll(),
+              '/board': (context) => const Board(),
+            },
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: Navigator(
+              onGenerateRoute: (_) {
+                return MaterialPageRoute<Widget>(
+                  builder: (_) => const Roll(),
+                  settings: RouteSettings(arguments: names),
+                );
               },
-              theme:
-                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                      .theme(),
-              home: Navigator(
-                onGenerateRoute: (_) {
-                  return MaterialPageRoute<Widget>(
-                      builder: (_) => const Roll(),
-                      settings: RouteSettings(arguments: names));
-                },
-              ))));
+            ),
+          ),
+        ),
+      );
 
       expect(find.byType(Text), findsNWidgets(3));
       expect(find.byType(OutlinedButton), findsOneWidget);
     });
 
     testWidgets('Does Alertbox appear?', (tester) async {
-      await tester.pumpWidget(MultiProvider(
+      await tester.pumpWidget(
+        MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+              create: (context) => GameProvider(),
+            ),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+              create: (context) => Preferences(),
+            ),
           ],
           child: MaterialApp(
-              title: 'TicTac',
-              routes: {
-                '/roll': (context) => const Roll(),
-                '/board': (context) => const Board(),
+            title: 'TicTac',
+            routes: {
+              '/roll': (context) => const Roll(),
+              '/board': (context) => const Board(),
+            },
+            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+                .theme(),
+            home: Navigator(
+              onGenerateRoute: (_) {
+                return MaterialPageRoute<Widget>(
+                  builder: (_) => const Roll(),
+                  settings: RouteSettings(arguments: names),
+                );
               },
-              theme:
-                  CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                      .theme(),
-              home: Navigator(
-                onGenerateRoute: (_) {
-                  return MaterialPageRoute<Widget>(
-                      builder: (_) => const Roll(),
-                      settings: RouteSettings(arguments: names));
-                },
-              ))));
+            ),
+          ),
+        ),
+      );
 
       expect(find.byType(AlertDialog), findsNothing);
 

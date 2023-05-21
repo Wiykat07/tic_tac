@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:provider/provider.dart';
+import 'package:tic_tac/Providers/settingsprovider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -21,12 +21,12 @@ class _ScreenState extends State<SettingsScreen> {
         decoration: BoxDecoration(
             color: c,
             border: Border.all(width: 1),
-            borderRadius: const BorderRadius.all(Radius.circular(8))));
+            borderRadius: const BorderRadius.all(Radius.circular(8)),),);
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    final double height = MediaQuery.of(context).size.height;
 
     final colorBox = Hive.box('Colors');
 
@@ -40,7 +40,7 @@ class _ScreenState extends State<SettingsScreen> {
                 prefs.updatePrefs();
               });
             },
-            child: colorContainer(c, key));
+            child: colorContainer(c, key),);
       }
 
       GestureDetector secondaryColor(String col, Color c, Key key) {
@@ -153,7 +153,7 @@ class _ScreenState extends State<SettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   secondaryColor(
-                      'Green', Colors.greenAccent, const Key('green2')),
+                      'Green', Colors.greenAccent, const Key('green2'),),
                   const SizedBox(
                     height: 20,
                     width: 20,
@@ -169,13 +169,13 @@ class _ScreenState extends State<SettingsScreen> {
                     width: 20,
                   ),
                   secondaryColor(
-                      'Yellow', Colors.yellowAccent, const Key('yellow2')),
+                      'Yellow', Colors.yellowAccent, const Key('yellow2'),),
                   const SizedBox(
                     height: 20,
                     width: 20,
                   ),
                   secondaryColor(
-                      'Purple', Colors.purpleAccent, const Key('purple2')),
+                      'Purple', Colors.purpleAccent, const Key('purple2'),),
                 ],
               ),
               const SizedBox(
@@ -186,7 +186,7 @@ class _ScreenState extends State<SettingsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   secondaryColor(
-                      'Orange', Colors.orangeAccent, const Key('orange2')),
+                      'Orange', Colors.orangeAccent, const Key('orange2'),),
                   const SizedBox(
                     height: 20,
                     width: 20,
@@ -202,7 +202,7 @@ class _ScreenState extends State<SettingsScreen> {
                     width: 20,
                   ),
                   secondaryColor(
-                      'Indigo', Colors.indigoAccent, const Key('indigo2')),
+                      'Indigo', Colors.indigoAccent, const Key('indigo2'),),
                   const SizedBox(
                     height: 20,
                     width: 20,
@@ -214,6 +214,6 @@ class _ScreenState extends State<SettingsScreen> {
           ),
         ),
       );
-    });
+    },);
   }
 }

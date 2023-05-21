@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -27,17 +25,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/single');
                 },
-                child: const Text('One Player')),
+                child: const Text('One Player'),),
             OutlinedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/two');
                 },
-                child: const Text('Two Player')),
+                child: const Text('Two Player'),),
             OutlinedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/settings');
                 },
-                child: const Text('Settings'))
+                child: const Text('Settings'),)
           ],
         ),
       ),

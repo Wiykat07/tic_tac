@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hive_test/hive_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:tic_tac/Providers/settingsprovider.dart';
-
-import 'package:hive_flutter/adapters.dart';
 import 'package:tic_tac/colordata.dart';
 
 class MockColors extends Mock implements ColorsDatabase {}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tic_tac/Providers/gameprovider.dart';
 import 'package:tic_tac/Providers/settingsprovider.dart';
 import 'package:tic_tac/Widgets/drawboard.dart';
-import 'package:tic_tac/Providers/gameprovider.dart';
 
 SizedBox piecePlaced(double h, double w, bool p, Color c, String k) {
   return SizedBox(
@@ -23,26 +23,26 @@ SizedBox emptySquare(double h, double w, Color c, String k) {
 }
 
 Builder square(double h, double w, int i, String k) {
-  return Builder(builder: ((context) {
+  return Builder(builder: (context) {
     if (Provider.of<GameProvider>(context, listen: false).spaceCheck(i)) {
       return piecePlaced(
           h,
           w,
           Provider.of<GameProvider>(context, listen: false).pieceCheck(i),
           Provider.of<Preferences>(context, listen: false).secondary,
-          k);
+          k,);
     }
     return emptySquare(
-        h, w, Provider.of<Preferences>(context, listen: false).secondary, k);
-  }));
+        h, w, Provider.of<Preferences>(context, listen: false).secondary, k,);
+  },);
 }
 
 Builder interactiveSquare(double h, double w, int i, String k) {
-  return Builder(builder: ((context) {
+  return Builder(builder: (context) {
     return Consumer<GameProvider>(builder: (context, game, child) {
       if (game.spaceCheck(i)) {
         return piecePlaced(h, w, game.pieceCheck(i),
-            Provider.of<Preferences>(context, listen: false).secondary, k);
+            Provider.of<Preferences>(context, listen: false).secondary, k,);
       }
       return GestureDetector(
           onTap: () {
@@ -50,22 +50,22 @@ Builder interactiveSquare(double h, double w, int i, String k) {
             game.switchTurns(!game.currentPlayer.piece);
             if (game.currentPlayer.number == PlayerNumber.ai) {
               game.boardCheck(!game
-                  .piece); //check winstate to make sure there wasn't a winning play
+                  .piece,); //check winstate to make sure there wasn't a winning play
               if (game.winState == 1) {
-                int spot = game.aiTurn(game.currentPlayer.piece);
+                final int spot = game.aiTurn(game.currentPlayer.piece);
                 game.placePieces(game.currentPlayer.piece, spot);
                 game.switchTurns(!game.currentPlayer.piece);
               }
             }
           },
           child: emptySquare(h, w,
-              Provider.of<Preferences>(context, listen: false).secondary, k));
-    });
-  }));
+              Provider.of<Preferences>(context, listen: false).secondary, k,),);
+    },);
+  },);
 }
 
 Row buildRows(
-    double h, double w, bool port, List<int> i, List<String> k, bool inter) {
+    double h, double w, bool port, List<int> i, List<String> k, bool inter,) {
   if (inter) {
     if (port) {
       return Row(

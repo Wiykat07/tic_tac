@@ -44,7 +44,7 @@ class _ConfettiWidgetsState extends State<ConfettiWidgets> {
                 Colors.orange,
                 Colors.purple,
               ],
-            )),
+            ),),
         widget.child,
       ],
     );

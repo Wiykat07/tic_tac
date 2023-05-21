@@ -15,7 +15,7 @@ void main() {
   test('Initial Values', () {
     expect(sut.players, []);
     expect(sut.currentPlayer,
-        Player(name: '', piece: false, number: PlayerNumber.none));
+        Player(name: '', piece: false, number: PlayerNumber.none),);
     expect(sut.winnerName, '');
     expect(sut.board, {});
     expect(sut.aiBoard, {});
@@ -26,7 +26,7 @@ void main() {
 
   test('Does get name work?', () {
     expect(sut.name, '');
-    Player p = Player(name: 'hi', piece: false, number: PlayerNumber.none);
+    final Player p = Player(name: 'hi', piece: false, number: PlayerNumber.none);
 
     sut.playerSet(p);
 
@@ -36,7 +36,7 @@ void main() {
   test('Does get piece work?', () {
     expect(sut.piece, false);
 
-    Player p = Player(name: 'hi', piece: true, number: PlayerNumber.none);
+    final Player p = Player(name: 'hi', piece: true, number: PlayerNumber.none);
 
     sut.playerSet(p);
 
@@ -45,7 +45,7 @@ void main() {
 
   test('Does get winnerName work?', () {
     expect(sut.winnerName, '');
-    String s = 'me';
+    const String s = 'me';
 
     sut.winnerSet(s);
 
@@ -54,9 +54,9 @@ void main() {
 
   test('Does get currentP work?', () {
     expect(sut.currentPlayer,
-        Player(name: '', piece: false, number: PlayerNumber.none));
+        Player(name: '', piece: false, number: PlayerNumber.none),);
 
-    Player p = Player(name: 'hi', piece: true, number: PlayerNumber.player1);
+    final Player p = Player(name: 'hi', piece: true, number: PlayerNumber.player1);
 
     sut.playerSet(p);
 
@@ -65,9 +65,9 @@ void main() {
 
   test('Does playerSet work?', () {
     expect(sut.currentPlayer,
-        Player(name: '', piece: false, number: PlayerNumber.none));
+        Player(name: '', piece: false, number: PlayerNumber.none),);
 
-    Player p = Player(name: 'hi', piece: true, number: PlayerNumber.player1);
+    final Player p = Player(name: 'hi', piece: true, number: PlayerNumber.player1);
 
     sut.playerSet(p);
 
@@ -85,7 +85,7 @@ void main() {
   test('Does addPlayer work?', () {
     expect(sut.players, []);
 
-    Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
 
     sut.addPlayer(false, 'me', PlayerNumber.player1);
 
@@ -93,8 +93,8 @@ void main() {
   });
 
   test('Does switchTurns work?', () {
-    Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
-    Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
+    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
 
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
@@ -107,8 +107,8 @@ void main() {
   });
 
   test('Does swapTurns work?', () {
-    Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
-    Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
+    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
 
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
@@ -687,8 +687,8 @@ void main() {
     sut.aiBoard.addEntries([const MapEntry(4, true)]);
     sut.aiBoard.addEntries([const MapEntry(2, false)]);
     sut.aiBoard.addEntries([const MapEntry(5, true)]);
-    Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
-    Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
+    final Player p = Player(name: 'me', piece: false, number: PlayerNumber.player1);
+    final Player p2 = Player(name: 'you', piece: true, number: PlayerNumber.player2);
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
     sut.here = true;

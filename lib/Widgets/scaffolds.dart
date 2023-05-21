@@ -18,7 +18,7 @@ class LandscapeScaffold extends StatelessWidget {
       required this.title,
       required this.height,
       required this.width,
-      required this.inter});
+      required this.inter,});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class LandscapeScaffold extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-            title: Text(title)),
+            title: Text(title),),
         body: Stack(children: [
           SizedBox(
             height: height,
@@ -38,7 +38,7 @@ class LandscapeScaffold extends StatelessWidget {
             child: CustomPaint(
                 painter: BoardMaker(
                     Provider.of<Preferences>(context, listen: false)
-                        .secondary)),
+                        .secondary,),),
           ),
           AlignPositioned(
               alignment: Alignment.topLeft,
@@ -46,15 +46,15 @@ class LandscapeScaffold extends StatelessWidget {
               dy: height * .07,
               child: Column(children: [
                 buildRows(height, width, false, [0, 1, 2],
-                    ['zero', 'one', 'two'], inter),
+                    ['zero', 'one', 'two'], inter,),
                 SizedBox(height: height * .009, width: width * .012),
                 buildRows(height, width, false, [3, 4, 5],
-                    ['three', 'four', 'five'], inter),
+                    ['three', 'four', 'five'], inter,),
                 SizedBox(height: height * .03, width: width * .012),
                 buildRows(height, width, false, [6, 7, 8],
-                    ['six', 'seven', 'eight'], inter),
-              ]))
-        ]));
+                    ['six', 'seven', 'eight'], inter,),
+              ],),)
+        ],),);
   }
 }
 
@@ -69,7 +69,7 @@ class PortraitScaffold extends StatelessWidget {
       required this.title,
       required this.height,
       required this.width,
-      required this.inter});
+      required this.inter,});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class PortraitScaffold extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
-          title: Text(title)),
+          title: Text(title),),
       body: Center(
           child: Stack(
         children: [
@@ -91,7 +91,7 @@ class PortraitScaffold extends StatelessWidget {
             child: CustomPaint(
                 painter: BoardMaker(
                     Provider.of<Preferences>(context, listen: false)
-                        .secondary)),
+                        .secondary,),),
           ),
           AlignPositioned(
             alignment: Alignment.topLeft,
@@ -99,17 +99,17 @@ class PortraitScaffold extends StatelessWidget {
             dy: height * .18,
             child: Column(children: [
               buildRows(height, width, true, [0, 1, 2], ['zero', 'one', 'two'],
-                  inter),
+                  inter,),
               SizedBox(height: height * .007, width: width * .04),
               buildRows(height, width, true, [3, 4, 5],
-                  ['three', 'four', 'five'], inter),
+                  ['three', 'four', 'five'], inter,),
               SizedBox(height: height * .007, width: width * .04),
               buildRows(height, width, true, [6, 7, 8],
-                  ['six', 'seven', 'eight'], inter),
-            ]),
+                  ['six', 'seven', 'eight'], inter,),
+            ],),
           )
         ],
-      )),
+      ),),
     );
   }
 }

@@ -11,12 +11,12 @@ import 'package:tic_tac/Screens/single.dart';
 import 'package:tic_tac/themes.dart';
 
 void main() {
-  int diff = 0;
+  const int diff = 0;
   late GameProvider game;
   late Player p1;
   late Player p2;
 
-  List<String> keys = [
+  final List<String> keys = [
     'zero',
     'one',
     'two',
@@ -41,23 +41,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
 
     expect(find.byType(Row), findsNWidgets(3));
     for (int i = 0; i < 9; i++) {
@@ -70,23 +76,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
 
     expect(game.board, {});
     await tester.tap(find.byKey(const Key('zero')));
@@ -101,23 +113,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
 
     expect(game.currentPlayer.number, PlayerNumber.player1);
     //press the first square
@@ -143,23 +161,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
 
     expect(game.currentPlayer.number, PlayerNumber.player1);
     //press the first square
@@ -174,23 +198,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -212,23 +242,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four'))); //X
     await tester.pump();
@@ -258,23 +294,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -299,23 +341,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four'))); //X
     await tester.pump();
@@ -349,23 +397,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four'))); //X
     await tester.pump();
@@ -398,23 +452,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four'))); //X
     await tester.pump();
@@ -447,23 +507,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -492,23 +558,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -535,23 +607,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.player2);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -578,27 +656,33 @@ void main() {
     game.addPlayer(true, 'Computer', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            routes: {
-              '/single': (context) => const Single(),
-              '/board': (context) => const Board(),
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          routes: {
+            '/single': (context) => const Single(),
+            '/board': (context) => const Board(),
+          },
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
             },
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -623,23 +707,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -663,23 +753,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a tie state...
     await tester.tap(find.byKey(const Key('four')));
     await tester.pump();
@@ -704,27 +800,33 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            routes: {
-              '/single': (context) => const Single(),
-              '/board': (context) => const Board(),
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          routes: {
+            '/single': (context) => const Single(),
+            '/board': (context) => const Board(),
+          },
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
             },
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('five')));
     await tester.pump();
@@ -747,23 +849,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('five')));
     await tester.pump();
@@ -785,23 +893,29 @@ void main() {
     game.addPlayer(true, 'playertwo', PlayerNumber.ai);
     game.switchTurns(false);
 
-    await tester.pumpWidget(MultiProvider(
+    await tester.pumpWidget(
+      MultiProvider(
         providers: [
           ChangeNotifierProvider<GameProvider>(create: (context) => game),
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+            create: (context) => Preferences(),
+          ),
         ],
         child: MaterialApp(
-            title: 'TicTac',
-            theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
-                .theme(),
-            home: Navigator(
-              onGenerateRoute: (_) {
-                return MaterialPageRoute<Widget>(
-                    builder: (_) => const Board(),
-                    settings: RouteSettings(arguments: diff));
-              },
-            ))));
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
     //setting up a win state...
     await tester.tap(find.byKey(const Key('five')));
     await tester.pump();

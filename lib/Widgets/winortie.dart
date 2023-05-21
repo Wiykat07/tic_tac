@@ -4,21 +4,21 @@ import 'package:provider/provider.dart';
 import '../Providers/gameprovider.dart';
 
 SizedBox alertBox(bool win, PlayerNumber ai, String winner) {
-  return SizedBox(child: Builder(builder: ((context) {
+  return SizedBox(child: Builder(builder: (context) {
     Future.delayed(const Duration(seconds: 5), () {
       showDialog(
           barrierDismissible: false,
           context: context,
-          builder: ((BuildContext context) {
+          builder: (BuildContext context) {
             return winOrTie(win, ai, winner, context);
-          }));
+          },);
     });
     return const SizedBox();
-  })));
+  },),);
 }
 
 AlertDialog winOrTie(
-    bool win, PlayerNumber ai, String winner, BuildContext context) {
+    bool win, PlayerNumber ai, String winner, BuildContext context,) {
   if (win && ai == PlayerNumber.ai) {
     return AlertDialog(
       title: const Text('Winner!'),
@@ -36,7 +36,7 @@ AlertDialog winOrTie(
                       .resetBoard();
                   Navigator.pushNamed(context, '/single');
                 },
-                child: const Text('Change Difficulty')),
+                child: const Text('Change Difficulty'),),
           ],
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -45,14 +45,14 @@ AlertDialog winOrTie(
                 Provider.of<GameProvider>(context, listen: false).resetBoard();
                 Navigator.pushNamed(context, '/');
               },
-              child: const Text('Quit')),
+              child: const Text('Quit'),),
           TextButton(
               onPressed: () {
                 Provider.of<GameProvider>(context, listen: false).resetBoard();
                 Navigator.pop(context);
               },
-              child: const Text('Play Again!'))
-        ])
+              child: const Text('Play Again!'),)
+        ],)
       ],
     );
   }
@@ -74,7 +74,7 @@ AlertDialog winOrTie(
                   Provider.of<GameProvider>(context, listen: false).swapTurns();
                   Navigator.pop(context);
                 },
-                child: const Text('Switch Turns!')),
+                child: const Text('Switch Turns!'),),
           ],
         ),
         Row(
@@ -86,14 +86,14 @@ AlertDialog winOrTie(
                       .resetBoard();
                   Navigator.pushNamed(context, '/');
                 },
-                child: const Text('Quit')),
+                child: const Text('Quit'),),
             TextButton(
                 onPressed: () {
                   Provider.of<GameProvider>(context, listen: false)
                       .resetBoard();
                   Navigator.pop(context);
                 },
-                child: const Text('Play Again!')),
+                child: const Text('Play Again!'),),
           ],
         )
       ],
@@ -117,7 +117,7 @@ AlertDialog winOrTie(
                   Provider.of<GameProvider>(context, listen: false).swapTurns();
                   Navigator.pop(context);
                 },
-                child: const Text('Switch Turns!')),
+                child: const Text('Switch Turns!'),),
           ],
         ),
         Row(
@@ -129,14 +129,14 @@ AlertDialog winOrTie(
                       .resetBoard();
                   Navigator.pushNamed(context, '/');
                 },
-                child: const Text('Quit')),
+                child: const Text('Quit'),),
             TextButton(
                 onPressed: () {
                   Provider.of<GameProvider>(context, listen: false)
                       .resetBoard();
                   Navigator.pop(context);
                 },
-                child: const Text('Play Again!')),
+                child: const Text('Play Again!'),),
           ],
         )
       ],
@@ -157,7 +157,7 @@ AlertDialog winOrTie(
                 Provider.of<GameProvider>(context, listen: false).resetBoard();
                 Navigator.pushNamed(context, '/single');
               },
-              child: const Text('Change Difficulty')),
+              child: const Text('Change Difficulty'),),
         ],
       ),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -166,14 +166,14 @@ AlertDialog winOrTie(
               Provider.of<GameProvider>(context, listen: false).resetBoard();
               Navigator.pushNamed(context, '/');
             },
-            child: const Text('Quit')),
+            child: const Text('Quit'),),
         TextButton(
             onPressed: () {
               Provider.of<GameProvider>(context, listen: false).resetBoard();
               Navigator.pop(context);
             },
-            child: const Text('Play Again!'))
-      ])
+            child: const Text('Play Again!'),)
+      ],)
     ],
   );
 }

@@ -17,7 +17,7 @@ class TwoState extends State<Two> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -82,7 +82,7 @@ class TwoState extends State<Two> {
                     names.add(player2Controller.text);
                     Navigator.pushNamed(context, '/roll', arguments: names);
                   },
-                  child: const Text('Who goes first?'))
+                  child: const Text('Who goes first?'),)
             ],
           ),
         ),

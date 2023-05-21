@@ -27,9 +27,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -40,7 +40,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Two())));
+              home: const Two(),),),);
 
       expect(find.byType(Column), findsOneWidget);
       expect(find.byType(TextFormField), findsNWidgets(2));
@@ -52,9 +52,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -65,7 +65,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Two())));
+              home: const Two(),),),);
 
       await tester.enterText(find.byKey(const Key('First Player')), 'name');
       await tester.enterText(find.byKey(const Key('Second Player')), 'name2');
@@ -74,9 +74,9 @@ void main() {
       await tester.pumpWidget(MultiProvider(
           providers: [
             ChangeNotifierProvider<GameProvider>(
-                create: (context) => GameProvider()),
+                create: (context) => GameProvider(),),
             ChangeNotifierProvider<Preferences>(
-                create: ((context) => Preferences())),
+                create: (context) => Preferences(),),
           ],
           child: MaterialApp(
               title: 'TicTac',
@@ -87,7 +87,7 @@ void main() {
               theme:
                   CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                       .theme(),
-              home: const Two())));
+              home: const Two(),),),);
 
       final TwoState state2 = tester.state(find.byType(Two));
 

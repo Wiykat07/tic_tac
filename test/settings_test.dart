@@ -45,13 +45,13 @@ void main() {
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+              create: (context) => Preferences(),),
         ],
         child: MaterialApp(
             title: 'TicTac',
             theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                 .theme(),
-            home: const SettingsScreen())));
+            home: const SettingsScreen(),),),);
 
     expect(find.byType(Column), findsOneWidget);
     expect(find.byType(Row), findsNWidgets(4));
@@ -63,13 +63,13 @@ void main() {
     await tester.pumpWidget(MultiProvider(
         providers: [
           ChangeNotifierProvider<Preferences>(
-              create: ((context) => Preferences())),
+              create: (context) => Preferences(),),
         ],
         child: MaterialApp(
             title: 'TicTac',
             theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
                 .theme(),
-            home: const SettingsScreen())));
+            home: const SettingsScreen(),),),);
 
     //primary color buttons work
     for (int i = 0; i < keys1.length; i++) {

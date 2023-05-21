@@ -1,38 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'dart:math' as math;
 
-enum PlayerNumber {
-  player1,
-  player2,
-  ai,
-  none,
-}
-
-class Player {
-  String name = '';
-  bool piece = false;
-  PlayerNumber number = PlayerNumber.none;
-
-  Player({
-    required this.name,
-    required this.piece,
-    required this.number,
-  });
-
-  @override
-  bool operator ==(Object other) =>
-      other is Player &&
-      other.name == name &&
-      other.number == number &&
-      other.piece == piece;
-
-  @override
-  int get hashCode => name.hashCode;
-}
+import 'package:flutter/material.dart';
 
 class GameProvider extends ChangeNotifier {
   List<Player> players = [];
+  List<Player> newOrder = [];
   Player currentPlayer =
       Player(name: '', piece: false, number: PlayerNumber.none);
   String _winnerName = '';
@@ -42,6 +15,10 @@ class GameProvider extends ChangeNotifier {
   int difficulty = 0; //ai difficulty level
   bool here =
       false; //controls a silly variable needed to prevent errors. No better place for it.
+
+  Player get currentP {
+    return currentPlayer;
+  }
 
   String get name {
     return currentPlayer.name;
@@ -55,137 +32,12 @@ class GameProvider extends ChangeNotifier {
     return _winnerName;
   }
 
-  Player get currentP {
-    return currentPlayer;
-  }
-
-  //added only for testing purposes
-  void winnerSet(String s) {
-    _winnerName = s;
-  }
-
-  void playerSet(Player p) {
-    currentPlayer = p;
-  }
-
-  void difficultySet(int d) {
-    difficulty = d;
-  }
-
   void addPlayer(bool piece, String player, PlayerNumber num) {
     //adds a player to the list
     if (player == '') {}
-    Player p = Player(name: player, piece: piece, number: num);
+    final Player p = Player(name: player, piece: piece, number: num);
 
     players.add(p);
-  }
-
-  void switchTurns(bool turn) {
-    //if player one, switch name to player two
-    //if player two, switch name to player one
-
-    Player p = players.firstWhere((element) => element.piece == turn);
-
-    currentPlayer = p;
-    log(p.name);
-    notifyListeners();
-  }
-
-  void swapTurns() {
-    List<Player> newOrder = [];
-    newOrder.add(players[1]);
-    newOrder.add(players[0]);
-
-    players = newOrder;
-  }
-
-  void placePieces(bool piece, int location) {
-    board.addEntries([MapEntry(location, piece)]);
-  }
-
-  void boardCheck(bool p) {
-    //gonna check previous round for a win so p wil always be !piece.
-    Player player = players.firstWhere((element) => element.piece == p);
-    if (board.isNotEmpty && board.length >= 3) {
-      if (board[0] == p && board[1] == p && board[2] == p) {
-        //first row win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[0] == p && board[3] == p && board[6] == p) {
-        //first column win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[0] == p && board[4] == p && board[8] == p) {
-        //diag 1 win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[3] == p && board[4] == p && board[5] == p) {
-        //second row win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[6] == p && board[7] == p && board[8] == p) {
-        //third row win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[1] == p && board[4] == p && board[7] == p) {
-        //second column win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[2] == p && board[5] == p && board[8] == p) {
-        //third column win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board[2] == p && board[4] == p && board[6] == p) {
-        //second diag win
-        _winnerName = player.name;
-        winState = 2;
-      } else if (board.length == 9) {
-        winState = 3;
-      }
-    } else {
-      winState = 1;
-    }
-  }
-
-  bool aiWinCheck(bool p, int i) {
-    if (aiBoard.isNotEmpty && aiBoard.length >= 3) {
-      aiBoard.addEntries([MapEntry(i, p)]);
-      if (aiBoard[0] == p && aiBoard[1] == p && aiBoard[2] == p) {
-        //first row win
-        return true;
-      }
-      if (aiBoard[0] == p && aiBoard[3] == p && aiBoard[6] == p) {
-        //first column win
-        return true;
-      }
-      if (aiBoard[0] == p && aiBoard[4] == p && aiBoard[8] == p) {
-        //diag 1 win
-        return true;
-      }
-      if (aiBoard[3] == p && aiBoard[4] == p && aiBoard[5] == p) {
-        //second row win
-        return true;
-      }
-      if (aiBoard[6] == p && aiBoard[7] == p && aiBoard[8] == p) {
-        //third row win
-        return true;
-      }
-      if (aiBoard[1] == p && aiBoard[4] == p && aiBoard[7] == p) {
-        //second column win
-        return true;
-      }
-      if (aiBoard[2] == p && aiBoard[5] == p && aiBoard[8] == p) {
-        //third column win
-        return true;
-      }
-      if (aiBoard[2] == p && aiBoard[4] == p && aiBoard[6] == p) {
-        //second diag win
-        return true;
-      }
-      aiBoard.remove(i); //gets rid of piece if no win condition
-      return false;
-    }
-    return false;
   }
 
   int aiBlockCheck(bool p) {
@@ -278,20 +130,6 @@ class GameProvider extends ChangeNotifier {
     return -1;
   }
 
-  bool spaceCheck(int i) {
-    if (board[i] != null) {
-      return true;
-    }
-    return false;
-  }
-
-  bool pieceCheck(int i) {
-    if (spaceCheck(i) && board[i] == true) {
-      return true;
-    }
-    return false;
-  }
-
   int aiTurn(bool p) {
     if (difficulty == 0) {
       if (!spaceCheck(4)) {
@@ -359,7 +197,7 @@ class GameProvider extends ChangeNotifier {
         total--; //remove the taken spaces from random options.
       });
 
-      math.Random random = math.Random();
+      final math.Random random = math.Random();
       int piece =
           random.nextInt(total) + 1; //pick a random number for the piece
 
@@ -378,12 +216,93 @@ class GameProvider extends ChangeNotifier {
     return -1;
   }
 
-  void resetBoard() {
-    board.clear();
-    aiBoard.clear();
-    switchTurns(false);
-    here = false;
-    notifyListeners();
+  bool aiWinCheck(bool p, int i) {
+    if (aiBoard.isNotEmpty && aiBoard.length >= 3) {
+      aiBoard.addEntries([MapEntry(i, p)]);
+      if (aiBoard[0] == p && aiBoard[1] == p && aiBoard[2] == p) {
+        //first row win
+        return true;
+      }
+      if (aiBoard[0] == p && aiBoard[3] == p && aiBoard[6] == p) {
+        //first column win
+        return true;
+      }
+      if (aiBoard[0] == p && aiBoard[4] == p && aiBoard[8] == p) {
+        //diag 1 win
+        return true;
+      }
+      if (aiBoard[3] == p && aiBoard[4] == p && aiBoard[5] == p) {
+        //second row win
+        return true;
+      }
+      if (aiBoard[6] == p && aiBoard[7] == p && aiBoard[8] == p) {
+        //third row win
+        return true;
+      }
+      if (aiBoard[1] == p && aiBoard[4] == p && aiBoard[7] == p) {
+        //second column win
+        return true;
+      }
+      if (aiBoard[2] == p && aiBoard[5] == p && aiBoard[8] == p) {
+        //third column win
+        return true;
+      }
+      if (aiBoard[2] == p && aiBoard[4] == p && aiBoard[6] == p) {
+        //second diag win
+        return true;
+      }
+      aiBoard.remove(i); //gets rid of piece if no win condition
+      return false;
+    }
+    return false;
+  }
+
+  void boardCheck(bool p) {
+    //gonna check previous round for a win so p wil always be !piece.
+    final Player player = players.firstWhere((element) => element.piece == p);
+    if (board.isNotEmpty && board.length >= 3) {
+      if (board[0] == p && board[1] == p && board[2] == p) {
+        //first row win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[0] == p && board[3] == p && board[6] == p) {
+        //first column win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[0] == p && board[4] == p && board[8] == p) {
+        //diag 1 win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[3] == p && board[4] == p && board[5] == p) {
+        //second row win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[6] == p && board[7] == p && board[8] == p) {
+        //third row win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[1] == p && board[4] == p && board[7] == p) {
+        //second column win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[2] == p && board[5] == p && board[8] == p) {
+        //third column win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board[2] == p && board[4] == p && board[6] == p) {
+        //second diag win
+        _winnerName = player.name;
+        winState = 2;
+      } else if (board.length == 9) {
+        winState = 3;
+      }
+    } else {
+      winState = 1;
+    }
+  }
+
+  void difficultySet(int d) {
+    difficulty = d;
   }
 
   void emptyBoard() {
@@ -394,4 +313,86 @@ class GameProvider extends ChangeNotifier {
     here = false;
     notifyListeners();
   }
+
+  bool pieceCheck(int i) {
+    if (spaceCheck(i) && board[i] == true) {
+      return true;
+    }
+    return false;
+  }
+
+  void placePieces(bool piece, int location) {
+    board.addEntries([MapEntry(location, piece)]);
+  }
+
+  void playerSet(Player p) {
+    currentPlayer = p;
+  }
+
+  void resetBoard() {
+    board.clear();
+    aiBoard.clear();
+    switchTurns(false);
+    here = false;
+    notifyListeners();
+  }
+
+  bool spaceCheck(int i) {
+    if (board[i] != null) {
+      return true;
+    }
+    return false;
+  }
+
+  void swapTurns() {
+    newOrder.add(players[1]);
+    newOrder.add(players[0]);
+
+    players = newOrder;
+  }
+
+  void switchTurns(bool turn) {
+    //if player one, switch name to player two
+    //if player two, switch name to player one
+
+    final Player p = players.firstWhere((element) => element.piece == turn);
+
+    currentPlayer = p;
+    log(p.name);
+    notifyListeners();
+  }
+
+  //added only for testing purposes
+  void winnerSet(String s) {
+    _winnerName = s;
+  }
+}
+
+class Player {
+  String name = '';
+  bool piece = false;
+  PlayerNumber number = PlayerNumber.none;
+
+  Player({
+    required this.name,
+    required this.piece,
+    required this.number,
+  });
+
+  @override
+  int get hashCode => name.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      other is Player &&
+      other.name == name &&
+      other.number == number &&
+      other.piece == piece;
+}
+
+enum PlayerNumber {
+  player1,
+  player2,
+  ai,
+  none,
 }

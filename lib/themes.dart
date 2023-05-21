@@ -14,7 +14,7 @@ class CustomTheme {
           style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(secondary),
         foregroundColor: MaterialStateProperty.all(primary),
-      )),
+      ),),
       dialogTheme: DialogTheme(
         backgroundColor: primary,
         titleTextStyle: TextStyle(
@@ -37,12 +37,12 @@ class CustomTheme {
           primary: secondary!,
           secondary: secondary!,
           surface: secondary!,
-          primaryContainer: primary),
+          primaryContainer: primary,),
       canvasColor: primary,
       textTheme: TextTheme(
           bodyMedium: TextStyle(color: secondary),
           labelMedium: TextStyle(color: secondary),
-          titleMedium: TextStyle(color: secondary)),
+          titleMedium: TextStyle(color: secondary),),
       scaffoldBackgroundColor: primary,
     );
   }

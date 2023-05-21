@@ -17,7 +17,7 @@ class _Roll extends State<Roll> {
 
     void diceRoll() {
       int chance = 0;
-      Random random = Random();
+      final Random random = Random();
       chance = random.nextInt(2) + 1;
       if (chance == 1) {
         Provider.of<GameProvider>(context, listen: false)
@@ -52,10 +52,10 @@ class _Roll extends State<Roll> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/board', arguments: -1);
                     },
-                    child: const Text('Let\'s Play!'))
+                    child: const Text('Let\'s Play!'),)
               ],
             );
-          });
+          },);
     }
 
     return Scaffold(
@@ -69,9 +69,9 @@ class _Roll extends State<Roll> {
               onPressed: () {
                 rollsResults();
               },
-              child: const Text('Press to flip')),
+              child: const Text('Press to flip'),),
         ],
-      )),
+      ),),
     );
   }
 }

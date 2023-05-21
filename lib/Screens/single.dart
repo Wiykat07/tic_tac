@@ -38,7 +38,7 @@ class SingleState extends State<Single> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Enter your name')),
@@ -87,7 +87,7 @@ class SingleState extends State<Single> {
                           diff = newValue!;
                           ai = difficult(diff);
                         });
-                      }),
+                      },),
                 ],
               ),
               Text(description),
@@ -109,7 +109,7 @@ class SingleState extends State<Single> {
                         .switchTurns(false);
                     Navigator.pushNamed(context, '/board', arguments: ai);
                   },
-                  child: const Text('Let\'s play!'))
+                  child: const Text('Let\'s play!'),)
             ],
           ),
         ),
