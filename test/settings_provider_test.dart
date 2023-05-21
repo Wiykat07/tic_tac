@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hive_test/hive_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:tic_tac/color_data.dart';
-
-class MockColors extends Mock implements ColorsDatabase {}
 
 void main() {
   late ColorsDatabase db;
@@ -22,19 +19,25 @@ void main() {
     expect(db.secondColors, 'Yellow');
   });
   test('Gets colors', () {
-    expect(db.primary, Colors.green);
-    expect(db.secondary, Colors.yellowAccent);
-    expect(db.colors, 'Green');
-    expect(db.secondColors, 'Yellow');
+    if (!Hive.isAdapterRegistered(200)) {
+      Hive.registerAdapter(ColorAdapter());
+    }
+    db.createInitialColors();
+    expect(db.colorBox.get(1), Colors.green);
+    expect(db.colorBox.get(2), Colors.yellowAccent);
+    expect(db.colorBox.get(3), 'Green');
+    expect(db.colorBox.get(4), 'Yellow');
   });
   test('updates colors', () {
-    db.primary = Colors.black;
-    db.secondary = Colors.white;
-    db.colors = 'Black';
-    db.secondColors = 'White';
-
+    if (!Hive.isAdapterRegistered(200)) {
+      Hive.registerAdapter(ColorAdapter());
+    }
+    db.updatePrimary(Colors.black, 'Black');
     expect(db.colorBox.get(1), Colors.black);
     expect(db.colorBox.get(3), 'Black');
+    db.updateSecondary(Colors.white, 'White');
+    expect(db.colorBox.get(2), Colors.white);
+    expect(db.colorBox.get(4), 'White');
   });
 
   tearDown(() => tearDownTestHive());

@@ -247,4 +247,15 @@ class _ScreenState extends State<SettingsScreen> {
       ),
     );
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<Preferences>(context, listen: false).initialPrefs();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 }

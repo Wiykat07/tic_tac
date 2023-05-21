@@ -2,15 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hive_test/hive_test.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac/Providers/settings_provider.dart';
 import 'package:tic_tac/Screens/settings.dart';
-
+import 'package:tic_tac/color_data.dart';
 import 'package:tic_tac/themes.dart';
 
 void main() {
+  late ColorsDatabase db;
   const List<Key> keys1 = [
     Key('green'),
     Key('blue'),
@@ -38,14 +39,14 @@ void main() {
   setUp(() async {
     await setUpTestHive();
     await Hive.openBox('Colors');
-    await Hive.openBox('Names');
+    db = ColorsDatabase();
   });
 
   testWidgets('All the buttons are there!', (tester) async {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider<Preferences>(
+          ListenableProvider<Preferences>(
             create: (context) => Preferences(),
           ),
         ],
@@ -57,7 +58,7 @@ void main() {
         ),
       ),
     );
-
+    db.createInitialColors();
     expect(find.byType(Column), findsOneWidget);
     expect(find.byType(Row), findsNWidgets(4));
     expect(find.byType(Text), findsNWidgets(5));
