@@ -2,42 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hive_test/hive_test.dart';
+import 'package:tic_tac/Providers/settings_provider.dart';
 import 'package:tic_tac/color_data.dart';
 
 void main() {
-  late ColorsDatabase db;
+  late Preferences sut;
 
   setUp(() async {
     await setUpTestHive();
     await Hive.openBox('Colors');
-    db = ColorsDatabase();
+    sut = Preferences();
   });
   test('Initial values', () {
-    expect(db.primary, Colors.green);
-    expect(db.secondary, Colors.yellowAccent);
-    expect(db.colors, 'Green');
-    expect(db.secondColors, 'Yellow');
+    expect(
+      sut.colorBox,
+      Hive.box('Colors'),
+    );
+    expect(sut.db, ColorsDatabase());
   });
-  test('Gets colors', () {
+  test('Gets color', () {
     if (!Hive.isAdapterRegistered(200)) {
       Hive.registerAdapter(ColorAdapter());
     }
-    db.createInitialColors();
-    expect(db.colorBox.get(1), Colors.green);
-    expect(db.colorBox.get(2), Colors.yellowAccent);
-    expect(db.colorBox.get(3), 'Green');
-    expect(db.colorBox.get(4), 'Yellow');
+    expect(sut.color, sut.db.colors);
   });
-  test('updates colors', () {
+  test('Gets primary', () {
+    expect(sut.primary, sut.db.primary);
+  });
+  test('Gets secondary', () {
+    expect(sut.secondary, sut.db.secondary);
+  });
+  test('Gets secondColor', () {
+    expect(sut.secondColor, sut.db.secondColors);
+  });
+  test('displays initial colors on first opening', () {
     if (!Hive.isAdapterRegistered(200)) {
       Hive.registerAdapter(ColorAdapter());
     }
-    db.updatePrimary(Colors.black, 'Black');
-    expect(db.colorBox.get(1), Colors.black);
-    expect(db.colorBox.get(3), 'Black');
-    db.updateSecondary(Colors.white, 'White');
-    expect(db.colorBox.get(2), Colors.white);
-    expect(db.colorBox.get(4), 'White');
+    sut.initialPrefs();
+    expect(sut.color, 'Green');
+    expect(sut.primary, Colors.green);
+    expect(sut.secondary, Colors.yellowAccent);
+    expect(sut.secondColor, 'Yellow');
+  });
+
+  test('Loads changed colors on multiple openings', () {
+    if (!Hive.isAdapterRegistered(200)) {
+      Hive.registerAdapter(ColorAdapter());
+    }
+    sut.initialPrefs();
+    sut.db.colorBox.put(1, Colors.black);
+    sut.db.colorBox.put(3, 'Black');
+    sut.initialPrefs();
+    expect(sut.color, 'Black');
+    expect(sut.primary, Colors.black);
+  });
+  test('Update prefs works', () {
+    if (!Hive.isAdapterRegistered(200)) {
+      Hive.registerAdapter(ColorAdapter());
+    }
+    sut.initialPrefs();
+    sut.db.colorBox.put(1, Colors.black);
+    sut.db.colorBox.put(3, 'Black');
+
+    sut.updatePrefs();
+
+    expect(sut.color, 'Black');
+    expect(sut.primary, Colors.black);
   });
 
   tearDown(() => tearDownTestHive());

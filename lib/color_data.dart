@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -11,6 +9,17 @@ class ColorsDatabase {
 
   //reference box
   final colorBox = Hive.box('Colors');
+
+  @override
+  int get hashCode => Object.hash(primary, secondary, colors, secondColors);
+
+  @override
+  bool operator ==(Object other) =>
+      other is ColorsDatabase &&
+      other.primary == primary &&
+      other.secondary == secondary &&
+      other.colors == colors &&
+      other.secondColors == secondColors;
 
   //runs first time ever opening this app
   void createInitialColors() {
@@ -24,7 +33,6 @@ class ColorsDatabase {
     primary = colorBox.get(1) as Color;
     secondary = colorBox.get(2) as Color;
     colors = colorBox.get(3) as String;
-    log('Color is $colors');
     secondColors = colorBox.get(4) as String;
   }
 

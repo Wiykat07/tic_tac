@@ -8,7 +8,7 @@ class Preferences extends ChangeNotifier {
   final colorBox = Hive.box('Colors');
 
   String get color {
-    return db.colorBox.get(3) as String;
+    return db.colorBox.get(3, defaultValue: 'Green') as String;
   }
 
   Color get primary {
@@ -20,7 +20,7 @@ class Preferences extends ChangeNotifier {
   }
 
   String get secondColor {
-    return db.colorBox.get(4) as String;
+    return db.colorBox.get(4, defaultValue: 'Yellow') as String;
   }
 
   void initialPrefs() {
