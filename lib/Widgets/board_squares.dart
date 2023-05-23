@@ -16,11 +16,11 @@ Row buildRows(
     if (port) {
       return Row(
         children: [
-          interactiveSquare(h * .115, w * .25, i[0], k[0]),
-          SizedBox(height: h * .1, width: w * .02),
-          interactiveSquare(h * .115, w * .25, i[1], k[1]),
-          SizedBox(height: h * .1, width: w * .02),
-          interactiveSquare(h * .115, w * .25, i[2], k[2]),
+          interactiveSquare(h * .11, w * .25, i[0], k[0]),
+          SizedBox(height: h * .115, width: w * .03),
+          interactiveSquare(h * .11, w * .25, i[1], k[1]),
+          SizedBox(height: h * .115, width: w * .03),
+          interactiveSquare(h * .11, w * .25, i[2], k[2]),
         ],
       );
     }
@@ -37,11 +37,11 @@ Row buildRows(
   if (port) {
     return Row(
       children: [
-        square(h * .115, w * .25, i[0], k[0]),
-        SizedBox(height: h * .1, width: w * .02),
-        square(h * .115, w * .25, i[1], k[1]),
-        SizedBox(height: h * .1, width: w * .02),
-        square(h * .115, w * .25, i[2], k[2]),
+        square(h * .1, w * .24, i[0], k[0]),
+        SizedBox(height: h * .115, width: w * .03),
+        square(h * .1, w * .24, i[1], k[1]),
+        SizedBox(height: h * .115, width: w * .03),
+        square(h * .1, w * .24, i[2], k[2]),
       ],
     );
   }
@@ -56,8 +56,9 @@ Row buildRows(
   );
 }
 
-SizedBox emptySquare(double h, double w, Color c, String k) {
-  return SizedBox(
+Container emptySquare(double h, double w, Color c, String k) {
+  return Container(
+    color: Colors.red,
     height: h,
     width: w,
     key: Key(k),
