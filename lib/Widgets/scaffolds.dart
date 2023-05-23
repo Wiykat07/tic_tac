@@ -47,7 +47,7 @@ class LandscapeScaffold extends StatelessWidget {
           AlignPositioned(
             alignment: Alignment.topLeft,
             dx: width * .2,
-            dy: height * .07,
+            dy: height * .05,
             child: Column(
               children: [
                 buildRows(
@@ -58,7 +58,7 @@ class LandscapeScaffold extends StatelessWidget {
                   ['zero', 'one', 'two'],
                   inter,
                 ),
-                SizedBox(height: height * .009, width: width * .012),
+                SizedBox(height: height * .03, width: width * .012),
                 buildRows(
                   height,
                   width,
@@ -160,6 +160,84 @@ class PortraitScaffold extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TabletScaffold extends StatelessWidget {
+  final String title;
+  final double height;
+  final double width;
+  final bool inter;
+
+  const TabletScaffold({
+    super.key,
+    required this.title,
+    required this.height,
+    required this.width,
+    required this.inter,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            Provider.of<GameProvider>(context, listen: false).emptyBoard();
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(title),
+      ),
+      body: Stack(
+        children: [
+          SizedBox(
+            height: height,
+            width: width,
+            child: CustomPaint(
+              painter: BoardMaker(
+                Provider.of<Preferences>(context, listen: false).secondary,
+              ),
+            ),
+          ),
+          AlignPositioned(
+            alignment: Alignment.topLeft,
+            dx: width * .2,
+            dy: height * .1,
+            child: Column(
+              children: [
+                buildRows(
+                  height,
+                  width,
+                  false,
+                  [0, 1, 2],
+                  ['zero', 'one', 'two'],
+                  inter,
+                ),
+                SizedBox(height: height * .045, width: width * .012),
+                buildRows(
+                  height + 50,
+                  width,
+                  false,
+                  [3, 4, 5],
+                  ['three', 'four', 'five'],
+                  inter,
+                ),
+                SizedBox(height: height * .03, width: width * .012),
+                buildRows(
+                  height,
+                  width,
+                  false,
+                  [6, 7, 8],
+                  ['six', 'seven', 'eight'],
+                  inter,
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

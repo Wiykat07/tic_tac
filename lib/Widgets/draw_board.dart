@@ -1,62 +1,5 @@
 import 'package:flutter/material.dart';
 
-class XAndO extends CustomPainter {
-  bool oOrX = false;
-  bool isStart = false;
-  Color s = Colors.yellowAccent;
-
-  XAndO(this.isStart, this.oOrX, this.s);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (size.width > size.height) {
-      final paint = Paint()
-        ..strokeWidth = 5
-        ..color = s
-        ..style = PaintingStyle.stroke;
-      if (!isStart) {
-        if (oOrX) {
-          canvas.drawCircle(Offset(size.width * .5, size.height * .5),
-              size.height * .35, paint,);
-        }
-        if (!oOrX) {
-          final piece = Path();
-          piece.relativeMoveTo(size.width * .1, size.height * .1);
-          piece.relativeLineTo(size.width * .8, size.height * .8);
-          piece.relativeMoveTo(-(size.width * .8), 0);
-          piece.relativeLineTo(size.width * .8, -(size.height * .8));
-
-          canvas.drawPath(piece, paint);
-        }
-      }
-    }
-    if (size.width <= size.height) {
-      final paint = Paint()
-        ..strokeWidth = 5
-        ..color = s
-        ..style = PaintingStyle.stroke;
-      if (!isStart) {
-        if (oOrX) {
-          canvas.drawCircle(Offset(size.width * .2, size.height * .2),
-              size.width * .2, paint,);
-        }
-        if (!oOrX) {
-          final piece = Path();
-          piece.relativeMoveTo(size.height * .1, size.height * .1);
-          piece.relativeLineTo(size.width * .2, size.height * .8);
-          piece.relativeMoveTo(-(size.width * .2), 0);
-          piece.relativeLineTo(size.width * .2, -(size.height * .8));
-
-          canvas.drawPath(piece, paint);
-        }
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(XAndO oldDelegate) => false;
-}
-
 class BoardMaker extends CustomPainter {
   Color s = Colors.yellowAccent;
   BoardMaker(this.s);
@@ -127,4 +70,67 @@ class BoardMaker extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class XAndO extends CustomPainter {
+  bool oOrX = false;
+  bool isStart = false;
+  Color s = Colors.yellowAccent;
+
+  XAndO(this.isStart, this.oOrX, this.s);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.width > size.height) {
+      final paint = Paint()
+        ..strokeWidth = 5
+        ..color = s
+        ..style = PaintingStyle.stroke;
+      if (!isStart) {
+        if (oOrX) {
+          canvas.drawCircle(
+            Offset(size.width * .5, size.height * .5),
+            size.height * .35,
+            paint,
+          );
+        }
+        if (!oOrX) {
+          final piece = Path();
+          piece.relativeMoveTo(size.width * .1, size.height * .1);
+          piece.relativeLineTo(size.width * .8, size.height * .8);
+          piece.relativeMoveTo(-(size.width * .8), 0);
+          piece.relativeLineTo(size.width * .8, -(size.height * .8));
+
+          canvas.drawPath(piece, paint);
+        }
+      }
+    }
+    if (size.width <= size.height) {
+      final paint = Paint()
+        ..strokeWidth = 5
+        ..color = s
+        ..style = PaintingStyle.stroke;
+      if (!isStart) {
+        if (oOrX) {
+          canvas.drawCircle(
+            Offset(size.width * .2, size.height * .2),
+            size.width * .2,
+            paint,
+          );
+        }
+        if (!oOrX) {
+          final piece = Path();
+          piece.relativeMoveTo(size.height * .1, size.height * .1);
+          piece.relativeLineTo(size.width * .2, size.height * .8);
+          piece.relativeMoveTo(-(size.width * .2), 0);
+          piece.relativeLineTo(size.width * .2, -(size.height * .8));
+
+          canvas.drawPath(piece, paint);
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(XAndO oldDelegate) => false;
 }

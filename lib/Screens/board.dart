@@ -26,6 +26,14 @@ class _Board extends State<Board> {
         game.boardCheck(!game.piece);
 
         if (game.winState == 1) {
+          if (MediaQuery.of(context).size.width > 600) {
+            return TabletScaffold(
+              title: '${game.name}\'s turn',
+              height: height,
+              width: width,
+              inter: true,
+            );
+          }
           if (MediaQuery.of(context).orientation == Orientation.portrait) {
             return PortraitScaffold(
               title: '${game.name}\'s turn',
@@ -46,6 +54,19 @@ class _Board extends State<Board> {
           if (game.winnerName == 'Computer') {
             if (!game.here) {
               game.here = true;
+              if (MediaQuery.of(context).size.width > 600) {
+                return Stack(
+                  children: [
+                    alertBox(true, game.currentPlayer.number, game.winnerName),
+                    TabletScaffold(
+                      title: 'Winner',
+                      height: height,
+                      width: width,
+                      inter: false,
+                    ),
+                  ],
+                );
+              }
               if (MediaQuery.of(context).orientation == Orientation.portrait) {
                 return Stack(
                   children: [
@@ -72,6 +93,18 @@ class _Board extends State<Board> {
                 );
               }
             } else {
+              if (MediaQuery.of(context).size.width > 600) {
+                return Stack(
+                  children: [
+                    TabletScaffold(
+                      title: 'Winner!',
+                      height: height,
+                      width: width,
+                      inter: false,
+                    ),
+                  ],
+                );
+              }
               if (MediaQuery.of(context).orientation == Orientation.portrait) {
                 return Stack(
                   children: [
@@ -100,6 +133,22 @@ class _Board extends State<Board> {
           if (game.winnerName != 'Computer') {
             if (!game.here) {
               game.here = true;
+              if (MediaQuery.of(context).size.width > 600) {
+                return Stack(
+                  children: [
+                    alertBox(true, game.currentPlayer.number, game.winnerName),
+                    TabletScaffold(
+                      title: 'Winner!',
+                      height: height,
+                      width: width,
+                      inter: false,
+                    ),
+                    const ConfettiWidgets(
+                      child: Center(child: SizedBox(height: 50, width: 50)),
+                    ),
+                  ],
+                );
+              }
               if (MediaQuery.of(context).orientation == Orientation.portrait) {
                 return Stack(
                   children: [
@@ -132,6 +181,21 @@ class _Board extends State<Board> {
                 );
               }
             } else {
+              if (MediaQuery.of(context).size.width > 600) {
+                return Stack(
+                  children: [
+                    TabletScaffold(
+                      title: 'Winner!',
+                      height: height,
+                      width: width,
+                      inter: false,
+                    ),
+                    const ConfettiWidgets(
+                      child: Center(child: SizedBox(height: 50, width: 50)),
+                    ),
+                  ],
+                );
+              }
               if (MediaQuery.of(context).orientation == Orientation.portrait) {
                 return Stack(
                   children: [
@@ -168,6 +232,19 @@ class _Board extends State<Board> {
         if (game.winState == 3) {
           if (!game.here) {
             game.here = true;
+            if (MediaQuery.of(context).size.width > 600) {
+              return Stack(
+                children: [
+                  alertBox(false, game.currentPlayer.number, game.winnerName),
+                  TabletScaffold(
+                    title: 'Tie?',
+                    height: height,
+                    width: width,
+                    inter: false,
+                  ),
+                ],
+              );
+            }
             if (MediaQuery.of(context).orientation == Orientation.portrait) {
               return Stack(
                 children: [
@@ -194,6 +271,19 @@ class _Board extends State<Board> {
               );
             }
           } else {
+            if (MediaQuery.of(context).size.width > 600) {
+              return Stack(
+                children: [
+                  alertBox(false, game.currentPlayer.number, game.winnerName),
+                  TabletScaffold(
+                    title: 'Tie?',
+                    height: height,
+                    width: width,
+                    inter: false,
+                  ),
+                ],
+              );
+            }
             if (MediaQuery.of(context).orientation == Orientation.portrait) {
               return Stack(
                 children: [
