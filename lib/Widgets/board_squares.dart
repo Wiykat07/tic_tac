@@ -37,11 +37,11 @@ Row buildRows(
   if (port) {
     return Row(
       children: [
-        square(h * .1, w * .24, i[0], k[0]),
+        square(h * .11, w * .25, i[0], k[0]),
         SizedBox(height: h * .115, width: w * .03),
-        square(h * .1, w * .24, i[1], k[1]),
+        square(h * .11, w * .25, i[1], k[1]),
         SizedBox(height: h * .115, width: w * .03),
-        square(h * .1, w * .24, i[2], k[2]),
+        square(h * .11, w * .25, i[2], k[2]),
       ],
     );
   }
@@ -56,9 +56,8 @@ Row buildRows(
   );
 }
 
-Container emptySquare(double h, double w, Color c, String k) {
-  return Container(
-    color: Colors.red,
+SizedBox emptySquare(double h, double w, Color c, String k) {
+  return SizedBox(
     height: h,
     width: w,
     key: Key(k),
