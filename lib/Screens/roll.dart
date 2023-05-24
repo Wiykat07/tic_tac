@@ -51,7 +51,7 @@ class _Roll extends State<Roll> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/board', arguments: -1);
+                  Navigator.pushNamed(context, '/board');
                 },
                 child: const Text('Let\'s Play!'),
               )

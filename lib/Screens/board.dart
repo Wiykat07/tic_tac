@@ -18,11 +18,9 @@ class _Board extends State<Board> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    final args = ModalRoute.of(context)!.settings.arguments as int;
 
     return Consumer<GameProvider>(
       builder: (context, game, child) {
-        game.difficultySet(args);
         game.boardCheck(!game.piece);
 
         if (game.winState == 1) {

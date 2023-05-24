@@ -22,6 +22,11 @@ class TwoState extends State<Two> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed('/');
+          },
+        ),
         title: const Text('What are your names?'),
       ),
       body: Center(
@@ -74,15 +79,16 @@ class TwoState extends State<Two> {
                 size: Size.fromHeight(height * .05),
               ),
               OutlinedButton(
-                  onPressed: () {
-                    if (!_player2Key.currentState!.validate()) {
-                      return;
-                    }
-                    names.add(player1Controller.text);
-                    names.add(player2Controller.text);
-                    Navigator.pushNamed(context, '/roll', arguments: names);
-                  },
-                  child: const Text('Who goes first?'),)
+                onPressed: () {
+                  if (!_player2Key.currentState!.validate()) {
+                    return;
+                  }
+                  names.add(player1Controller.text);
+                  names.add(player2Controller.text);
+                  Navigator.pushNamed(context, '/roll', arguments: names);
+                },
+                child: const Text('Who goes first?'),
+              )
             ],
           ),
         ),

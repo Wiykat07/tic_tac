@@ -25,7 +25,14 @@ class SingleState extends State<Single> {
     final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Enter your name')),
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed('/');
+          },
+        ),
+        title: const Text('Enter your name'),
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -92,7 +99,9 @@ class SingleState extends State<Single> {
                       .addPlayer(false, names[0], PlayerNumber.player1);
                   Provider.of<GameProvider>(context, listen: false)
                       .switchTurns(false);
-                  Navigator.pushNamed(context, '/board', arguments: ai);
+                  Provider.of<GameProvider>(context, listen: false)
+                      .difficultySet(ai);
+                  Navigator.pushNamed(context, '/board');
                 },
                 child: const Text('Let\'s play!'),
               )

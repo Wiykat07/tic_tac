@@ -53,7 +53,7 @@ AlertDialog winOrTie(
           children: [
             TextButton(
               onPressed: () {
-                Provider.of<GameProvider>(context, listen: false).resetBoard();
+                Provider.of<GameProvider>(context, listen: false).emptyBoard();
                 Navigator.pushNamed(context, '/');
               },
               child: const Text('Quit'),
@@ -96,7 +96,7 @@ AlertDialog winOrTie(
           children: [
             TextButton(
               onPressed: () {
-                Provider.of<GameProvider>(context, listen: false).resetBoard();
+                Provider.of<GameProvider>(context, listen: false).emptyBoard();
                 Navigator.pushNamed(context, '/');
               },
               child: const Text('Quit'),
@@ -139,7 +139,7 @@ AlertDialog winOrTie(
           children: [
             TextButton(
               onPressed: () {
-                Provider.of<GameProvider>(context, listen: false).resetBoard();
+                Provider.of<GameProvider>(context, listen: false).emptyBoard();
                 Navigator.pushNamed(context, '/');
               },
               child: const Text('Quit'),
@@ -180,7 +180,7 @@ AlertDialog winOrTie(
         children: [
           TextButton(
             onPressed: () {
-              Provider.of<GameProvider>(context, listen: false).resetBoard();
+              Provider.of<GameProvider>(context, listen: false).emptyBoard();
               Navigator.pushNamed(context, '/');
             },
             child: const Text('Quit'),
