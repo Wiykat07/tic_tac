@@ -177,6 +177,10 @@ void main() {
     sut.addPlayer(false, 'me', PlayerNumber.player1);
     sut.addPlayer(true, 'you', PlayerNumber.player2);
 
+    //add this because normally boardcheck checks for the lastPlayer name for a winnerName but we're manipulating values here so there is no technical last player
+    sut.lastPlayer =
+        Player(name: 'me', piece: false, number: PlayerNumber.player1);
+
     //row 1 win
     sut.placePieces(false, 0);
     sut.placePieces(false, 1);
