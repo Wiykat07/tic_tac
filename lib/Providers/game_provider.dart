@@ -8,6 +8,7 @@ class GameProvider extends ChangeNotifier {
   List<Player> newOrder = [];
   Player currentPlayer =
       Player(name: '', piece: false, number: PlayerNumber.none);
+  Player lastPlayer = Player(name: '', piece: false, number: PlayerNumber.none);
   String _winnerName = '';
   Map<int, bool> board = {};
   Map<int, bool> aiBoard = {};
@@ -259,39 +260,38 @@ class GameProvider extends ChangeNotifier {
 
   void boardCheck(bool p) {
     //gonna check previous round for a win so p wil always be !piece.
-    final Player player = players.firstWhere((element) => element.piece == p);
     if (board.isNotEmpty && board.length >= 3) {
       if (board[0] == p && board[1] == p && board[2] == p) {
         //first row win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[0] == p && board[3] == p && board[6] == p) {
         //first column win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[0] == p && board[4] == p && board[8] == p) {
         //diag 1 win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[3] == p && board[4] == p && board[5] == p) {
         //second row win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[6] == p && board[7] == p && board[8] == p) {
         //third row win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[1] == p && board[4] == p && board[7] == p) {
         //second column win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[2] == p && board[5] == p && board[8] == p) {
         //third column win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board[2] == p && board[4] == p && board[6] == p) {
         //second diag win
-        _winnerName = player.name;
+        _winnerName = lastPlayer.name;
         winState = 2;
       } else if (board.length == 9) {
         winState = 3;
@@ -310,7 +310,12 @@ class GameProvider extends ChangeNotifier {
     board.clear();
     aiBoard.clear();
     players.clear();
+    currentPlayer = Player(name: '', piece: false, number: PlayerNumber.none);
+    lastPlayer = Player(name: '', piece: false, number: PlayerNumber.none);
+    newOrder.clear();
     here = false;
+    winState = 0;
+    difficulty = 0;
     notifyListeners();
   }
 
@@ -352,13 +357,13 @@ class GameProvider extends ChangeNotifier {
   }
 
   void switchTurns(bool turn) {
-    //if player one, switch name to player two
-    //if player two, switch name to player one
+    //makes whoever turn is the current player, whos not turn it is last player
 
-    final Player p = players.firstWhere((element) => element.piece == turn);
+    final bool x = !turn;
 
-    currentPlayer = p;
-    log(p.name);
+    currentPlayer = players.firstWhere((element) => element.piece == turn);
+    lastPlayer = players.firstWhere((element) => element.piece == x);
+    log(currentPlayer.name);
     notifyListeners();
   }
 
