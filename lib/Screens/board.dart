@@ -272,7 +272,6 @@ class _Board extends State<Board> {
             if (MediaQuery.of(context).size.width > 600) {
               return Stack(
                 children: [
-                  alertBox(false, game.currentPlayer.number, game.winnerName),
                   TabletScaffold(
                     title: 'Tie?',
                     height: height,
