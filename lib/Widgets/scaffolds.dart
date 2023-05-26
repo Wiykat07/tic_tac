@@ -27,8 +27,20 @@ class LandscapeScaffold extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            Provider.of<GameProvider>(context, listen: false).emptyBoard();
-            Navigator.of(context).pop();
+            if (Provider.of<GameProvider>(context, listen: false)
+                        .players[1]
+                        .number ==
+                    PlayerNumber.player2 ||
+                Provider.of<GameProvider>(context, listen: false)
+                        .players[0]
+                        .number ==
+                    PlayerNumber.player2) {
+              Provider.of<GameProvider>(context, listen: false).emptyBoard();
+              Navigator.of(context).pushNamed('/two');
+            } else {
+              Provider.of<GameProvider>(context, listen: false).emptyBoard();
+              Navigator.of(context).pushNamed('/single');
+            }
           },
         ),
         title: Text(title),
