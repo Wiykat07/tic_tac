@@ -131,9 +131,13 @@ void main() {
     expect(sut.players[1], p2);
 
     sut.swapTurns();
+    final Player newP =
+        Player(name: 'you', piece: false, number: PlayerNumber.player1);
+    final Player newP2 =
+        Player(name: 'me', piece: true, number: PlayerNumber.player2);
 
-    expect(sut.players[0], p2);
-    expect(sut.players[1], p);
+    expect(sut.players[0], newP);
+    expect(sut.players[1], newP2);
   });
 
   test('Does placePieces work?', () {

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class GameProvider extends ChangeNotifier {
   List<Player> players = [];
-  List<Player> newOrder = [];
   Player currentPlayer =
       Player(name: '', piece: false, number: PlayerNumber.none);
   Player lastPlayer = Player(name: '', piece: false, number: PlayerNumber.none);
@@ -312,7 +311,6 @@ class GameProvider extends ChangeNotifier {
     players.clear();
     currentPlayer = Player(name: '', piece: false, number: PlayerNumber.none);
     lastPlayer = Player(name: '', piece: false, number: PlayerNumber.none);
-    newOrder.clear();
     here = false;
     winState = 0;
     difficulty = 0;
@@ -350,10 +348,21 @@ class GameProvider extends ChangeNotifier {
   }
 
   void swapTurns() {
-    newOrder.add(players[1]);
-    newOrder.add(players[0]);
+    final Player p = Player(
+      name: players[1].name,
+      piece: false,
+      number: PlayerNumber.player1,
+    ); //old player 2 name
+    final Player p2 = Player(
+      name: players[0].name,
+      piece: true,
+      number: PlayerNumber.player2,
+    ); //old player 1 name
 
-    players = newOrder;
+    players.clear();
+
+    players.add(p);
+    players.add(p2);
   }
 
   void switchTurns(bool turn) {
