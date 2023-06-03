@@ -388,9 +388,13 @@ void main() {
 
     await tester.tap(find.widgetWithText(TextButton, 'Switch Turns!'));
 
+    final Player test =
+        Player(name: 'playertwo', piece: false, number: PlayerNumber.player1);
+    final Player test2 =
+        Player(name: 'playerone', piece: true, number: PlayerNumber.player2);
     expect(game.board.isEmpty, true);
-    expect(game.players[0], p2);
-    expect(game.players[1], p1);
+    expect(game.players[0], test);
+    expect(game.players[1], test2);
   });
   testWidgets('tie alert quit button works for two player', (tester) async {
     game.addPlayer(false, 'playerone', PlayerNumber.player1);
@@ -548,9 +552,14 @@ void main() {
 
     await tester.tap(find.widgetWithText(TextButton, 'Switch Turns!'));
 
+    final Player test =
+        Player(name: 'playertwo', piece: false, number: PlayerNumber.player1);
+    final Player test2 =
+        Player(name: 'playerone', piece: true, number: PlayerNumber.player2);
+
     expect(game.board.isEmpty, true);
-    expect(game.players[0], p2);
-    expect(game.players[1], p1);
+    expect(game.players[0], test);
+    expect(game.players[1], test2);
   });
 
   testWidgets('win alert quit button works for two player', (tester) async {
