@@ -10,48 +10,49 @@ Row buildRows(
   bool port,
   List<int> i,
   List<String> k,
+  List<String> sem,
   bool inter,
 ) {
   if (inter) {
     if (port) {
       return Row(
         children: [
-          interactiveSquare(h * .11, w * .25, i[0], k[0]),
+          interactiveSquare(h * .11, w * .25, i[0], sem[0], k[0]),
           SizedBox(height: h * .115, width: w * .03),
-          interactiveSquare(h * .11, w * .25, i[1], k[1]),
+          interactiveSquare(h * .11, w * .25, i[1], sem[1], k[1]),
           SizedBox(height: h * .115, width: w * .03),
-          interactiveSquare(h * .11, w * .25, i[2], k[2]),
+          interactiveSquare(h * .11, w * .25, i[2], sem[2], k[2]),
         ],
       );
     }
     return Row(
       children: [
-        interactiveSquare(h * .2, w * .125, i[0], k[0]),
+        interactiveSquare(h * .2, w * .125, i[0], sem[0], k[0]),
         SizedBox(height: h * .1, width: w * .012),
-        interactiveSquare(h * .2, w * .125, i[1], k[1]),
+        interactiveSquare(h * .2, w * .125, i[1], sem[1], k[1]),
         SizedBox(height: h * .1, width: w * .012),
-        interactiveSquare(h * .2, w * .125, i[2], k[2]),
+        interactiveSquare(h * .2, w * .125, i[2], sem[2], k[2]),
       ],
     );
   }
   if (port) {
     return Row(
       children: [
-        square(h * .11, w * .25, i[0], k[0]),
+        square(h * .11, w * .25, i[0], sem[0], k[0]),
         SizedBox(height: h * .115, width: w * .03),
-        square(h * .11, w * .25, i[1], k[1]),
+        square(h * .11, w * .25, i[1], sem[1], k[1]),
         SizedBox(height: h * .115, width: w * .03),
-        square(h * .11, w * .25, i[2], k[2]),
+        square(h * .11, w * .25, i[2], sem[2], k[2]),
       ],
     );
   }
   return Row(
     children: [
-      square(h * .2, w * .125, i[0], k[0]),
+      square(h * .2, w * .125, i[0], sem[0], k[0]),
       SizedBox(height: h * .1, width: w * .012),
-      square(h * .2, w * .125, i[1], k[1]),
+      square(h * .2, w * .125, i[1], sem[1], k[1]),
       SizedBox(height: h * .1, width: w * .012),
-      square(h * .2, w * .125, i[2], k[2]),
+      square(h * .2, w * .125, i[2], sem[2], k[2]),
     ],
   );
 }
@@ -65,20 +66,29 @@ SizedBox emptySquare(double h, double w, Color c, String k) {
   );
 }
 
-Builder interactiveSquare(double h, double w, int i, String k) {
+Builder interactiveSquare(double h, double w, int i, String sem, String k) {
   return Builder(
     builder: (context) {
       return Consumer<GameProvider>(
         builder: (context, game, child) {
           if (game.spaceCheck(i)) {
-            return piecePlaced(
-              h,
-              w,
-              game.pieceCheck(i),
-              Provider.of<Preferences>(context, listen: false).secondary,
-              k,
+            if (game.pieceCheck(i)) {
+              sem = '$sem O';
+            } else {
+              sem = '$sem X';
+            }
+            return Semantics(
+              label: sem,
+              child: piecePlaced(
+                h,
+                w,
+                game.pieceCheck(i),
+                Provider.of<Preferences>(context, listen: false).secondary,
+                k,
+              ),
             );
           }
+          sem = '$sem Empty';
           return GestureDetector(
             onTap: () {
               game.placePieces(game.currentPlayer.piece, i);
@@ -94,11 +104,14 @@ Builder interactiveSquare(double h, double w, int i, String k) {
                 }
               }
             },
-            child: emptySquare(
-              h,
-              w,
-              Provider.of<Preferences>(context, listen: false).secondary,
-              k,
+            child: Semantics(
+              label: sem,
+              child: emptySquare(
+                h,
+                w,
+                Provider.of<Preferences>(context, listen: false).secondary,
+                k,
+              ),
             ),
           );
         },
@@ -116,23 +129,35 @@ SizedBox piecePlaced(double h, double w, bool p, Color c, String k) {
   );
 }
 
-Builder square(double h, double w, int i, String k) {
+Builder square(double h, double w, int i, String sem, String k) {
   return Builder(
     builder: (context) {
       if (Provider.of<GameProvider>(context, listen: false).spaceCheck(i)) {
-        return piecePlaced(
-          h,
-          w,
-          Provider.of<GameProvider>(context, listen: false).pieceCheck(i),
-          Provider.of<Preferences>(context, listen: false).secondary,
-          k,
+        if (Provider.of<GameProvider>(context, listen: false).pieceCheck(i)) {
+          sem = '$sem O';
+        } else {
+          sem = '$sem X';
+        }
+        return Semantics(
+          label: sem,
+          child: piecePlaced(
+            h,
+            w,
+            Provider.of<GameProvider>(context, listen: false).pieceCheck(i),
+            Provider.of<Preferences>(context, listen: false).secondary,
+            k,
+          ),
         );
       }
-      return emptySquare(
-        h,
-        w,
-        Provider.of<Preferences>(context, listen: false).secondary,
-        k,
+      sem = '$sem Empty';
+      return Semantics(
+        label: sem,
+        child: emptySquare(
+          h,
+          w,
+          Provider.of<Preferences>(context, listen: false).secondary,
+          k,
+        ),
       );
     },
   );

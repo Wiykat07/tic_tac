@@ -24,6 +24,18 @@ void main() {
     Key('indigo'),
     Key('cyan')
   ];
+  const List<String> semantics = [
+    'Green',
+    'Blue',
+    'Red',
+    'Yellow',
+    'Purple',
+    'Orange',
+    'Black',
+    'White',
+    'Indigo',
+    'Cyan'
+  ];
   const List<Key> keys2 = [
     Key('green2'),
     Key('blue2'),
@@ -96,5 +108,28 @@ void main() {
     }
 
     expect(find.byType(Container), findsNWidgets(20));
+  });
+  testWidgets('Semantic Test', (tester) async {
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<Preferences>(
+            create: (context) => Preferences(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: const SettingsScreen(),
+        ),
+      ),
+    );
+    //at least two labels show up for the colors to match the buttons
+    //it will be three if the color is selected
+    for (int i = 0; i < keys1.length; i++) {
+      log('button $i');
+      expect(find.bySemanticsLabel(semantics[i]), findsAtLeastNWidgets(2));
+    }
   });
 }

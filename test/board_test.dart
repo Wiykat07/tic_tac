@@ -941,6 +941,51 @@ void main() {
 
     expect(game.board.isEmpty, true);
   });
+  testWidgets('Semantic Tester', (tester) async {
+    game.addPlayer(false, 'playerone', PlayerNumber.player1);
+    game.addPlayer(true, 'playertwo', PlayerNumber.ai);
+    game.switchTurns(false);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<GameProvider>(create: (context) => game),
+          ChangeNotifierProvider<Preferences>(
+            create: (context) => Preferences(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'TicTac',
+          theme: CustomTheme(primary: Colors.green, secondary: Colors.yellow)
+              .theme(),
+          home: Navigator(
+            onGenerateRoute: (_) {
+              return MaterialPageRoute<Widget>(
+                builder: (_) => const Board(),
+                settings: const RouteSettings(arguments: diff),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+    expect(find.bySemanticsLabel('Upper Left Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Upper Center Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Upper Right Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Middle Left Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Middle Center Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Middle Right Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Lower Left Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Lower Center Empty'), findsOneWidget);
+    expect(find.bySemanticsLabel('Lower Right Empty'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('zero'))); //X
+    await tester.pump();
+    expect(find.bySemanticsLabel('Upper Left X'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('five'))); //X
+    await tester.pump();
+    expect(find.bySemanticsLabel('Middle Center O'), findsOneWidget);
+  });
 
   tearDown(() async {
     await tearDownTestHive();
