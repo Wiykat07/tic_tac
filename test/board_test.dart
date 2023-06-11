@@ -13,8 +13,6 @@ import 'package:tic_tac/themes.dart';
 void main() {
   const int diff = 0;
   late GameProvider game;
-  late Player p1;
-  late Player p2;
 
   final List<String> keys = [
     'zero',
@@ -32,8 +30,6 @@ void main() {
     game = GameProvider();
     await setUpTestHive();
     await Hive.openBox('Colors');
-    p1 = Player(name: 'playerone', piece: false, number: PlayerNumber.player1);
-    p2 = Player(name: 'playertwo', piece: true, number: PlayerNumber.player2);
   });
 
   testWidgets('Initial widgets are all there', (WidgetTester tester) async {

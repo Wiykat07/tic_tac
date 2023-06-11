@@ -74,7 +74,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Green',
                       child: primaryColor(
-                          'Green', Colors.green, const Key('green')),
+                          'Green', Colors.green, const Key('green'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -100,7 +100,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Yellow',
                       child: primaryColor(
-                          'Yellow', Colors.yellow, const Key('yellow')),
+                          'Yellow', Colors.yellow, const Key('yellow'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -109,7 +109,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Purple',
                       child: primaryColor(
-                          'Purple', Colors.purple, const Key('purple')),
+                          'Purple', Colors.purple, const Key('purple'),),
                     ),
                   ],
                 ),
@@ -123,7 +123,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Orange',
                       child: primaryColor(
-                          'Orange', Colors.orange, const Key('orange')),
+                          'Orange', Colors.orange, const Key('orange'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -132,7 +132,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Black',
                       child: primaryColor(
-                          'Black', Colors.black, const Key('black')),
+                          'Black', Colors.black, const Key('black'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -141,7 +141,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'White',
                       child: primaryColor(
-                          'White', Colors.white, const Key('white')),
+                          'White', Colors.white, const Key('white'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -150,7 +150,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Indigo',
                       child: primaryColor(
-                          'Indigo', Colors.indigo, const Key('indigo')),
+                          'Indigo', Colors.indigo, const Key('indigo'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -261,7 +261,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'Black',
                       child: secondaryColor(
-                          'Black', Colors.black, const Key('black2')),
+                          'Black', Colors.black, const Key('black2'),),
                     ),
                     const SizedBox(
                       height: 20,
@@ -270,7 +270,7 @@ class _ScreenState extends State<SettingsScreen> {
                     Semantics(
                       label: 'White',
                       child: secondaryColor(
-                          'White', Colors.white, const Key('white2')),
+                          'White', Colors.white, const Key('white2'),),
                     ),
                     const SizedBox(
                       height: 20,
